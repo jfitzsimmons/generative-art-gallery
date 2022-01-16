@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <meta charset="utf-8">
+        <title>Title of the document</title>
+     </head>
+<style>
+    /**
+        FADE IN AND OUT DOESNT WORK withd effects (blur, saturate)
+    **/
+    body {
+        padding: 0; 
+        margin:0;
+        background: #000;
+        color: #fff;
+        font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+
+    }
+    canvas {
+        position: fixed;
+        z-index: 1;
+    }
+
+    h1 {
+        font-size: 5vmin;
+    }
+
+    .sepia {
+        transition: .5s;
+        filter: sepia(0);
+    }
+
+    .page {
+        pointer-events: auto;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .another {
+        align-self: flex-end;
+        flex: 1;
+    }
+    
+
+    .again {
+        align-self: center;
+        flex: 1;
+        display: flex;
+        justify-content: end;
+    }
+
+    .menu {
+        flex: 1;
+        padding: 2vmin;
+        align-self: flex-start;
+    }
+    /** IT HAS TO DO WOTH PAGE**/
+    
+    button {
+        backdrop-filter: blur(4px) saturate(250%);
+        background-color: hsla(0,0%,0%,.6);
+        border: 1px solid hsla(0,0%,0%,.1);
+        transition: .5s;
+        filter: sepia(0%);
+       
+    }
+    button:hover {
+        backdrop-filter: blur(7px) saturate(500%);
+        cursor: pointer;
+        filter: sepia(50%);
+    }
+    button:active {
+        transition: .2s;
+    }
+    .again__button {
+        box-shadow: -1vh 0 10px 0 rgba(255,255,255, 0.2), -2vh 0 20px 0 rgba(255,255,255, 0.19), -3vh 0 30px 0 rgba(255,255,255, 0.19);
+        border-radius: 25px 0 0 25px;
+        padding: 3vh;
+        min-width: 150px;
+        width: 30vmin;
+    }
+    .again__button:hover  {
+        padding: 4vh;
+        box-shadow: -1vh 0 15px 0 rgba(255,255,255, 0.2), -3vh 0 30px 0 rgba(255,255,255, 0.2), -5vh 0 45px 0 rgba(255,255,255, 0.2);
+    }
+    .again__button:active {
+        padding: 4.5vh;
+        box-shadow: -1vh 0 5px 0 rgba(255,255,255, 0.2), -2vh 0 10px 0 rgba(255,255,255, 0.19), -3vh 0 15px 0 rgba(255,255,255, 0.19);
+
+    }
+    .another__button {
+        box-shadow: 0 -1vh 10px 0 rgba(255,255,255, 0.2), 0 -2vh 20px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2);
+        border-radius: 25px 25px 0 0;
+        padding: 3vw;
+    }
+    .another__button:hover {
+        padding: 4vw;
+        box-shadow: 0 -1vh 15px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2), 0 -5vh 45px 0 rgba(255,255,255, 0.2);
+    }
+    .another__button:active {
+        padding: 3.9vw;
+        box-shadow: 0 -1vh 5px 0 rgba(255,255,255, 0.2), 0 -2vh 10px 0 rgba(255,255,255, 0.19), 0 -3vh 15px 0 rgba(255,255,255, 0.19);
+
+    }
+
+   
+
+    .menu__button {
+        box-shadow: -1vh 1vh 10px 0 rgba(255,255,255, 0.1), 2vh -2vh 20px 0 rgba(255,255,255, 0.1), 3vh 3vh 30px 0 rgba(255,255,255, 0.1);
+        border-radius: 25px;
+        padding: 3vw;
+        min-height: 7vmin;
+        color:#fff;
+        text-shadow: 0px 0px 4px rgba(0,0,0, .9);
+        width: 100%;
+        padding: 2vmin 1vmin;
+        margin: 1vmin 0;
+        font-size: 2vmin;
+        text-transform: uppercase;
+        font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        letter-spacing: 1vmin;
+        white-space: nowrap;
+        max-width: 30vw;
+    }
+
+
+
+    .menu__button.active::before{
+        color:rgba(255, 255, 255, .6);
+        content:  "\203B";
+        font-size: 3vmin;
+    }
+
+    .menu__button:hover {
+        padding: 4vmin;
+        box-shadow: -1vh -1vh 15px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2), 4vh 4vh 45px 0 rgba(255,255,255, 0.2);
+    }
+    .menu__button:active {
+        padding: 3.5vmin;
+        text-shadow: 0px 0px 6px rgba(0,0,0, .6),0px 0px 11px rgba(0,0,0, .5);
+        box-shadow: -1vh -1vh 3px 0 rgba(255,255,255, 0.1), -1vh -1vh 7px 0 rgba(255,255,255, 0.1), 1vh 1vh 14px 0 rgba(255,255,255, 0.1);
+    }
+
+
+    .label {
+        color: rgba(255,255,255, 0.8);
+        text-shadow: 0px 0px 6px rgba(0,0,0, .9);
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 7vmin;
+        transition: .5s;
+
+    }
+    .again__label {
+        writing-mode: sideways-lr;
+        font-size: 9vmin;
+
+    }
+    .another__label {
+        font-size: 7vw;
+        bottom: 9vw;
+        position: absolute;
+        width: 100%;
+        left: 0;
+    }
+    
+    .another__button:hover .another__label  {
+        font-size: 8vw;
+    }
+
+    
+    .again__button:hover .again__label  {
+        font-size: 10vmin;
+        
+    }
+
+    .another__button:active .another__label,
+    .again__button:active .again__label {
+        text-shadow: 0px 0px 8px rgba(0,0,0, .6),0px 0px 15px rgba(0,0,0, .5);
+        transition: .2s;
+    }
+
+
+
+    .title {
+        font-size: 6vmin;
+    }
+
+    .controls {
+        display: flex;
+        flex-direction: rows;
+        justify-content: space-between;
+        flex: 1;
+        box-shadow: none;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        z-index: 3;
+        pointer-events: none;
+        box-shadow: inset 0 0 15vmin rgba(0,0,0, .5);
+        transition: .5s;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+
+    .controls:hover ~ .sepia  {
+        filter: sepia(50%);
+    }
+
+    .controls.loaded.fadein {
+        width: calc(100% + 20vmin);
+        height: calc(100% + 20vmin);
+        box-shadow: inset 0 0 10vmin rgba(0,0,0, 0);
+        transition: 1s;
+        transition-delay: .8s;
+        top: -5%;
+        left: -5%;
+    }
+
+    .controls.loaded.fadein:hover { 
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 0 0 30vmin rgba(0,0,0, 1);
+        transition: .5s;
+        top: 0;
+        left: 0;
+    }
+
+
+
+    .controls.loaded.fadein:hover button.page,
+    .controls.loaded.fadein:hover .page button,
+    .controls.loaded.fadein:hover .title {
+        transition-timing-function: ease-out;
+        opacity: 1;
+        transition: opacity .5s, padding .5s, background-filter .5s,filter .5s,box-shadow .5s;
+
+        
+
+    }
+
+    .controls.loaded.fadein:hover .light_beam {
+        opacity: 1;
+        transition: 1.5s;
+
+        
+
+    }
+
+
+  
+
+    .controls.loaded.fadein .page button,
+    .controls.loaded.fadein button.page,
+    .controls.loaded.fadein .title
+    {
+        transition-timing-function: ease-in;
+        opacity: 0;
+        transition: opacity 1.3s 1s, padding .5s 0s, background-filter .5s 0s,filter .5s 0s,box-shadow .5s 0s;
+        
+    }
+
+    .controls.loaded.fadein .light_beam
+    {
+        opacity: 0;
+        transition: 1.3s;        
+    }
+
+ 
+    .controls:hover .light_beam {
+        left: 72vw;
+        transform: skew(-30deg,0deg); 
+        border-image: 
+            linear-gradient(
+                180deg, 
+            rgba(255, 255, 200, .6), 
+            rgba(255, 255, 200, 0)
+            ) 
+        
+    }
+
+    .controls:hover .light_beam2 {
+        left: 15vw;
+        transform: skew(30deg,0deg); 
+    }
+.light_beam {
+    opacity: 1;
+    position: absolute;
+    bottom:0;
+    left:48%;
+    width: 1vw;
+    height: 0;
+    border-radius: 50px;
+    border-top: 25vw solid;
+    border-left: 6vw solid transparent;
+    border-right: 6vw solid transparent;
+    
+    
+  border-style: solid;
+  border-image: 
+    linear-gradient(
+        180deg, 
+      rgba(255, 255, 255, .6), 
+      rgba(255, 255, 255, 0)
+    ) 
+
+}
+.light_beam2 {
+   
+    position: absolute;
+    left:40%;
+    bottom:0;
+    width: 1vw;
+    height: 0;
+    border-top: 25vw solid;
+    border-left: 6vw solid transparent;
+    border-right: 6vw solid transparent;
+    
+    
+  border-style: solid;
+  border-image: 
+    linear-gradient(
+        180deg, 
+      rgba(255, 255, 255, .6), 
+      rgba(255, 255, 255, 0)
+    ) 
+
+}
+
+
+.light_beam { 
+  -ms-transform: skew(50deg,0deg); 
+  -webkit-transform: skew(50deg,0deg); 
+  transform: skew(50deg,0deg); 
+}
+
+.light_beam2 { 
+  -ms-transform: skew(-50deg,0deg); 
+  -webkit-transform: skew(-50deg,0deg); 
+  transform: skew(-50deg,0deg); 
+}
+    
+
+    .chevron2 {
+      position: relative;
+      text-align: center;
+      padding: 12px;
+      margin-right: .05vw;
+      height: 30vh;     
+    }
+    .chevron2:before {
+      content: '';
+      position: absolute;
+      top: -7vh;
+      height: 15vh;
+      width: 1vw;
+      background: rgba(255, 255, 255, 0.5);
+      transform: skew(12deg, 0deg);
+      box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+      min-height: 23vh;
+
+
+    }
+    .chevron2:after {
+      content: '';
+      position: absolute;
+      top: 53%;
+      height: 15vh;
+      width: 1vw;
+      background: rgba(255, 255, 255, 0.5);
+      transform: skew(-12deg, 0deg);
+      box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+      min-height: 23vh;
+
+    }
+
+    .chevron {
+      position: relative;
+      text-align: center;
+      padding: 12px;
+      margin-bottom: 1vw;
+      width: 30vw;
+    }
+    .chevron:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2vw;
+      width: 15vw;
+      background: rgba(255, 255, 255, 0.5);  
+      transform: skew(0deg, 12deg);
+      box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+
+    }
+    .chevron:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 2vw;
+      width: 15vw;
+      background: rgba(255, 255, 255, 0.5);
+      transform: skew(0deg, -12deg);
+      box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+
+    }
+
+
+   
+
+
+</style>
+<body> 
+    <div id="controls" class="controls fadein">
+        <div class="light_beam"></div>
+        <div class="light_beam light_beam2"></div>
+        <div id="menu" class="menu page">
+            <div class="title label">ART<br/>&#9751;&#8881;&#8942;&#8942;&#8942;&#8942;&#8942;&#8880;&#9751;</div>
+        </div>
+        
+        <div class="another page">
+            <button id="another" class="another__button">
+                
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+                <div class="label another__label">another <br/> &#10557;</div> 
+            </button>
+        </div>
+       
+
+        <div class="again">
+            <button id="again" class="page flex again__button">
+                <div class="label again__label">again <br/> &#10227;</div> 
+                <div class="flex">
+                    <div class="chevron2"></div>
+                    <div class="chevron2"></div>
+                    <div class="chevron2"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <canvas id="canvas1" class="sepia">
+        Sorry, your browser does not support canvas.
+    </canvas>
+</body>
+</html>
+<script type="module" src="./lib.js"></script>
