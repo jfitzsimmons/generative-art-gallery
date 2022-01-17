@@ -330,6 +330,7 @@
 
                     let angle = Math.atan2(ground.y - flag.y, ground.x - flag.x) * 180 / Math.PI;
                     let l = rndmRng(80,40);
+                    ctx.beginPath();
 
                     ctx.moveTo(flag.x,flag.y);
                     ctx.fillStyle = '#050605';
@@ -344,6 +345,7 @@
 
         export function loadWorld() {
             ctx.clearRect(0,0,w,h);
+            ctx.lineWidth = 0;
             ctx.shadowColor = "#000"
             ctx.shadowBlur = 0;
             ctx.shadowOffsetX = 0;

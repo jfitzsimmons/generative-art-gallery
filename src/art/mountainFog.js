@@ -84,6 +84,9 @@ export function loadMountain() {
     ctx.setLineDash([]);
     ctx.save();
     hmod = 0.4;
+    ctx.fillStyle="#FEF9EB";
+    ctx.fillRect(0,0,w,h);
+    
     for (let i = 0; i < 6; i++) {
         createMtn(i);
         (i<5) && createFog(i);

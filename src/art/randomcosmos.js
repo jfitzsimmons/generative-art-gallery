@@ -290,7 +290,6 @@
                 
 
         export function loadArt() {
-            console.log('cosmos load')
             ctx.clearRect(0,0,w,h);
             ctx.shadowColor = "#000"
             ctx.shadowBlur = 0;
@@ -299,7 +298,7 @@
             ctx.save();
             
            // canvas= (flip === true) ? document.getElementById("canvas1") : document.getElementById("canvas2");
-            console.log(flip);
+     
             ctx=canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;

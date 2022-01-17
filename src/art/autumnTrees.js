@@ -119,7 +119,6 @@
         }
 
         export function loadTrees() {
-            console.log('cosmos');
             ctx.clearRect(0,0,w,h);
             ctx.shadowColor = "#000"
             ctx.shadowBlur = 0;
@@ -130,6 +129,24 @@
             let y = h+h*.1
             stumps = [];
             let sLayer = 0;
+
+            let gradient = ctx.createLinearGradient(w/2,h,w/2,0);
+            gradient.addColorStop(0, `rgba(54,19,5,1)`);
+            gradient.addColorStop(1, `rgba(169,102,30,1)`);
+
+            ctx.fillStyle=gradient;
+            ctx.fillRect(0,0,w,h);
+
+            //    background: radial-gradient(ellipse at top right, rgba(255,250,190,.6) 0%, rgba(210,180,115,.1) 60%, rgba(160,100,35,0.3) 100%);  ">
+
+            gradient = ctx.createLinearGradient(w,0,0,h);
+            gradient.addColorStop(0, `rgba(255,250,190,.6)`);
+            gradient.addColorStop(.6, `rgba(210,180,115,.1)`);
+            gradient.addColorStop(1, `rgba(160,100,35,0.3)`);
+
+            ctx.fillStyle=gradient;
+            ctx.fillRect(0,0,w,h);
+
 
             while (y > h*.2) {
                 let x = rndmRng(60,-300)* (1-sLayer*.05);

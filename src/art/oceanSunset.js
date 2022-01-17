@@ -32,6 +32,7 @@ function sun() {
     let gradient = ctx.createLinearGradient(w*.5,rndmRng(t*.8,t*.4), w*.5,t);
     gradient.addColorStop(0, '#FDD1B8');
     gradient.addColorStop(1, '#FFE8B8');
+    ctx.beginPath();
     ctx.arc(sunX, t, sunW, 0, Math.PI * 2, true);
     ctx.fillStyle = gradient;
     ctx.fill();
@@ -202,6 +203,7 @@ function sunReflection() {
 
 export function loadSunset() {
     ctx.clearRect(0,0,w,h);
+    ctx.lineWidth = 0;
     ctx.shadowColor = "#000"
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;

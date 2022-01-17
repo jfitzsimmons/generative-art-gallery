@@ -202,8 +202,6 @@ function circleGroup() {
 }
 
 export function loadSyntheosis() {
-    console.log('synth load');
-
     ctx.clearRect(0,0,w,h);
     ctx.shadowColor = "#000"
     ctx.shadowBlur = 0;

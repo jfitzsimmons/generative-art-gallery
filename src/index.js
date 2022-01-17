@@ -1,12 +1,14 @@
-import {loadArt} from './src/art/randomcosmos.js'
-import {load} from './src/art/meditate.js'
-import {loadSyntheosis} from './src/art/syntheosis.js'
-import {loadTrees} from './src/art/autumnTrees.js'
-import {loadDabs} from './src/art/paintDabs.js'
-import {loadCity} from './src/art/pixelCity.js'
-import {loadMountain} from './src/art/mountainFog.js'
-import {loadSunset} from './src/art/oceanSunset.js'
-import {loadWorld} from './src/art/reclaimedWorld.js'
+import {loadArt} from './art/randomcosmos.js'
+import {load} from './art/meditate.js'
+import {loadSyntheosis} from './art/syntheosis.js'
+import {loadTrees} from './art/autumnTrees.js'
+import {loadDabs} from './art/paintDabs.js'
+import {loadCity} from './art/pixelCity.js'
+import {loadMountain} from './art/mountainFog.js'
+import {loadSunset} from './art/oceanSunset.js'
+import {loadWorld} from './art/reclaimedWorld.js'
+
+import './styles/style.css';
 
 const calls = [
     {f:load, name:'meditations'},
@@ -40,7 +42,7 @@ function incrementCall() {
     let oldCall = call
     call = (++call >= calls.length) ? 0 : call++
     calls[call].f.call();
-
+    
     setAgainListener(oldCall,call);
     handleActiveButton(buttons[call]);
 }

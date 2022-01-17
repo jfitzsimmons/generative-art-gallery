@@ -29,10 +29,11 @@
         } 
 
         function drawSpeck(x,y) {
+            ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x+rndmRng(5,1),y+rndmRng(5,1));
             ctx.stroke();
-            ctx.beginPath();
+            
         }
 
         function setDashedLines() {
@@ -289,7 +290,6 @@
 
         function generateNoise() {
             let squares = Math.round((h*w)/((h*.2)*(w*.2)));
-            console.log(squares)
             let x, y, number = 0;
             let count = 1;
             for ( y = h; y > -squares; y-=squares ) {
@@ -310,7 +310,6 @@
 
         export function load() {
             meteors = [], stripes = [];
-            console.log('cosmos');
             ctx.clearRect(0,0,w,h);
             ctx.shadowColor = "#000"
             ctx.shadowBlur = 0;
