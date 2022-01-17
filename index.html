@@ -2,7 +2,7 @@
 <html>
      <head>
         <meta charset="utf-8">
-        <title>Title of the document</title>
+        <title>Generative Art Gallery</title>
      </head>
 <style>
     /**
@@ -55,8 +55,10 @@
         flex: 1;
         padding: 2vmin;
         align-self: flex-start;
+        width: 485px;
+        margin-right: 7vmin;
+        min-width: 28vw;
     }
-    /** IT HAS TO DO WOTH PAGE**/
     
     button {
         backdrop-filter: blur(4px) saturate(250%);
@@ -108,21 +110,18 @@
    
 
     .menu__button {
-        box-shadow: -1vh 1vh 10px 0 rgba(255,255,255, 0.1), 2vh -2vh 20px 0 rgba(255,255,255, 0.1), 3vh 3vh 30px 0 rgba(255,255,255, 0.1);
+        box-shadow: -0vmin 0vmin 10px 0 rgba(255,255,255, 0.1), 1vmin -1vmin 20px 0 rgba(255,255,255, 0.1), 2vmin 2vmin 30px 0 rgba(255,255,255, 0.1);
         border-radius: 25px;
-        padding: 3vw;
         min-height: 7vmin;
         color:#fff;
         text-shadow: 0px 0px 4px rgba(0,0,0, .9);
-        width: 100%;
-        padding: 2vmin 1vmin;
-        margin: 1vmin 0;
+        padding: 2vmin;
+        margin: 1vmin;
         font-size: 2vmin;
         text-transform: uppercase;
         font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
         letter-spacing: 1vmin;
         white-space: nowrap;
-        max-width: 30vw;
     }
 
 
@@ -134,13 +133,14 @@
     }
 
     .menu__button:hover {
-        padding: 4vmin;
-        box-shadow: -1vh -1vh 15px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2), 4vh 4vh 45px 0 rgba(255,255,255, 0.2);
+        padding: 4vmin 2vmin;
+        box-shadow: -1vmin -1vmin 15px 0 rgba(255,255,255, 0.2), 0 -2vmin 30px 0 rgba(255,255,255, 0.2), 2vmin 2vmin 45px 0 rgba(255,255,255, 0.2);
+        
     }
     .menu__button:active {
-        padding: 3.5vmin;
+        padding: 3.5vmin 2vmin;
         text-shadow: 0px 0px 6px rgba(0,0,0, .6),0px 0px 11px rgba(0,0,0, .5);
-        box-shadow: -1vh -1vh 3px 0 rgba(255,255,255, 0.1), -1vh -1vh 7px 0 rgba(255,255,255, 0.1), 1vh 1vh 14px 0 rgba(255,255,255, 0.1);
+        box-shadow: -1vmin -1vmin 3px 0 rgba(255,255,255, 0.1), -1vmin -1vmin 7px 0 rgba(255,255,255, 0.1), 1vmin 1vmin 14px 0 rgba(255,255,255, 0.1);
     }
 
 
@@ -273,7 +273,7 @@
 
  
     .controls:hover .light_beam {
-        left: 72vw;
+        left: 68vw;
         transform: skew(-30deg,0deg); 
         border-image: 
             linear-gradient(
@@ -285,14 +285,14 @@
     }
 
     .controls:hover .light_beam2 {
-        left: 15vw;
+        left: 23vw;
         transform: skew(30deg,0deg); 
     }
 .light_beam {
     opacity: 1;
     position: absolute;
     bottom:0;
-    left:48%;
+    left:49vw;
     width: 1vw;
     height: 0;
     border-radius: 50px;
@@ -313,7 +313,7 @@
 .light_beam2 {
    
     position: absolute;
-    left:40%;
+    left:45vw;
     bottom:0;
     width: 1vw;
     height: 0;
