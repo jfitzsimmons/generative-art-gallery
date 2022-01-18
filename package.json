@@ -1,0 +1,26 @@
+{
+   "name": "generative-art-gallery",
+   "version": "1.0.0",
+   "description": "",
+   "private": true,
+   "scripts": {
+      "deploy": "gh-pages -d dist",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "webpack",
+      "dev": "npx webpack serve --open"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "MIT",
+   "devDependencies": {
+      "css-loader": "^6.5.1",
+      "style-loader": "^3.3.1",
+      "webpack": "^5.38.1",
+      "webpack-cli": "^4.7.2",
+      "webpack-dev-server": "^4.7.3"
+   },
+   "homepage": "https://jfitzsimmons.github.io/generative-art-gallery/",
+   "dependencies": {
+      "gh-pages": "^3.2.3"
+   }
+}
