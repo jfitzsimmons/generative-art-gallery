@@ -7,7 +7,7 @@ import {loadCity} from './art/pixelCity.js'
 import {loadMountain} from './art/mountainFog.js'
 import {loadSunset} from './art/oceanSunset.js'
 import {loadWorld} from './art/reclaimedWorld.js'
-
+import {resetCanvas} from './utils/canvas.js'
 import './styles/style.css';
 
 const calls = [
@@ -23,11 +23,13 @@ const calls = [
 ];
 
 let call=0;
-let buttons = []
+let buttons = [];
+let flip = true;
 
-function setAgainListener(oldCall,newCall) {
-    document.getElementById("again").removeEventListener("click", calls[oldCall].f); 
-    document.getElementById("again").addEventListener("click", calls[newCall].f);
+function loadArt2(newCall) {
+    resetCanvas(flip);
+    (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
+    flip= (flip===true) ? false : true;
 }
 
 function handleActiveButton(button) {
@@ -39,29 +41,21 @@ function handleActiveButton(button) {
 }
 
 function incrementCall() {
-    let oldCall = call
     call = (++call >= calls.length) ? 0 : call++
-    calls[call].f.call();
-    
-    setAgainListener(oldCall,call);
+    loadArt2(call)
     handleActiveButton(buttons[call]);
 }
 
 function setCall(e, i) {
     e.preventDefault();
-
-    let oldCall = call
     call = i;
-    calls[call].f.call();
-
-    setAgainListener(oldCall,call);
+    loadArt2(call)
     handleActiveButton(e.target);
 }
 
-
-document.getElementById("again").addEventListener("click", calls[call].f); 
+document.getElementById("again").addEventListener("click", loadArt2); 
 document.getElementById("another").addEventListener("click", incrementCall);
-calls[call].f.call();
+loadArt2(call);
 
 calls.forEach((c,i) => {
         const element = document.createElement("button");
@@ -77,3 +71,4 @@ calls.forEach((c,i) => {
 window.onload = function() {
     document.getElementById("controls").classList.add("loaded");
 }
+

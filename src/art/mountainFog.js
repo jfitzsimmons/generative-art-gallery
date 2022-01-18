@@ -1,8 +1,5 @@
-const canvas=document.getElementById("canvas1");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const w = window.innerWidth;
-const h = window.innerHeight;
+import {ctx,h,w,resetCanvas} from '../utils/canvas.js'
+
 let hmod = 0.4;
 const amount = 6;
 const mtnColors = [
@@ -21,7 +18,6 @@ const fogColors = [
     ['rgba(177, 198, 205, 0.05)','rgba(230, 240, 240, 0.05)'],
     ['rgba(168, 201, 215, 0.05)','rgba(255, 255, 255, 0.05)']
 ]
-const ctx=canvas.getContext("2d");
 ctx.lineWidth = 0;
 
 
@@ -76,13 +72,7 @@ function cragX(px) {
 }
 
 export function loadMountain() {
-    ctx.clearRect(0,0,w,h);
-    ctx.shadowColor = "#000"
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;  
-    ctx.setLineDash([]);
-    ctx.save();
+    resetCanvas(); 
     hmod = 0.4;
     ctx.fillStyle="#FEF9EB";
     ctx.fillRect(0,0,w,h);
@@ -92,5 +82,4 @@ export function loadMountain() {
         (i<5) && createFog(i);
         hmod += 0.1;
     }
-    ctx.restore();
 }

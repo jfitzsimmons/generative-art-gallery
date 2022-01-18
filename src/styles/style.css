@@ -315,3 +315,15 @@ button:active {
     transform: skew(0deg, -12deg);
     box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
 }
+
+.show {
+    transition: 1s;
+    transition-timing-function: ease-in;
+    opacity:1;
+}
+
+.hide {
+    transition: 1s;
+    transition-timing-function: ease-out;
+    opacity:0;
+}

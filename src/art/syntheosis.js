@@ -1,43 +1,16 @@
-const canvas=document.getElementById("canvas1");
-let ctx=canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const w = window.innerWidth;
-const h = window.innerHeight;
-const rndmRng = (h, l) => Math.random() * (h - l) + l;
+import {ctx,h,w} from '../utils/canvas.js';
+import {rndmRng,distanceToC,drawEllipseByCenter} from '../utils/helpers.js';
+
 let maxCircles=Math.round(h*w/rndmRng(8800,6300));
 let circleCount = 0;
 const cx = w*rndmRng(.9,.1);
 const cy = h*rndmRng(.9,.1);
-const distanceToC = (px,py) => Math.sqrt((Math.pow(px-cx,2))+(Math.pow(py-cy,2)));
 let spheres = [];
-
-function drawEllipseByCenter(ctx, cx, cy, w, h) {
-    drawEllipse(ctx, cx - w/2.0, cy - h/2.0, w, h);
-}
-
-function drawEllipse(ctx, x, y, w, h) {
-    const kappa = .5522848,
-        ox = (w / 2) * kappa, 
-        oy = (h / 2) * kappa, 
-        xe = x + w,           
-        ye = y + h,        
-        xm = x + w / 2,    
-        ym = y + h / 2; 
-
-    ctx.beginPath();
-    ctx.moveTo(x, ym);
-    ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-    ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-    ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-    ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-    ctx.fill();
-}
 
 function drawSphere(x,y,r,hue) {
     const ax = x+rndmRng(r/5,-r/5);
     const ay = y+rndmRng(r/5,-r/5);
-    const alpha = distanceToC(ax,ay)/(h/2+w/2)+.3;
+    const alpha = distanceToC(ax,ay,cx,cy)/(h/2+w/2)+.3;
 
     //shadow
     ctx.shadowColor = `hsla(0, 0%, 1%, ${alpha.toFixed(1)})`;
@@ -78,8 +51,8 @@ function drawSphere(x,y,r,hue) {
 function points(x,y,r) {
     let edge = r*1.05;
     let lines =8;
-    let distance = distanceToC(x,y)/(h/2+w/2)*3;
-    let alpha = (Math.round((distanceToC(x,y)/(h/2+w/2))*10)/10).toFixed(1);
+    let distance = distanceToC(x,y,cx,cy)/(h/2+w/2)*3;
+    let alpha = (Math.round((distanceToC(x,y,cx,cy)/(h/2+w/2))*10)/10).toFixed(1);
     let btm = Math.random()>.66;            
     
     for(let i = 0; i < lines; i++) {
@@ -144,7 +117,7 @@ function drawLight(x,y,r) {
     ctx.shadowColor = `hsla(47, 95%, 85%, 1)`;
     let ex = x+rndmRng(r/15,-r/15)
     let ey = y+rndmRng(r/15,-r/15)
-    let distance = distanceToC(ex,ey)/(h/2+w/2)+.1;
+    let distance = distanceToC(ex,ey,cx,cy)/(h/2+w/2)+.1;
     let dimension = (distance+.5)/2.5
     let alpha = (1-Math.round(distance*2 * 10) / 10 < 0) ? 0 : (1-Math.round(distance*2 * 10) / 10).toFixed(1);
     let alpha2 = (Math.round(distance * 10) / 10 > 1) ? .9 : (Math.round(distance * 10) / 10 -.1).toFixed(1);

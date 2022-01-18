@@ -1,16 +1,10 @@
+import {ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {rndmRng} from '../utils/helpers.js';
 
-const canvas=document.getElementById("canvas1");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const w = window.innerWidth;
-const h = window.innerHeight;
-const rndmRng = (h, l) => Math.random() * (h - l) + l;
 const t = h*rndmRng(.75,.5);
 const btm = h-t;
 let sunX = 0;
 let sunW = 0;
-
-const ctx=canvas.getContext("2d");
 
 function sunset() { 
     let gradient = ctx.createLinearGradient(w*rndmRng(.53,.5),t*rndmRng(.2,.1), w*rndmRng(.5,.47),t*rndmRng(1,.8));
@@ -202,13 +196,7 @@ function sunReflection() {
 
 
 export function loadSunset() {
-    ctx.clearRect(0,0,w,h);
-    ctx.lineWidth = 0;
-    ctx.shadowColor = "#000"
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;  
-    ctx.save();
+    resetCanvas();
 
     sunset();
     sun();
@@ -216,7 +204,4 @@ export function loadSunset() {
     ocean();
     waves();
     sunReflection();
-
-    ctx.restore();
-
 }
