@@ -1,13 +1,9 @@
-import {ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,groupBy} from '../utils/helpers.js';
 
-
-let monoliths = [];
-let hills = [];
-let ground = [];
+let monoliths=[],hills=[],ground=[],colorsM=[],colorsG=[];
 let sun = {x: w*rndmRng(.7,.3), y: h*rndmRng(.45,-.05),}
-const colorsM = ['#B8AE36','#7C832A','#7C832A','#706C19','#445112','#1C2E0D','#081809','#050A06','#040504'];
-const colorsG = ['211, 200, 57,','125, 132, 42,','125, 132, 42,','112, 108, 25,','68, 81, 18,','28, 46, 13,','8, 24, 9,','5, 10, 6,']
+let baseHue = 56; 
 
 function drawTree(h) {
     const trunkY = h.y-rndmRng(h.r+150,h.r+30);
@@ -82,9 +78,9 @@ function drawCables(rows,t) {
         x: rndmRng(0,-100),
         y: h * rndmRng(.2+(t*.11),-.05+(t*.06)),
     }
+
     ctx.strokeStyle = colorsM[t];
     ctx.lineWidth = 2;
-
     rows.forEach(m => {
         start = quadCurves(start.y,m.y, 800, 200, start,m.x+(m.mw/2));
     });
@@ -92,6 +88,7 @@ function drawCables(rows,t) {
     const endY = h * rndmRng(.2+(t*.11),-.05+(t*.06));
     const endX = rndmRng(w+100,w);
     let cpy = Math.max(start.y,endY) + rndmRng(800,200);
+
     ctx.beginPath()
     ctx.moveTo(start.x,start.y);
     ctx.quadraticCurveTo(start.x+(endX-start.x)/2+35, cpy, endX, endY);
@@ -99,8 +96,8 @@ function drawCables(rows,t) {
 }
 
 function drawCables2(amt) {
-    ctx.strokeStyle="#EBEDAA";
-    ctx.fillStyle="#EBEDAA";
+    ctx.strokeStyle=`hsla(${baseHue+6}, 65%, 80%, 1)`;
+    ctx.fillStyle=`hsla(${baseHue+6}, 65%, 80%, 1)`;
 
     for (let i = amt; i--;) {
         const p0 = {x: rndmRng(0,-400), y: h-rndmRng(500,300),}
@@ -186,16 +183,16 @@ function generateMonolith(type,x) {
     const y = h * rndmRng(.2+(type*.11),-.05+(type*.06))
 
     monoliths.push({
-                type,
-                x,
-                y,
-                mw,
-                mh,
-            });
+        type,
+        x,
+        y,
+        mw,
+        mh,
+    });
 }
 
 function generateMonoRow(t) {
-    let x = w*rndmRng(.16,.02);;
+    let x = w*rndmRng(.16,.02);
     while (x < w-100) {
         generateMonolith(t,x);
         x+=rndmRng(800,200);
@@ -204,7 +201,7 @@ function generateMonoRow(t) {
 
 function drawMonolith(m) {
     ctx.fillStyle=colorsM[m.type];
-    ctx.strokeStyle="#EBEDAA";
+    ctx.strokeStyle=`hsla(${baseHue+6}, 65%, 80%, 1)`;
     ctx.lineWidth=3;
     ctx.fillRect(m.x, m.y, m.mw, m.mh);
     if (m.type === 0) {
@@ -231,19 +228,19 @@ function drawGradient(type) {
     const gradient = ctx.createLinearGradient(w/2,0,w/2,h);
 
     (type===0) ?
-        gradient.addColorStop(.05, `rgba(${colorsG[type]} 0)`) :
-        gradient.addColorStop(((2*(3.5/(2-(type*.13))))/8)-.1, `rgba(${colorsG[type]} 0)`);
+        gradient.addColorStop(.05, `hsla(${colorsG[type]}, 0)`) :
+        gradient.addColorStop(((2*(3.5/(2-(type*.13))))/8)-.1, `hsla(${colorsG[type]}, 0)`);
     
-    gradient.addColorStop(.4+(type*.36)/((type+1)*.53), `rgba(${colorsG[type]} 1)`);
-    gradient.addColorStop(1, `rgba(${colorsG[type]} 1)`);
+    gradient.addColorStop(.4+(type*.36)/((type+1)*.53), `hsla(${colorsG[type]}, 1)`);
+    gradient.addColorStop(1, `hsla(${colorsG[type]}, 1)`);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, w, h);
 }
 
 function drawSun() {
     ctx.shadowBlur = 20;
-    ctx.shadowColor = "#EBEDAA";
-    ctx.fillStyle="#EBEDAA";
+    ctx.shadowColor = `hsla(${baseHue+6}, 65%, 80%, 1)`;
+    ctx.fillStyle=`hsla(${baseHue+6}, 65%, 80%, 1)`;
     ctx.arc(sun.x, sun.y, rndmRng(600,200), 0, 2 * Math.PI);
     ctx.fill();
     ctx.shadowBlur = 0;
@@ -260,11 +257,11 @@ function drawDudes() {
         x: peaks[0].x + w * rndmRng(.2,.1),
         y: h-rndmRng(270,200),
         r: rndmRng(30,20),
-    })
+    });
 
     peaks.forEach((p,i) => {
         ctx.lineWidth = 2;
-        ctx.fillStyle="#050605";
+        ctx.fillStyle=`hsla(${baseHue+64}, 9%, 2%, 1)`;
 
         //body
         ctx.beginPath()
@@ -279,17 +276,17 @@ function drawDudes() {
         ctx.arc(p.x, p.y+p.r, p.r, 0, 2 * Math.PI);
         var grdRadial = ctx.createRadialGradient(p.x,p.y+p.r,p.r, 
                                                 p.x+rndmRng(p.r,p.r*-1),p.y+rndmRng(p.r*4,p.r*-2),p.r+rndmRng(10,-10));
-        grdRadial.addColorStop(0, '#313a03');
-        grdRadial.addColorStop(.8, '#060805');
-        grdRadial.addColorStop(1, '#060805');
+        grdRadial.addColorStop(0, `hsla(${baseHue+14}, 90%, 12%, 1)`);
+        grdRadial.addColorStop(.8, `hsla(${baseHue+44}, 23%, 3%, 1)`);
+        grdRadial.addColorStop(1, `hsla(${baseHue+44}, 23%, 3%, 1)`);
         ctx.fillStyle = grdRadial;
         ctx.fill();
 
         ctx.shadowBlur = 3;
-        ctx.shadowColor = "#050605";
+        ctx.shadowColor = `hsla(${baseHue+64}, 9%, 2%, 1)`;
         //eyes
         ctx.beginPath();
-        ctx.fillStyle = '#E6E29B';
+        ctx.fillStyle = `hsla(${baseHue+1}, 60%, 75%, 1)`;
         ctx.arc(p.x-(rndmRng(12,5)), p.y+(rndmRng(18,8)), (rndmRng(3,1)), 0, 2 * Math.PI);
         ctx.arc(p.x+(rndmRng(12,5)), p.y+(rndmRng(18,8)), (rndmRng(3,1)), 0, 2 * Math.PI);
         ctx.fill();
@@ -297,14 +294,14 @@ function drawDudes() {
         ctx.shadowBlur = 0;
         //smile
         ctx.beginPath();
-        ctx.strokeStyle = '#050605';
+        ctx.strokeStyle = `hsla(${baseHue+64}, 9%, 2%, 1)`;
         ctx.arc(p.x, p.y+p.r, p.r-rndmRng(10,5), rndmRng(.7,-.4), rndmRng(1.1,.8) * Math.PI);
         ctx.stroke();
 
         //Flag
         if (i===1) {
             ctx.lineWidth = 10;
-            ctx.strokeStyle = '#050605';
+            ctx.strokeStyle = `hsla(${baseHue+64}, 9%, 2%, 1)`;
             let ground = {x: p.x-rndmRng(120,80), y: h+10}
             let flag = {x: p.x-rndmRng(140,100), y: h-rndmRng(400,300)}
             ctx.beginPath();
@@ -317,7 +314,7 @@ function drawDudes() {
             ctx.beginPath();
 
             ctx.moveTo(flag.x,flag.y);
-            ctx.fillStyle = '#050605';
+            ctx.fillStyle = `hsla(${baseHue+64}, 9%, 2%, 1)`;
             ctx.lineTo(flag.x- (l * Math.cos((angle)* Math.PI / 180)),flag.y- (l * Math.sin((angle)* Math.PI / 180)));
             ctx.lineTo(flag.x- (l * Math.cos((60+angle)* Math.PI / 180)),flag.y- (l * Math.sin((60+angle)* Math.PI / 180)));
             ctx.lineTo(flag.x,flag.y);
@@ -328,14 +325,35 @@ function drawDudes() {
 }
 
 export function loadWorld() {
-    resetCanvas()
-
     monoliths = [];
     hills = [];
     ground = [];
     sun = {x: w*rndmRng(.7,.3), y: h*rndmRng(.45,-.05),}
+    baseHue = Math.round(rndmRng(283,0));
 
-    ctx.fillStyle="#E1D640";
+    colorsM = [
+        ` hsla(${baseHue}, 55%, 47%, 1)`,
+         `hsla(${baseHue+10}, 51%, 34%, 1)`,
+         `hsla(${baseHue+10}, 51%, 34%, 1)`,
+         `hsla(${baseHue+2}, 51%, 34%, 1)`,
+         `hsla(${baseHue+17}, 51%, 34%, 1)`,
+         `hsla(${baseHue+38}, 51%, 34%, 1)`,
+         `hsla(${baseHue+69}, 51%, 34%, 1)`,
+         `hsla(${baseHue+77}, 51%, 34%, 1)`,
+         `hsla(${baseHue+65}, 51%, 34%, 1)`,
+     ];
+    colorsG = [
+        `${baseHue+1}, 64%, 53%`,
+        `${baseHue+10}, 52%, 34%`,
+        `${baseHue+10}, 52%, 34%`,
+        `${baseHue+2}, 64%, 27%`,
+        `${baseHue+17}, 64%, 19%`,
+        `${baseHue+38}, 56%, 12%`,
+        `${baseHue+69}, 50%, 6%`,
+        `${baseHue+77}, 33%, 3%`,
+    ]
+
+    ctx.fillStyle=`hsla(${baseHue}, 73%, 57%, 1)`;
     ctx.fillRect(0,0,w,h);
     ctx.beginPath();
 

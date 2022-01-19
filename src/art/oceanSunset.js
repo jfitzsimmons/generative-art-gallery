@@ -1,4 +1,4 @@
-import {ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng} from '../utils/helpers.js';
 
 const t = h*rndmRng(.75,.5);
@@ -196,8 +196,6 @@ function sunReflection() {
 
 
 export function loadSunset() {
-    resetCanvas();
-
     sunset();
     sun();
     cloudWisps(16);

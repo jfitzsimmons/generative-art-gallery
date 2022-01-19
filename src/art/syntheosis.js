@@ -175,14 +175,6 @@ function circleGroup() {
 }
 
 export function loadSyntheosis() {
-    ctx.clearRect(0,0,w,h);
-    ctx.shadowColor = "#000"
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.setLineDash([]);
-    ctx.save();
-
     spheres = [];
     circleCount = 0;
     circleGroup();
@@ -193,7 +185,4 @@ export function loadSyntheosis() {
             if (Math.random() > .5) drawLight(s.x,s.y+s.r*3,s.r)
         });
     })
-
-    ctx.restore();
-
 }

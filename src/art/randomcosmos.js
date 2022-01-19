@@ -1,7 +1,7 @@
-import {canvas,canvas2,ctx,ctx2,h,w,resetCanvas} from '../utils/canvas.js'
+import {ctx,h,w,setDashedLines} from '../utils/canvas.js'
 import {rndmRng,coinflip,shuffle} from '../utils/helpers.js';
 
-let lineDash =0, lineSpace=0;
+let dashes = [0,0];
 let gradientArray = ['360, 0%','204, 100%','260, 31%','340, 89%','179, 79%'];
 
 function pickGradient(i) {
@@ -17,30 +17,18 @@ function drawSpeck(x,y) {
     ctx.beginPath();
 }
 
-function setDashedLines() {
-    ctx.lineWidth=rndmRng(5,1);
-    lineDash=rndmRng(5,1);
-    lineSpace=rndmRng(6,3);
-    ctx.setLineDash([lineDash, lineSpace]);
-}
-
 function backgroundGradients(layers) {
     for (let i=layers; i--;) {
         let outR = rndmRng(w*.4, w*.1);
         let outX = rndmRng(w+w*.1, 0-w*.1);
         let outY = rndmRng(h+h*.1, 0-h*.1);
         let inR = rndmRng(outR*.3, outR*.01);
-        //let bg = `rgba(${rndmRng(80,54)}, ${rndmRng(40,10)}, ${rndmRng(43,17)}, `;
 
         let grd = ctx.createRadialGradient(outX, outY, inR, outX, outY, outR);
-        grd.addColorStop(0, `rgba(${rndmRng(80, 54)}, ${rndmRng(40, 10)}, ${rndmRng(
-43,
-17
-)}, ${rndmRng(0.9, 0.5)})`);
-        grd.addColorStop(1, `rgba(${rndmRng(80, 54)}, ${rndmRng(40, 10)}, ${rndmRng(
-43,
-17
-)}, 0)`);
+        grd.addColorStop(0, `rgba(${rndmRng(80, 54)}, ${rndmRng(40, 10)}, 
+                        ${rndmRng(43,17)}, ${rndmRng(0.9, 0.5)})`);
+        grd.addColorStop(1, `rgba(${rndmRng(80, 54)}, ${rndmRng(40, 10)}, 
+                        ${rndmRng(43,17)}, 0)`);
 
         ctx.fillStyle = grd;
         ctx.fillRect(outX-outR, outY-outR, outR*2, outR*2);
@@ -119,25 +107,23 @@ function splatterPoints(ox,oy,layers) {
         x=ox+rndmRng(10*m,5*m);
         y=oy+rndmRng(10*m,5*m);
         drawSpeck(x,y)
-        }
+    }
 }
-
 
 function curvedLine() {
     let counter = 0, x=0;
     let startX = rndmRng(-500,0);
     let height = rndmRng(350,40);
-    let increase = 90/180*Math.PI / rndmRng(3,1);
     let startY = rndmRng(500,-200);
     let y=startY;
     let splatter = Math.round(rndmRng(8,1));
 
-    for(let i=startX; i<=w+100; i+=lineDash+lineSpace){
+    for(let i=startX; i<=w+100; i+=dashes[0]+dashes[1]){
         ctx.strokeStyle = `rgba(254, 254, 254, ${rndmRng(1,.1)})`;
-        setDashedLines();
+        dashes = setDashedLines();
         ctx.moveTo(x,y);
         let increase = 90/180*Math.PI / rndmRng(30,15);
-        x = i + lineDash + lineSpace;
+        x = i + dashes[0]+dashes[1];
         y = startY+i/2 - Math.sin(counter) * height;
         counter += increase;
         ctx.lineTo(x,y);
@@ -161,7 +147,6 @@ function circleShading(x,y,size) {
         ctx.arc(x, y, size-(i/2)*10, startAngle+i/rndmRng(30,20), endAngle);
         ctx.stroke();
         increment -= rndmRng(increment*.03,increment*.001)+(layers/10*.01);
-        
     }
 }
 
@@ -259,13 +244,7 @@ function points() {
     }
 }
 
-        
-
-export function loadArt() {
-   
-    
- 
-
+export function loadCosmos() {
     let bgSpots = Math.round(rndmRng(6,2));
     backgroundGradients(bgSpots);
 
@@ -282,21 +261,4 @@ export function loadArt() {
     points();
 
     mainCircle();
-
-
-
 }
-
-        
-/** 
-        loadArt();
-
-        setInterval(loadArt, 10000);
-
-        setTimeout(function(){
-            const element = document.getElementById("fader");
-            element.style.animation = "fade 20s ease-in-out infinite";
-        }, 8000); 
-
-        */
-

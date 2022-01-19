@@ -1,5 +1,5 @@
-import {loadArt} from './art/randomcosmos.js'
-import {load} from './art/meditate.js'
+import {loadCosmos} from './art/randomcosmos.js'
+import {loadMeditations} from './art/meditate.js'
 import {loadSyntheosis} from './art/syntheosis.js'
 import {loadTrees} from './art/autumnTrees.js'
 import {loadDabs} from './art/paintDabs.js'
@@ -11,8 +11,8 @@ import {resetCanvas} from './utils/canvas.js'
 import './styles/style.css';
 
 const calls = [
-    {f:load, name:'meditations'},
-    {f:loadArt, name:'cosmos'},
+    {f:loadMeditations, name:'meditations'},
+    {f:loadCosmos, name:'cosmos'},
     {f:loadSyntheosis, name: 'syntheosis'},
     {f:loadDabs, name: 'paint_dabs'},
     {f:loadCity, name: 'pixel_city'},
@@ -21,12 +21,11 @@ const calls = [
     {f:loadSunset, name: 'ocean_sunset'},
     {f:loadWorld, name: 'reclaimed_world'},
 ];
-
 let call=0;
 let buttons = [];
 let flip = true;
 
-function loadArt2(newCall) {
+function loadArt(newCall) {
     resetCanvas(flip);
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
     flip= (flip===true) ? false : true;
@@ -42,20 +41,20 @@ function handleActiveButton(button) {
 
 function incrementCall() {
     call = (++call >= calls.length) ? 0 : call++
-    loadArt2(call)
+    loadArt(call)
     handleActiveButton(buttons[call]);
 }
 
 function setCall(e, i) {
     e.preventDefault();
     call = i;
-    loadArt2(call)
+    loadArt(call)
     handleActiveButton(e.target);
 }
 
-document.getElementById("again").addEventListener("click", loadArt2); 
+document.getElementById("again").addEventListener("click", loadArt); 
 document.getElementById("another").addEventListener("click", incrementCall);
-loadArt2(call);
+loadArt(call);
 
 calls.forEach((c,i) => {
         const element = document.createElement("button");

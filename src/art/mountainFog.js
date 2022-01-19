@@ -1,4 +1,4 @@
-import {ctx,h,w,resetCanvas} from '../utils/canvas.js'
+import {ctx,h,w} from '../utils/canvas.js'
 
 let hmod = 0.4;
 const amount = 6;
@@ -18,9 +18,6 @@ const fogColors = [
     ['rgba(177, 198, 205, 0.05)','rgba(230, 240, 240, 0.05)'],
     ['rgba(168, 201, 215, 0.05)','rgba(255, 255, 255, 0.05)']
 ]
-ctx.lineWidth = 0;
-
-
 
 function createFog(i) {
     let lingrad = ctx.createLinearGradient(w,(h*hmod),w,h);
@@ -72,7 +69,6 @@ function cragX(px) {
 }
 
 export function loadMountain() {
-    resetCanvas(); 
     hmod = 0.4;
     ctx.fillStyle="#FEF9EB";
     ctx.fillRect(0,0,w,h);

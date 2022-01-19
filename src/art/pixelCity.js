@@ -1,4 +1,4 @@
-import {ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,shuffle,randomProperty} from '../utils/helpers.js';
 
 const rowHeight = 10;
@@ -500,8 +500,6 @@ function buildingRow() {
 }
 
 export function loadCity() {
-    resetCanvas()
-
     layers =[], buildings = [];
     buildingRows = 2;
 

@@ -1,4 +1,4 @@
-import {ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng, shuffle, flatten} from '../utils/helpers.js';
 
 const fallColors = [354,29,53,65,35]
@@ -12,17 +12,17 @@ let branchLayer=[], treePoints=[], stumps=[];
 
 function buildBranch(start, layer) {
     let temp = (layer===0) ? 1 : layer;
-    for (var i = 2; i--;) {
+    for (let i = 2; i--;) {
         let newBranchH = rndmRng(branchH*1.2,branchH*.8);
         let newX = Math.round(Math.cos(rndmRng(80,35)*Math.PI/180) * newBranchH);
         let newY = Math.round(Math.sin(newBranchH*Math.PI/180) * newBranchH);
         let flip = (i===1) ? -1 : 1;
         let adjust = Math.abs(((start.x+(newX*flip)/3) - treeCenter.x)/temp);
-        let bc= {
+        let bc = {
             x: (i === 1) ? start.x-topW/4 : start.x+topW/4,
             y: start.y,
         };
-        let tc= {
+        let tc = {
             x: (i === 1) ? start.x-topW/4-newX : start.x+topW/4+newX,
             y: start.y-newY+adjust,
         };
@@ -55,7 +55,7 @@ function buildBranch(start, layer) {
 
 function drawLeaves(x,y,c,l,s,a,r) {
     let amount = a;
-    for (var i = amount; i--;) {
+    for (let i = amount; i--;) {
         ctx.beginPath();
         let size = Math.round(rndmRng(14-(s.layer+l/2.2), 8-(s.layer+l/2.2)));
         ctx.arc(rndmRng(x+r, x-r), rndmRng(y+25, y-25), size, 0, Math.PI * 2); 
@@ -94,21 +94,13 @@ function drawBranch(b,i,s) {
     return baseColor;
 }
 
-export function loadTrees() {
-    resetCanvas();
-
-    let y = h+h*.1
-    stumps = [];
-    let sLayer = 0;
-
+function drawBackground() {
     let gradient = ctx.createLinearGradient(w/2,h,w/2,0);
     gradient.addColorStop(0, `rgba(54,19,5,1)`);
     gradient.addColorStop(1, `rgba(169,102,30,1)`);
 
     ctx.fillStyle=gradient;
     ctx.fillRect(0,0,w,h);
-
-    //    background: radial-gradient(ellipse at top right, rgba(255,250,190,.6) 0%, rgba(210,180,115,.1) 60%, rgba(160,100,35,0.3) 100%);  ">
 
     gradient = ctx.createLinearGradient(w,0,0,h);
     gradient.addColorStop(0, `rgba(255,250,190,.6)`);
@@ -117,30 +109,38 @@ export function loadTrees() {
 
     ctx.fillStyle=gradient;
     ctx.fillRect(0,0,w,h);
+}
 
+export function loadTrees() {
+    let y = h+h*.1
+    stumps = [];
+    let sLayer = 0;
+
+    drawBackground();
 
     while (y > h*.2) {
         let x = rndmRng(60,-300)* (1-sLayer*.05);
 
         while (x < w) { 
-            y -= rndmRng(h*.09, h*-.07)* (1-sLayer*.05);
+            y -= rndmRng(h*.075, h*-.06)* (1-sLayer*.04);
             stumps.push({
                 x,
                 y,
                 layer:sLayer,
-                sparse : [rndmRng(12,0),rndmRng(12,0)].sort(),
+                sparse: [rndmRng(11,0),rndmRng(11,0)].sort(),
                 fallColor: fallColors[Math.round(rndmRng(fallColors.length-1, 0))],
                 colorChange: Math.random(),
             })
             x += rndmRng(700, 300)* (1-sLayer*.12);
         }
 
-        y -= rndmRng(h*.24, h*.16)* (1-sLayer*.11);
+        y -= rndmRng(h*.24, h*.16)* (1-sLayer*.1);
         sLayer++;      
     }
 
     stumps.sort(function(a, b) {return parseFloat(a.y) - parseFloat(b.y)})
 
+    // Shadows
     ctx.beginPath();
     ctx.moveTo(0,stumps[0].y-50);
     sLayer = stumps[0].layer;
@@ -166,25 +166,32 @@ export function loadTrees() {
     treePoints = [];
 
     stumps.forEach((s,i) => {
-        ctx.shadowColor = `hsla(56, 95%, ${90*((s.layer/2+1)*.28)}%, .2)`;
-        ctx.shadowBlur = 20-(s.layer*2);
-        ctx.shadowOffsetY = 0-s.layer;
-        ctx.shadowOffsetX = s.layer;
-
-        btmW = rndmRng(65,55) * (1-s.layer*.1);
+        btmW = rndmRng(62,52) * (1-s.layer*.1);
         topW = btmW*(5/6);
         offset = (btmW-topW) / 2;
         stumpH = rndmRng(160,140)* (1-s.layer*.07);
         branchH = stumpH/2;
-
         let amount = 24-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*2;
-        drawLeaves(s.x,s.y,20 +(s.layer*4),0,s,Math.round(amount/2),300);
+
+        ctx.shadowColor = `hsla(56, 95%, ${90*((s.layer/2+1)*.28)}%, .2)`;
+        ctx.shadowBlur = 20-(s.layer*2);
+        ctx.shadowOffsetY = 0-s.layer;
+        ctx.shadowOffsetX = s.layer;
+        ctx.save();
+
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowOffsetX = 0;
+
+        drawLeaves(s.x,s.y-rndmRng(h*.01,0),18 +(s.layer*4),0,s,Math.round(amount/1.5),300);
+
+        ctx.restore();
 
         var grd = ctx.createLinearGradient(s.x, s.y, s.x, s.y-stumpH);
-        grd.addColorStop(0, `hsla(348, 7%, ${15 +(s.layer*2)}%, 0)`);
-        grd.addColorStop(.3, `hsla(348, 7%, ${15 +(s.layer*2)}%, .9)`);
+            grd.addColorStop(0, `hsla(348, 7%, ${15 +(s.layer*2)}%, 0)`);
+            grd.addColorStop(.3, `hsla(348, 7%, ${15 +(s.layer*2)}%, .9)`);
+        
         ctx.fillStyle=grd;
-
         ctx.beginPath();
         ctx.moveTo(s.x,s.y);
         ctx.lineTo(s.x+btmW, s.y);
@@ -192,8 +199,16 @@ export function loadTrees() {
         ctx.lineTo(s.x+offset,s.y-stumpH);
         ctx.lineTo(s.x,s.y);
         ctx.fill();
+        ctx.save();
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowOffsetX = 0;
 
-        drawLeaves(s.x+10,s.y+12,20 +(s.layer*4),0,s,Math.round(amount/2),300);
+        s.colorChange = .9;
+
+        drawLeaves(s.x+10,s.y+rndmRng(h*.01,0),16+(s.layer*4),0,s,Math.round(amount/1.5),300);
+
+        ctx.restore();
 
         treeCenter = {
             x: s.x+topW/2+offset,
@@ -204,7 +219,7 @@ export function loadTrees() {
         branchLayer.push(treePoints);
         
         let halt = Math.floor(Math.sqrt(topW))-1;
-        let test = branchLayer;
+        let copy = branchLayer;
 
         for (let j=0; j < halt; j++) {
             btmW /= 2;
@@ -212,7 +227,7 @@ export function loadTrees() {
             offset = (btmW-topW) / 2;
             treePoints = [];
 
-            test[j].forEach((l) => {
+            copy[j].forEach((l) => {
                 buildBranch(l.tc,j+1);
             })
 

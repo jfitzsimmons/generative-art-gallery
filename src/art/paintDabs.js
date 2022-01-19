@@ -1,4 +1,4 @@
-import {canvas,ctx,h,w,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,shuffle} from '../utils/helpers.js';
 
 let dabR = w*.02
@@ -74,8 +74,7 @@ function dabDraw(x,y) {
 let dabArr = [];
 
 export function loadDabs() {
-    resetCanvas();
-
+    
     dabArr = [];
     x = rndmRng(-1, dabR*-1);
     y = rndmRng(-1, dabR*-1);
@@ -99,7 +98,10 @@ export function loadDabs() {
     dabArr.forEach((d) => {
         dabDraw(d.x,d.y);
     })
+    //ctx.rotate(180 * Math.PI / 180);
 
-    canvas.style.transform = (Math.random() > .5) ? "rotate(180deg)" : "rotate(360deg)"
+    //(Math.random() > .5) ?  : ctx.rotate(0 * Math.PI / 180);
+
+    
 }
 

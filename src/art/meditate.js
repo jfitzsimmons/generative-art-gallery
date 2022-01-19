@@ -1,4 +1,4 @@
-import {ctx,h,w,setDashedLines,resetCanvas} from '../utils/canvas.js';
+import {ctx,h,w,setDashedLines} from '../utils/canvas.js';
 import {rndmRng, shuffle, coinflip} from '../utils/helpers.js';
 
 //horizon point
@@ -13,8 +13,7 @@ function drawSpeck(x,y) {
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x+rndmRng(5,1),y+rndmRng(5,1));
-    ctx.stroke();
-    
+    ctx.stroke(); 
 }
 
 function dirt() {
@@ -267,9 +266,7 @@ function generateNoise() {
     let x, y, number = 0;
     let count = 1;
     for ( y = h; y > -squares; y-=squares ) {
-        
         for ( x = 0; x < w; x+=squares ) {
-            
             if (Math.random()>.7) {
                 count+= squares * .0002
                 number = Math.floor( rndmRng(256,51) );
@@ -282,10 +279,9 @@ function generateNoise() {
     ctx.filter = `none`;
 }
 
-export function load() {
+export function loadMeditations() {
     meteors = [], stripes = [];
   
-
     //sky
     let grd = ctx.createRadialGradient(p1.x, p1.y, h*rndmRng(.4,.01), p1.x, p1.y, h*rndmRng(.99,.96));
         grd.addColorStop(rndmRng(.2,0), "#Ffdfd8");
@@ -359,4 +355,3 @@ export function load() {
         drawStripe(s);
     })
 }
-
