@@ -8,8 +8,25 @@ import {loadMountain} from './art/mountainFog.js'
 import {loadSunset} from './art/oceanSunset.js'
 import {loadWorld} from './art/reclaimedWorld.js'
 import {resetCanvas} from './utils/canvas.js'
+import {rndmRng} from './utils/helpers.js'
+//import './utils/favicons.js';
 import './styles/style.css';
+//import favicon from './assets/favicons/favicon.ico';
 
+//require.context('./assets/favicons', true, /^\.\//);
+/** 
+const myIcon = new Image();
+
+myIcon.src = favicon;
+
+console.log(`myIcon.src: ${myIcon.src}`)
+
+document.createElement('link');
+link.type = 'image/png';
+link.rel = 'shortcut icon';
+link.href = 'myIcon.src';
+document.getElementsByTagName('head')[0].appendChild(link);
+*/
 const calls = [
     {f:loadMeditations, name:'meditations'},
     {f:loadCosmos, name:'cosmos'},
@@ -52,8 +69,16 @@ function setCall(e, i) {
     handleActiveButton(e.target);
 }
 
+function randomCall() {
+    call = Math.round(rndmRng(calls.length-1,0));
+    loadArt(call)
+    handleActiveButton(buttons[call]);
+}
+
+
 document.getElementById("again").addEventListener("click", loadArt); 
 document.getElementById("another").addEventListener("click", incrementCall);
+document.getElementById("random").addEventListener("click", randomCall); 
 loadArt(call);
 
 calls.forEach((c,i) => {

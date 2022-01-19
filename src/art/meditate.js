@@ -1,12 +1,8 @@
 import {ctx,h,w,setDashedLines} from '../utils/canvas.js';
 import {rndmRng, shuffle, coinflip} from '../utils/helpers.js';
 
-//horizon point
-const p1 = {x:rndmRng(w*.6,w*.3),y:rndmRng(h*.6,h*.7)}
-//stripes point
-const p2 = (p1.x < w*.5) ? {x:rndmRng(w*.63,w*.75),y:rndmRng(h*.65,h*.77)} : {x:rndmRng(w*-.02,w*.15),y:rndmRng(h*.65,h*.77)}
+let p1 = {}, p2 = {};
 let meteors = [], stripes = [];
-//let lineDash=0,lineSpace=0;
 let dashArray = [0,0]
 
 function drawSpeck(x,y) {
@@ -112,7 +108,7 @@ function curvedLine(newX,newY,endX,splat) {
 function drips() {
     let count = 0; 
     let x = rndmRng(30,-30);
-    let step = rndmRng(w*.08,w*.03);
+    let step = rndmRng(w*.06,w*.03);
     let short = h*rndmRng(.49,.1);
     let mod = 1;
 
@@ -189,7 +185,7 @@ function drawStalk(x,y,nh,set) {
 
 function createFields(x,stalks,mod) {
     let y = p1.y;
-    let height = rndmRng(40,10);
+    let height = rndmRng(30,5);
     let maxHeight = rndmRng(h*.55,h*.35);
     let minHeight = rndmRng(h*.34,h*.25);
     let oldHeight = 0;
@@ -281,11 +277,15 @@ function generateNoise() {
 
 export function loadMeditations() {
     meteors = [], stripes = [];
-  
+
+    p1 = {x:rndmRng(w*.6,w*.3),y:rndmRng(h*.6,h*.7)}
+    p2 = (p1.x < w*.5) ? {x:rndmRng(w*.63,w*.75),y:rndmRng(h*.65,h*.77)} 
+        : {x:rndmRng(w*-.02,w*.15),y:rndmRng(h*.65,h*.77)}
+
     //sky
     let grd = ctx.createRadialGradient(p1.x, p1.y, h*rndmRng(.4,.01), p1.x, p1.y, h*rndmRng(.99,.96));
-        grd.addColorStop(rndmRng(.2,0), "#Ffdfd8");
-        grd.addColorStop(rndmRng(.8,.5), "#E3D8D1");
+        grd.addColorStop(rndmRng(.4,0), "#Ffdfd8");
+        grd.addColorStop(rndmRng(.9,.6), "#E3D8D1");
         grd.addColorStop(1, "#dfccc0");
     ctx.fillStyle = grd;
     ctx.fillRect(0,0,w,p1.y);
@@ -311,7 +311,7 @@ export function loadMeditations() {
 
     //sun
     ctx.fillStyle="#DA2E20";
-    let size= rndmRng(h*.4,h*.2);
+    let size= rndmRng(h*.34,h*.19);
     ctx.beginPath();
     ctx.arc(p1.x*1.05,p1.y*.85,size, 0, Math.PI*2);
     ctx.fill();
