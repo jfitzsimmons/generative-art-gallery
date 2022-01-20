@@ -62,29 +62,29 @@ button:active {
 .again__button {
     box-shadow: -1vh 0 10px 0 rgba(255,255,255, 0.2), -2vh 0 20px 0 rgba(255,255,255, 0.19), -3vh 0 30px 0 rgba(255,255,255, 0.19);
     border-radius: 25px 0 0 25px;
-    padding: 3vh;
-    min-width: 150px;
-    width: 30vmin;
+    padding: 2vh;
+    min-width: 140px;
+    width: 26vmin;
 }
 .again__button:hover  {
-    padding: 4vh;
+    padding: 3vh;
     box-shadow: -1vh 0 15px 0 rgba(255,255,255, 0.2), -3vh 0 30px 0 rgba(255,255,255, 0.2), -5vh 0 45px 0 rgba(255,255,255, 0.2);
 }
 .again__button:active {
-    padding: 4.5vh;
+    padding: 3.5vh;
     box-shadow: -1vh 0 5px 0 rgba(255,255,255, 0.2), -2vh 0 10px 0 rgba(255,255,255, 0.19), -3vh 0 15px 0 rgba(255,255,255, 0.19);
 }
 .another__button {
     box-shadow: 0 -1vh 10px 0 rgba(255,255,255, 0.2), 0 -2vh 20px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2);
     border-radius: 25px 25px 0 0;
-    padding: 4vw 2.3vw;
+    padding: 3vw 2vw;
 }
 .another__button:hover {
-    padding: 4vw 3vw;
+    padding: 3.5vw 2.5vw;
     box-shadow: 0 -1vh 15px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2), 0 -5vh 45px 0 rgba(255,255,255, 0.2);
 }
 .another__button:active {
-    padding: 3.9vw;
+    padding: 3.25vw;
     box-shadow: 0 -1vh 5px 0 rgba(255,255,255, 0.2), 0 -2vh 10px 0 rgba(255,255,255, 0.19), 0 -3vh 15px 0 rgba(255,255,255, 0.19);
 }
 .menu__button {
@@ -95,10 +95,10 @@ button:active {
     text-shadow: 0px 0px 4px rgba(0,0,0, .9);
     padding: 1.7vmin;
     margin: 1vmin;
-    font-size: 1.7vmin;
+    font-size: 1.3vw;
     text-transform: uppercase;
     font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: 0.7vmin;
+    letter-spacing: 0.5vw;
     white-space: nowrap;
 }
 .menu__button.active {
@@ -111,13 +111,13 @@ button:active {
 .menu__button::before{
     color:rgba(255, 255, 255, .6);
     content:  "\203B";
-    font-size: 0vmin;
+    font-size: 0;
     transition: .5s;
 }
 .menu__button.active::before{
     color:rgba(255, 255, 255, .6);
     content:  "\203B";
-    font-size: 3vmin;
+    font-size: 1.8vw;
 }
 .menu__button:hover {
     padding: 3.5vmin 1.7vmin;
@@ -131,6 +131,7 @@ button:active {
 .random {
     width: 75%;
     padding: 2vmin 2vmin 1vmin;
+    line-height: 3vmin;
 }
 .dice {
     font-size: 4vmin;
@@ -140,7 +141,7 @@ button:active {
     text-shadow: 0px 0px 6px rgba(0,0,0, .9);
     text-transform: uppercase;
     text-align: center;
-    line-height: 7vmin;
+    line-height: 6vmin;
     transition: .5s;
 }
 .again__label {
@@ -148,18 +149,18 @@ button:active {
     font-size: 9vmin;
 }
 .another__label {
-    font-size: 6.9vw;
+    font-size: 5.5vw;
     bottom: 9vw;
     position: absolute;
     width: 100%;
     left: 0%;
 }
 .another__button:hover .another__label  {
-    font-size: 7.8vw;
+    font-size: 6.1vw;
     left: -1%;
 }
 .again__button:hover .again__label  {
-    font-size: 10vmin;  
+    font-size: 8vmin;  
 }
 .another__button:active .another__label,
 .again__button:active .again__label {
@@ -284,7 +285,8 @@ button:active {
     text-align: center;
     padding: 12px;
     margin-right: .05vw;
-    height: 30vh;     
+    height: 30vh; 
+    left: -2vw;    
 }
 .chevron2:before {
     content: '';
@@ -313,7 +315,7 @@ button:active {
     text-align: center;
     padding: 12px;
     margin-bottom: 1vw;
-    width: 26vw;
+    width: 20vw;
 }
 .chevron:before {
     content: '';
@@ -321,7 +323,7 @@ button:active {
     top: 0;
     left: 0;
     height: 2vw;
-    width: 13vw;
+    width: 10vw;
     background: rgba(255, 255, 255, 0.5);  
     transform: skew(0deg, 12deg);
     box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
@@ -332,18 +334,16 @@ button:active {
     top: 0;
     right: 0;
     height: 2vw;
-    width: 13vw;
+    width: 10vw;
     background: rgba(255, 255, 255, 0.5);
     transform: skew(0deg, -12deg);
     box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
 }
-
 .show {
     transition: 1s;
     transition-timing-function: ease-in;
     opacity:1;
 }
-
 .hide {
     transition: 1s;
     transition-timing-function: ease-out;
