@@ -161,19 +161,22 @@ button:active {
     transition: .5s;
 }
 .again__label {
-    writing-mode: sideways-lr;
     font-size: 9vmin;
+    writing-mode: tb;
+    margin: auto 0;
+    transform: rotate(180deg);
 }
 .another__label {
     font-size: 5.5vw;
     bottom: 9vw;
     position: absolute;
-    width: 100%;
-    left: 0%;
+    width: 106%;
+    left: -0.75vw;
 }
 .another__button:hover .another__label  {
     font-size: 6.1vw;
-    left: -1%;
+    left: -1.3vw;
+    width: 110%;
 }
 .again__button:hover .again__label  {
     font-size: 8vmin;  
@@ -207,7 +210,6 @@ button:active {
 .controls:hover ~ .sepia  {
     filter: sepia(50%);
 }
-
 .controls.loaded.fadein {
     width: calc(100% + 20vmin);
     height: calc(100% + 20vmin);
@@ -217,7 +219,6 @@ button:active {
     top: -5%;
     left: -5%;
 }
-
 .controls.loaded.fadein:hover { 
     width: 100%;
     height: 100%;
@@ -226,7 +227,6 @@ button:active {
     top: 0;
     left: 0;
 }
-
 .controls.loaded.fadein:hover button.page,
 .controls.loaded.fadein:hover .page button,
 .controls.loaded.fadein:hover .title {
@@ -234,26 +234,23 @@ button:active {
     opacity: 1;
     transition: opacity .5s, padding .5s, background-filter .5s,filter .5s,box-shadow .5s;
 }
-
 .controls.loaded.fadein:hover .light_beam {
     opacity: 1;
     transition: 1.5s;
 }
-
 .controls.loaded.fadein .page button,
 .controls.loaded.fadein button.page,
 .controls.loaded.fadein .title
 {
     transition-timing-function: ease-in;
     opacity: 0;
-    transition: opacity 1.3s 1s, padding .5s 0s, background-filter .5s 0s,filter .5s 0s,box-shadow .5s 0s; 
+    transition: opacity .8s 1s, padding .5s 0s, background-filter .5s 0s,filter .5s 0s,box-shadow .5s 0s; 
 }
 .controls.loaded.fadein .light_beam
 {
     opacity: 0;
-    transition: 1.3s;        
+    transition: .8s;        
 }
-
 .controls:hover .light_beam {
     left: 66vw;
     transform: skew(-30deg,0deg); 
