@@ -13,6 +13,22 @@ canvas {
 h1 {
     font-size: 5vmin;
 }
+.hundred {
+    height: 100%!important;
+    width: 100%!important;
+    top: 0!important;
+    left: 0!important;
+}
+.show {
+    transition: 1s;
+    transition-timing-function: ease-in;
+    opacity:1!important;
+}
+.hide {
+    transition: 1s;
+    transition-timing-function: ease-out;
+    opacity:0;
+}
 .sepia {
     transition: .5s;
     filter: sepia(0);
@@ -338,14 +354,4 @@ button:active {
     background: rgba(255, 255, 255, 0.5);
     transform: skew(0deg, -12deg);
     box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
-}
-.show {
-    transition: 1s;
-    transition-timing-function: ease-in;
-    opacity:1;
-}
-.hide {
-    transition: 1s;
-    transition-timing-function: ease-out;
-    opacity:0;
 }

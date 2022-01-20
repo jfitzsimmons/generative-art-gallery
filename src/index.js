@@ -25,41 +25,70 @@ const calls = [
 let call=0;
 let buttons = [];
 let flip = true;
+const againBtn = document.getElementById("again");
+const titleEl = document.getElementById("title");
+const controlsEl = document.getElementById("controls");
 
-function loadArt(newCall) {
+function loadArt(e,newCall) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
     resetCanvas(flip);
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
     flip= (flip===true) ? false : true;
 }
 
 function handleActiveButton(button) {
-    var actives = document.getElementsByClassName("active");
+    const actives = document.getElementsByClassName("active");
     while (actives.length)
         actives[0].classList.remove('active');
 
     buttons[call].classList.add("active"); 
 }
 
-function incrementCall() {
+function incrementCall(e) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
     call = (++call >= calls.length) ? 0 : call++
     loadArt(call)
     handleActiveButton(buttons[call]);
 }
 
 function setCall(e, i) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
     e.preventDefault();
     call = i;
     loadArt(call)
     handleActiveButton(e.target);
 }
 
-function randomCall() {
+function randomCall(e) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
     call = Math.round(rndmRng(calls.length-1+.499,-.499));
     loadArt(call)
     handleActiveButton(buttons[call]);
 }
 
-document.getElementById("again").addEventListener("click", loadArt); 
+function showControls() {
+    const actives = document.getElementsByTagName("button");
+    if (againBtn.classList.contains('show')) {
+        againBtn.classList.remove('show');
+        titleEl.classList.remove('show');
+        controlsEl.classList.remove('hundred');
+        
+        for (let i = actives.length-1; i--;) {
+            actives[i].classList.remove('show');
+        }
+    } else {
+        againBtn.classList.add('show');
+        titleEl.classList.add('show');
+        controlsEl.classList.add('hundred');
+        
+        for (let i = actives.length-1; i--;) {
+            actives[i].classList.add('show');
+        }
+    }
+}
+
+document.getElementById("view").addEventListener("click", showControls);
+againBtn.addEventListener("click", loadArt); 
 document.getElementById("another").addEventListener("click", incrementCall);
 document.getElementById("random").addEventListener("click", randomCall); 
 loadArt(call);
@@ -76,5 +105,6 @@ calls.forEach((c,i) => {
 })
 
 window.onload = function() {
-    document.getElementById("controls").classList.add("loaded");
+    controlsEl.classList.add("loaded");
 }
+
