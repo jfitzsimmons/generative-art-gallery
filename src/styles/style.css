@@ -37,17 +37,17 @@ h1 {
 }
 .menu {
     flex: 1;
-    /**padding: 1vmin 4vmin 1vmin 1vmin;**/
     align-self: flex-start;
-    /**max-width: 485px;**/
     min-width: 28vw;
-    width: 33vmin;
     text-align: center;
 }    
+.menu .page {
+    max-width: 33vw;
+}
 button {
     backdrop-filter: blur(4px) saturate(250%);
     background-color: hsla(0,0%,0%,.6);
-    border: 1px solid hsla(0,0%,0%,.1);
+    border: .3vmin solid hsla(0,0%,0%,.1);
     transition: .5s;
     filter: sepia(0%);
 }
@@ -90,7 +90,7 @@ button:active {
 .menu__button {
     box-shadow: -0vmin 0vmin 10px 0 rgba(255,255,255, 0.1), 1vmin -1vmin 20px 0 rgba(255,255,255, 0.1), 2vmin 2vmin 30px 0 rgba(255,255,255, 0.1);
     border-radius: 25px;
-    min-height: 7vmin;
+    min-height: 5vmin;
     color:#fff;
     text-shadow: 0px 0px 4px rgba(0,0,0, .9);
     padding: 1.7vmin;
@@ -101,17 +101,30 @@ button:active {
     letter-spacing: 0.7vmin;
     white-space: nowrap;
 }
+.menu__button.active {
+    border-top: .5vmin solid hsla(0, 100%, 100%, 0.6);
+    border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.6);
+    border-left: .3vmin solid hsla(0, 100%, 100%, 0.6);
+    border-right: .3vmin solid hsla(0, 100%, 100%, 0.6);
+    transition: .5s;
+}
+.menu__button::before{
+    color:rgba(255, 255, 255, .6);
+    content:  "\203B";
+    font-size: 0vmin;
+    transition: .5s;
+}
 .menu__button.active::before{
     color:rgba(255, 255, 255, .6);
     content:  "\203B";
     font-size: 3vmin;
 }
 .menu__button:hover {
-    padding: 4vmin 1.8vmin;
+    padding: 3.5vmin 1.7vmin;
     box-shadow: -1vmin -1vmin 15px 0 rgba(255,255,255, 0.2), 0 -2vmin 30px 0 rgba(255,255,255, 0.2), 2vmin 2vmin 45px 0 rgba(255,255,255, 0.2);
 }
 .menu__button:active {
-    padding: 3.5vmin 2vmin;
+    padding: 3vmin 1.7vmin;
     text-shadow: 0px 0px 6px rgba(0,0,0, .6),0px 0px 11px rgba(0,0,0, .5);
     box-shadow: -1vmin -1vmin 3px 0 rgba(255,255,255, 0.1), -1vmin -1vmin 7px 0 rgba(255,255,255, 0.1), 1vmin 1vmin 14px 0 rgba(255,255,255, 0.1);
 }
@@ -139,10 +152,11 @@ button:active {
     bottom: 9vw;
     position: absolute;
     width: 100%;
-    left: 0;
+    left: 0%;
 }
 .another__button:hover .another__label  {
     font-size: 7.8vw;
+    left: -1%;
 }
 .again__button:hover .again__label  {
     font-size: 10vmin;  

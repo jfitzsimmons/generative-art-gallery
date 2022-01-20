@@ -122,7 +122,7 @@ export function loadTrees() {
         let x = rndmRng(60,-300)* (1-sLayer*.05);
 
         while (x < w) { 
-            y -= rndmRng(h*.075, h*-.06)* (1-sLayer*.04);
+            y -= rndmRng(h*.075, h*-.055)* (1-sLayer*.035);
             stumps.push({
                 x,
                 y,

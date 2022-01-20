@@ -1,8 +1,7 @@
 import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng} from '../utils/helpers.js';
 
-const t = h*rndmRng(.75,.5);
-const btm = h-t;
+let t = h*rndmRng(.75,.5);
 let sunX = 0;
 let sunW = 0;
 
@@ -19,7 +18,6 @@ function sunset() {
     ctx.fillRect(0, 0, w, t);
 }
 
-
 function sun() {
     sunX = rndmRng(w*.75,w*.25);
     sunW = rndmRng(w*.15,w*.05);
@@ -31,8 +29,6 @@ function sun() {
     ctx.fillStyle = gradient;
     ctx.fill();
 }
-
-
 
 function cloudWisps(loops) { 
     for (let i = loops; i--;) {
@@ -65,6 +61,7 @@ function cloudWisps(loops) {
             if (line > w*.33 && increase === true) {
                 increase = false;
             }
+
             ctx.stroke();
             ctx.beginPath(); 
             line = (increase === true) ? line + rndmRng(100,1) : line - rndmRng(100,1);
@@ -74,28 +71,23 @@ function cloudWisps(loops) {
     }
 }
 
-
-
 function ocean() {
-    let gradient = ctx.createLinearGradient(w*.5,t, w*.5,h);
-    
-    gradient.addColorStop(0, 'rgba(64, 167, 186, 1)');
-    gradient.addColorStop(rndmRng(.02,.07), 'rgba(73, 206, 187, 1)');
-    gradient.addColorStop(rndmRng(.12,.08), 'rgba(59, 162, 181, 1)');
-    gradient.addColorStop(rndmRng(.17,.13), 'rgba(68, 201, 182, 1)');
-    gradient.addColorStop(rndmRng(.29,.19), 'rgba(54, 157, 176, 1)');
-    gradient.addColorStop(rndmRng(.39,.31), 'rgba(63, 196, 177, 1)');
-    gradient.addColorStop(rndmRng(.49,.41), 'rgba(49, 152, 171, 1)');
-    gradient.addColorStop(rndmRng(.59,.51), 'rgba(58, 191, 172, 1)');
-    gradient.addColorStop(rndmRng(.79,.61), 'rgba(44, 147, 166, 1)');
-    gradient.addColorStop(rndmRng(.95,.81), 'rgba(53, 186, 167, 1)');
-    gradient.addColorStop(1, 'rgba(39, 142, 161, 1)');
+    let gradient = ctx.createLinearGradient(w*.5,t, w*.5,h);       
+        gradient.addColorStop(0, 'rgba(64, 167, 186, 1)');
+        gradient.addColorStop(rndmRng(.02,.07), 'rgba(73, 206, 187, 1)');
+        gradient.addColorStop(rndmRng(.12,.08), 'rgba(59, 162, 181, 1)');
+        gradient.addColorStop(rndmRng(.17,.13), 'rgba(68, 201, 182, 1)');
+        gradient.addColorStop(rndmRng(.29,.19), 'rgba(54, 157, 176, 1)');
+        gradient.addColorStop(rndmRng(.39,.31), 'rgba(63, 196, 177, 1)');
+        gradient.addColorStop(rndmRng(.49,.41), 'rgba(49, 152, 171, 1)');
+        gradient.addColorStop(rndmRng(.59,.51), 'rgba(58, 191, 172, 1)');
+        gradient.addColorStop(rndmRng(.79,.61), 'rgba(44, 147, 166, 1)');
+        gradient.addColorStop(rndmRng(.95,.81), 'rgba(53, 186, 167, 1)');
+        gradient.addColorStop(1, 'rgba(39, 142, 161, 1)');
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, t, w, h);
 }
-
-
 
 function waves() {
     let wvs = t;
@@ -134,8 +126,6 @@ function waves() {
         wvs+=15;
     }
 }
-
-
 
 function sunReflection() {
     ctx.shadowBlur = 10;
@@ -194,8 +184,9 @@ function sunReflection() {
     }
 }
 
-
 export function loadSunset() {
+    t = h*rndmRng(.75,.5);
+
     sunset();
     sun();
     cloudWisps(16);

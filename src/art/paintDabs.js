@@ -2,12 +2,8 @@ import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,shuffle} from '../utils/helpers.js';
 
 let dabR = w*.02
-let x = rndmRng(-1, dabR*-1);
-let y = rndmRng(-1, dabR*-1);
-let hues = [Math.round(rndmRng(360,0)),Math.round(rndmRng(360,0))].sort();
-let sats = [Math.round(rndmRng(100,10)),Math.round(rndmRng(100,10))].sort();
-let lits = [Math.round(rndmRng(90,10)),Math.round(rndmRng(90,10))].sort();
-let count=0;
+let x = 0, y = 0, count = 0;
+let hues = [], sats = [], lits = [], dabArr = [];
 
 function dabDraw(x,y) {
     let inY = y + rndmRng(0, dabR*-1);
@@ -63,18 +59,24 @@ function dabDraw(x,y) {
 
     ctx.beginPath();
     gradient = ctx.createRadialGradient(x+source.x, inY+source.y, dabR/rndmRng(21,9), x, inY, dabR*.9)
-    gradient.addColorStop(0, `hsla(60, 60%, 98%, ${source.b})`);
+    gradient.addColorStop(0, `hsla(60, 60%, ${98-(100-lit)*.2}%, ${source.b})`);
     gradient.addColorStop(.5, `hsla(60, 60%, 98%, ${rndmRng(.1,.01)})`);
     gradient.addColorStop(.9, `hsla(60, 60%, 98%, 0)`);
 
+    ctx.shadowColor="hsla(60, 40%, 15%, 0.4)";
+    ctx.shadowBlur=10;
+    ctx.shadowOffsetX = source.x/3;
+    ctx.shadowOffsety = source.y/2;
+
     ctx.fillStyle = gradient;
     ctx.fillRect(x-dabR, inY-dabR, dabR*2, dabR*2);
+
+    ctx.shadowBlur=0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsety = 0;
 }
 
-let dabArr = [];
-
 export function loadDabs() {
-    
     dabArr = [];
     x = rndmRng(-1, dabR*-1);
     y = rndmRng(-1, dabR*-1);
@@ -98,10 +100,4 @@ export function loadDabs() {
     dabArr.forEach((d) => {
         dabDraw(d.x,d.y);
     })
-    //ctx.rotate(180 * Math.PI / 180);
-
-    //(Math.random() > .5) ?  : ctx.rotate(0 * Math.PI / 180);
-
-    
 }
-

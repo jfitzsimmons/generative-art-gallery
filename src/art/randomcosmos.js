@@ -36,7 +36,7 @@ function backgroundGradients(layers) {
 }
 
 function randomSpots() {
-    let spots = Math.round((h*w) / 10000);
+    let spots = Math.round((h*w) / 20000);
     for (let s=spots; s--;) {          
         let x = rndmRng(w,0);
         let y = rndmRng(h,0);
@@ -48,7 +48,6 @@ function randomSpots() {
         drawSpeck(x,y);
     }
 }
-
 
 function bursts(bursts) {
     for (let b=0; b<bursts; b++) {
@@ -215,50 +214,47 @@ function mainCircle() {
 }
 
 function points() {
-    for(let s=2; s--;) {
-        let x = rndmRng(w,0);
-        let y = rndmRng(h,0);
-        let size = Math.round(rndmRng(h*.3, h*.09));
-        let edge = (w>h) ? w : h;
-        let rings = Math.round(rndmRng(3,1));
+    let x = rndmRng(w,0);
+    let y = rndmRng(h,0);
+    let size = Math.round(rndmRng(h*.3, h*.09));
+    let edge = (w>h) ? w : h;
+    let rings = Math.round(rndmRng(3,1));
 
-        let lines = Math.round(rndmRng(25,10));
-        for(var i = 0; i < lines; i++) {
-            ctx.strokeStyle = pickGradient(0);
-            setDashedLines();
-            let x1 = x + size * Math.cos(2 * Math.PI * i / lines);
-            let y1 = y + size * Math.sin(2 * Math.PI * i / lines);  
-            let x2 = x + edge * Math.cos(2 * Math.PI * i / lines);
-            let y2 = y + edge * Math.sin(2 * Math.PI * i / lines);   
-            ctx.beginPath();
-            ctx.moveTo(x1,y1);
-            ctx.lineTo(x2,y2);
-            ctx.stroke();
-        }
+    let lines = Math.round(rndmRng(25,10));
+    for(var i = 0; i < lines; i++) {
+        ctx.strokeStyle = pickGradient(0);
+        setDashedLines();
+        let x1 = x + size * Math.cos(2 * Math.PI * i / lines);
+        let y1 = y + size * Math.sin(2 * Math.PI * i / lines);  
+        let x2 = x + edge * Math.cos(2 * Math.PI * i / lines);
+        let y2 = y + edge * Math.sin(2 * Math.PI * i / lines);   
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        ctx.lineTo(x2,y2);
+        ctx.stroke();
+    }
 
-        for (let c=1; c<=rings; c++) {
-            size = size*rndmRng(2.2, 1.8);
-            createArc(x,y,size)
-            if (Math.random() > .5) circleShading(x,y,size);       
-        }
+    for (let c=1; c<=rings; c++) {
+        size = size*rndmRng(2.2, 1.8);
+        createArc(x,y,size)
+        if (Math.random() > .5) circleShading(x,y,size);       
     }
 }
 
 export function loadCosmos() {
     let bgSpots = Math.round(rndmRng(6,2));
-    backgroundGradients(bgSpots);
-
-    randomSpots();
-
     let burstAmount = Math.round(((h/2)*(w/2)) / 90000);
-    bursts(burstAmount);
-
-    curvedLine() 
-
     let circleAmount = (burstAmount <= 1) ? 1 : Math.round(rndmRng(burstAmount-1,1));
-    circles(circleAmount);
 
+    backgroundGradients(bgSpots);
+    randomSpots();
     points();
-
+    bursts(Math.ceil(burstAmount/2));
+    circles(Math.floor(circleAmount/2));
+    curvedLine(); 
+    randomSpots();
+    bursts(Math.floor(burstAmount/2));
+    circles(Math.ceil(circleAmount/2));
+    points();
     mainCircle();
 }
