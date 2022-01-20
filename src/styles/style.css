@@ -187,6 +187,7 @@ button:active {
     transition: .2s;
 }
 .title {
+    margin-top: 1vmin;
     font-size: 6vmin;
 }
 .controls {

@@ -183,8 +183,10 @@ export function loadTrees() {
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
 
+        let tempColor =  s.colorChange;
+        s.colorChange = .1;
         drawLeaves(s.x,s.y-rndmRng(h*.01,0),18 +(s.layer*4),0,s,Math.round(amount/1.5),300);
-
+        
         ctx.restore();
 
         var grd = ctx.createLinearGradient(s.x, s.y, s.x, s.y-stumpH);
@@ -204,10 +206,9 @@ export function loadTrees() {
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
 
-        s.colorChange = .9;
-
         drawLeaves(s.x+10,s.y+rndmRng(h*.01,0),16+(s.layer*4),0,s,Math.round(amount/1.5),300);
-
+        s.colorChange = tempColor;
+        
         ctx.restore();
 
         treeCenter = {
