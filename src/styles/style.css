@@ -40,10 +40,12 @@ h1 {
     display: flex;
 }
 .another {
-    align-self: flex-end;
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
 }
 .again {
     align-self: center;
@@ -75,8 +77,17 @@ button:hover {
 button:active {
     transition: .2s;
 }
+.pin {
+    border-radius:  0 0 25px 25px;
+    padding: 2vmin;
+    box-shadow: 0vmin .5vmin 10px 0 rgba(255,255,255, 0.2), 0vmin 2vmin 20px 0 rgba(255,255,255, 0.4);
+}
+.pinned {
+    box-shadow: 0vmin 0vmin 4px 0 rgba(255,255,255, 0.4), 0vmin .5vmin 6px 0 rgba(255,255,255, 0.7);
+    transition: .5s;
+}
 .again__button {
-    box-shadow: -1vh 0 10px 0 rgba(255,255,255, 0.2), -2vh 0 20px 0 rgba(255,255,255, 0.19), -3vh 0 30px 0 rgba(255,255,255, 0.19);
+    box-shadow: -1vh 0 10px 0 rgba(255,255,255, 0.1), -2vh 0 20px 0 rgba(255,255,255, 0.1), -3vh 0 30px 0 rgba(255,255,255, 0.1);
     border-radius: 25px 0 0 25px;
     padding: 2vh;
     min-width: 140px;
@@ -88,12 +99,15 @@ button:active {
 }
 .again__button:active {
     padding: 3.5vh;
-    box-shadow: -1vh 0 5px 0 rgba(255,255,255, 0.2), -2vh 0 10px 0 rgba(255,255,255, 0.19), -3vh 0 15px 0 rgba(255,255,255, 0.19);
+    box-shadow: -1vh 0 5px 0 rgba(255,255,255, 0.2), -2vh 0 10px 0 rgba(255,255,255, 0.1), -3vh 0 15px 0 rgba(255,255,255, 0.2);
 }
 .another__button {
     box-shadow: 0 -1vh 10px 0 rgba(255,255,255, 0.2), 0 -2vh 20px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2);
     border-radius: 25px 25px 0 0;
     padding: 3vw 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .another__button:hover {
     padding: 3.5vw 2.5vw;
@@ -149,7 +163,7 @@ button:active {
     padding: 2vmin 2vmin 1vmin;
     line-height: 3vmin;
 }
-.dice {
+.symbol {
     font-size: 4vmin;
 }
 .label {
@@ -159,6 +173,18 @@ button:active {
     text-align: center;
     line-height: 6vmin;
     transition: .5s;
+}
+.pin__label {
+    font-size: calc(12px + 1vmin);
+    line-height: 3vmin;
+    font-weight: 100; 
+    transition: .5s;
+    width: 112%;
+    letter-spacing: .5vmin;
+}
+.pinned .pin__label {
+    font-weight: 700; 
+    letter-spacing: .7vmin;
 }
 .again__label {
     font-size: 9vmin;
@@ -230,7 +256,8 @@ button:active {
 }
 .controls.loaded.fadein:hover button.page,
 .controls.loaded.fadein:hover .page button,
-.controls.loaded.fadein:hover .title {
+.controls.loaded.fadein:hover .title,
+.controls.loaded.fadein:hover button.pin {
     transition-timing-function: ease-out;
     opacity: 1;
     transition: opacity .5s, padding .5s, background-filter .5s,filter .5s,box-shadow .5s;
@@ -241,7 +268,8 @@ button:active {
 }
 .controls.loaded.fadein .page button,
 .controls.loaded.fadein button.page,
-.controls.loaded.fadein .title
+.controls.loaded.fadein .title,
+.controls.loaded.fadein button.pin
 {
     transition-timing-function: ease-in;
     opacity: 0;

@@ -171,7 +171,7 @@ function drawStalk(x,y,nh,set) {
     ctx.lineTo(x+rndmRng(20,-20),y+nh)
     ctx.stroke();
     ctx.shadowOffsetX = 0;
-    ctx.lineWidth = Math.round(rndmRng(7,4));
+    ctx.lineWidth = Math.round(rndmRng(9,6));
     ctx.beginPath(); 
     ctx.moveTo(x,y);
     ctx.lineTo(x,y+(nh/rndmRng(6,1.5)))
@@ -219,7 +219,7 @@ function createFields(x,stalks,mod) {
             newHeight = (grow === false) ? rndmRng(height*1.005,height*.99) : rndmRng(height*1.01,height*.995);
         }
 
-        y-= (newHeight - oldHeight) / 4;
+        y-= (newHeight - oldHeight) / 3;
     }
 }
 

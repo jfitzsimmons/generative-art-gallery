@@ -8,7 +8,7 @@ import {loadMountain} from './art/mountainFog.js'
 import {loadSunset} from './art/oceanSunset.js'
 import {loadWorld} from './art/reclaimedWorld.js'
 import {resetCanvas} from './utils/canvas.js'
-import {rndmRng} from './utils/helpers.js'
+import {rndmRng, debounce} from './utils/helpers.js'
 import './styles/style.css';
 
 const calls = [
@@ -24,16 +24,18 @@ const calls = [
 ];
 let call=0;
 let buttons = [];
-let flip = true;
+let flipCanvas = true;
 const againBtn = document.getElementById("again");
+const pinBtn = document.getElementById("pin");
 const titleEl = document.getElementById("title");
 const controlsEl = document.getElementById("controls");
+const reloadArt = debounce(function() {loadArt(call)},500);
 
 function loadArt(e,newCall) {
     if(e && e.stopPropagation) e.stopPropagation(); 
-    resetCanvas(flip);
+    resetCanvas(flipCanvas);
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
-    flip= (flip===true) ? false : true;
+    flipCanvas= (flipCanvas===true) ? false : true;
 }
 
 function handleActiveButton(button) {
@@ -66,11 +68,14 @@ function randomCall(e) {
     handleActiveButton(buttons[call]);
 }
 
-function showControls() {
+function showControls(e) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
     const actives = document.getElementsByTagName("button");
+
     if (againBtn.classList.contains('show')) {
         againBtn.classList.remove('show');
         titleEl.classList.remove('show');
+        pinBtn.classList.remove('pinned');
         controlsEl.classList.remove('hundred');
         
         for (let i = actives.length-1; i--;) {
@@ -80,6 +85,7 @@ function showControls() {
         againBtn.classList.add('show');
         titleEl.classList.add('show');
         controlsEl.classList.add('hundred');
+        pinBtn.classList.add('pinned');
         
         for (let i = actives.length-1; i--;) {
             actives[i].classList.add('show');
@@ -87,8 +93,11 @@ function showControls() {
     }
 }
 
-document.getElementById("view").addEventListener("click", showControls);
+
+
 againBtn.addEventListener("click", loadArt); 
+pinBtn.addEventListener("click", showControls);
+document.getElementById("view").addEventListener("click", showControls);
 document.getElementById("another").addEventListener("click", incrementCall);
 document.getElementById("random").addEventListener("click", randomCall); 
 loadArt(call);
@@ -108,3 +117,4 @@ window.onload = function() {
     controlsEl.classList.add("loaded");
 }
 
+window.addEventListener('resize', reloadArt);
