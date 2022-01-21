@@ -76,6 +76,7 @@ function showControls(e) {
         againBtn.classList.remove('show');
         titleEl.classList.remove('show');
         pinBtn.classList.remove('pinned');
+        pinBtn.childNodes[0].innerHTML='PIN<br /><span class="symbol">&#9906;</span>';
         controlsEl.classList.remove('hundred');
         
         for (let i = actives.length-1; i--;) {
@@ -86,14 +87,13 @@ function showControls(e) {
         titleEl.classList.add('show');
         controlsEl.classList.add('hundred');
         pinBtn.classList.add('pinned');
+        pinBtn.childNodes[0].innerHTML='UNPIN<br /><span class="symbol">&#9906;</span>';
         
         for (let i = actives.length-1; i--;) {
             actives[i].classList.add('show');
         }
     }
 }
-
-
 
 againBtn.addEventListener("click", loadArt); 
 pinBtn.addEventListener("click", showControls);
