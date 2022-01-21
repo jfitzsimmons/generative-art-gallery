@@ -2,20 +2,18 @@ import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,shuffle,randomProperty} from '../utils/helpers.js';
 
 const rowHeight = 10;
-ctx.lineWidth = rowHeight;
-ctx.strokeStyle = '#550000';
-
-let buildingRows = 2;
-
 let buildingRowH = [[[17,12],[15,8],[13,4]]
                     ,[[22,17],[20,13],[18,9]]
                     ,[[27,22],[25,18],[23,14]]];
+let startHue = 0, buildingRows = 0;
+const baseHue = (diff) =>  {
+    let hue = (startHue+diff < 0) ? 360 + (startHue+diff) : startHue+diff;
+    return (hue > 80 && hue < 135) ? (135 - hue < 27) ? hue+= 27 : hue -=27 : hue;
+}
+let buildingRowC = [], sunsetColors = [], oceanColors = [], layers =[], buildings = [];
 
-let buildingRowC = [['#751856','#A32858','#CC425D','#EA6262','#F49373']
-                    ,['#CC425D','#EA6262','#F49373','#F49373','#FFB879']
-                    ,['#FFB879','#FFB879','#FFB879','#FCEF8D','#FCEF8D']];
-
-let layers =[], buildings = [];
+ctx.lineWidth = rowHeight;
+ctx.strokeStyle = '#550000'; 
 
 function randomDimension(max, min) {
     let rnd = Math.floor(Math.random() * (max - min) + min);
@@ -267,7 +265,6 @@ let building = (start, width, row, layers) => ({
 });
 
 function sunset() {
-    let sunsetColors = ['#CC425D','#EA6262','#F49373','#FFB879','#F9CD8E','#FCEF8D']
     let y = 0;
     let height = h*.0;
     let solids = [0,2,4,6,8,10];
@@ -324,7 +321,7 @@ function sunset() {
 }
 
 function star1(x,y) {
-    ctx.strokeStyle = '#FCEF8D';
+    ctx.strokeStyle = buildingRowC[2][4];
     ctx.moveTo(x,y);
     ctx.lineTo(x+rowHeight/2,y);
     ctx.stroke();
@@ -332,7 +329,7 @@ function star1(x,y) {
 }
 
 function star2(x,y) {
-    ctx.strokeStyle = '#FFB879';
+    ctx.strokeStyle = buildingRowC[1][4];
     ctx.moveTo(x,y);
     ctx.lineTo(x+rowHeight/2,y);
     ctx.stroke();
@@ -340,7 +337,7 @@ function star2(x,y) {
 }
 
 function star3(x,y) {
-    ctx.strokeStyle = '#FFB879';
+    ctx.strokeStyle = buildingRowC[1][4];
     ctx.moveTo(x-rowHeight/2*2,y);
     ctx.lineTo(x+rowHeight/2*2,y);
     ctx.stroke();
@@ -359,7 +356,7 @@ function star3(x,y) {
     ctx.stroke();
     ctx.beginPath(); 
 
-    ctx.strokeStyle = '#FCEF8D';
+    ctx.strokeStyle = buildingRowC[2][4];
     ctx.moveTo(x-rowHeight/2,y);
     ctx.lineTo(x+rowHeight/2,y);
     ctx.stroke();
@@ -371,7 +368,7 @@ function star3(x,y) {
 }
 
 function star4(x,y) {
-    ctx.strokeStyle = '#FFB879';
+    ctx.strokeStyle = buildingRowC[1][4];
     ctx.moveTo(x-rowHeight*9/2,y);
     ctx.lineTo(x+rowHeight*9/2,y);
     ctx.stroke();
@@ -399,7 +396,7 @@ function star4(x,y) {
     ctx.stroke();
     ctx.beginPath(); 
 
-    ctx.strokeStyle = '#FCEF8D';
+    ctx.strokeStyle = buildingRowC[2][4];
     ctx.moveTo(x-rowHeight*5/2,y);
     ctx.lineTo(x+rowHeight*5/2,y);
     ctx.stroke();
@@ -457,7 +454,6 @@ function oceanLayer(x,y,colors,d) {
 }
 
 function ocean() {
-    let oceanColors = ['#A32858','#CC425D','#EA6262','#F49373','#FFB879','#F9CD8E'];
     let x = Math.floor(w*.7);
     let y = h-16*rowHeight;
     ctx.moveTo(x,y);
@@ -493,21 +489,58 @@ function buildingRow() {
 }
 
 export function loadCity() {
+    startHue = Math.round(rndmRng(360,0));
+    buildingRowC = [
+        [
+            `hsla(${baseHue(-40)}, 66%, 28%, 1)`,
+            `hsla(${baseHue(-23)}, 61%, 40%, 1)`,
+            `hsla(${baseHue(-12)}, 58%, 53%, 1)`,
+            `hsla(${baseHue(0)}, 76%, 65%, 1)`,
+            `hsla(${baseHue(-345)}, 85%, 70%, 1)`
+        ],[
+            `hsla(${baseHue(-12)}, 58%, 53%, 1)`,
+            `hsla(${baseHue(0)}, 76%, 65%, 1)`,
+            `hsla(${baseHue(-345)}, 85%, 70%, 1)`,
+            `hsla(${baseHue(-345)}, 85%, 70%, 1)`,
+            `hsla(${baseHue(-332)}, 100%, 74%, 1)`
+        ],[
+            `hsla(${baseHue(-332)}, 100%, 74%, 1)`,
+            `hsla(${baseHue(-332)}, 100%, 74%, 1)`,
+            `hsla(${baseHue(-332)}, 100%, 74%, 1)`,
+            `hsla(${baseHue(-307)}, 95%, 77%, 1)`,
+            `hsla(${baseHue(-307)}, 95%, 77%, 1)`,
+        ]];
+    sunsetColors = [
+        buildingRowC[0][2],
+        buildingRowC[0][3],
+        buildingRowC[0][4],
+        buildingRowC[1][4],
+        `hsla(${baseHue(-325)}, 90%, 77%, 1)`,
+        buildingRowC[2][4]
+    ]
+    oceanColors = [
+        buildingRowC[0][1],
+        buildingRowC[0][2],
+        buildingRowC[0][3],
+        buildingRowC[0][4],
+        buildingRowC[1][4],
+        sunsetColors[4]
+    ];
     layers =[], buildings = [];
     buildingRows = 2;
 
     const gradient = ctx.createLinearGradient(w/2,0,w/2,h);
-        gradient.addColorStop(.05, `rgba(204,66,93,1)`);
-        gradient.addColorStop(.1, `rgba(236,106,101,1)`);
-        gradient.addColorStop(.4, `rgba(236,106,101,1)`);
-        gradient.addColorStop(.45, `rgba(244,147,115,1)`);
-        gradient.addColorStop(.55, `rgba(244,147,115,1)`);
-        gradient.addColorStop(.6, `rgba(255,184,121,1)`);
-        gradient.addColorStop(.7, `rgba(255,184,121,1)`);
-        gradient.addColorStop(.75, `rgba(249,205,142,1)`);
-        gradient.addColorStop(.75, `rgba(249,205,142,1)`);
-        gradient.addColorStop(.85, `rgba(249,205,142,1)`);
-        gradient.addColorStop(.9, `rgba(252,239,141,1)`);
+        gradient.addColorStop(.05, buildingRowC[0][2]);
+        gradient.addColorStop(.1, `hsla(${baseHue(-358)}, 78%, 66%, 1)`);
+        gradient.addColorStop(.4, `hsla(${baseHue(-358)}, 78%, 66%, 1)`);
+        gradient.addColorStop(.45, buildingRowC[0][4]);
+        gradient.addColorStop(.55, buildingRowC[0][4]);
+        gradient.addColorStop(.6, buildingRowC[1][4]);
+        gradient.addColorStop(.7, buildingRowC[1][4]);
+        gradient.addColorStop(.75, sunsetColors[4]);
+        gradient.addColorStop(.75, sunsetColors[4]);
+        gradient.addColorStop(.85, sunsetColors[4]);
+        gradient.addColorStop(.9, buildingRowC[2][4]);
 
     ctx.fillStyle=gradient;
     ctx.fillRect(0,0,w,h);
