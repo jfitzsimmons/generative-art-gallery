@@ -36,7 +36,7 @@ function backgroundGradients(layers) {
 }
 
 function randomSpots() {
-    let spots = Math.round((h*w) / 20000);
+    let spots = Math.round((h*w) / 21000);
     for (let s=spots; s--;) {          
         let x = rndmRng(w,0);
         let y = rndmRng(h,0);
@@ -54,8 +54,9 @@ function bursts(bursts) {
         let gradients=shuffle(gradientArray);
         let x = rndmRng(w,0);
         let y = rndmRng(h,0);
-        let size = Math.round(rndmRng(h*.3, h*.1));
+        let size = Math.round(rndmRng(h*.29, h*.08));
         let g = 0;
+        setDashedLines();
 
         for (let i=0; i < size; i++) { 
             if (i < size/40) { 
@@ -127,7 +128,7 @@ function curvedLine() {
         counter += increase;
         ctx.lineTo(x,y);
         ctx.stroke();
-        splatter = Math.round(rndmRng(16,1));
+        splatter = Math.round(rndmRng(14,1));
         splatterPoints(x,y,splatter);
     }
 }
@@ -220,7 +221,7 @@ function points() {
     let edge = (w>h) ? w : h;
     let rings = Math.round(rndmRng(3,1));
 
-    let lines = Math.round(rndmRng(25,10));
+    let lines = Math.round(rndmRng(21,8));
     for(var i = 0; i < lines; i++) {
         ctx.strokeStyle = pickGradient(0);
         setDashedLines();

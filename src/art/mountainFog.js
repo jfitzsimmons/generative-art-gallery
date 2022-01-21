@@ -62,10 +62,10 @@ function endPath(ctx,w,h) {
 }
 
 function cragY(py) {
-    return py + (Math.floor(Math.random() * 20) + -10); 
+    return py + (Math.floor(Math.random() * 30) + -15); 
 }
 function cragX(px) {
-    return px + (Math.floor(Math.random() * 6) + 1); 
+    return px + (Math.floor(Math.random() * 12) + 1); 
 }
 
 export function loadMountain() {

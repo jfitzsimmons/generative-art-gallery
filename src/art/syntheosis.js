@@ -1,7 +1,7 @@
 import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,distanceToC,drawEllipseByCenter} from '../utils/helpers.js';
 
-let maxCircles=Math.round(h*w/rndmRng(8800,6300));
+let maxCircles=Math.round(h*w/rndmRng(9000,7000));
 let circleCount = 0;
 const cx = w*rndmRng(.9,.1);
 const cy = h*rndmRng(.9,.1);

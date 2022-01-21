@@ -13,7 +13,7 @@ function drawSpeck(x,y) {
 }
 
 function dirt() {
-    let spots = Math.round((h*w) / 1200);
+    let spots = Math.round((h*w) / 1300);
     ctx.strokeStyle = "#161211";
     for (let s=spots; s--;) {  
         setDashedLines();
@@ -23,7 +23,7 @@ function dirt() {
 }
 
 function bursts(x,y,size,color) {
-    for (let i=0; i < size*1.9; i++) { 
+    for (let i=0; i < size*1.8; i++) { 
         ctx.beginPath();
         ctx.strokeStyle = `rgba(${color}, ${rndmRng(1,.5)})`;
         ctx.lineWidth=rndmRng(5,1);
@@ -61,7 +61,7 @@ function splatterPoints(ox,oy,layers) {
 
 function points(x,y,r) {
     let edge = (w>h) ? w/2 : h/2;
-    let lines = Math.round(r/rndmRng(13,10));
+    let lines = Math.round(r/rndmRng(14,11));
     
     for(let i = 0; i < lines; i++) {
         ctx.strokeStyle = `rgba(93, 78, 68, ${rndmRng(.2,.1)})`;
@@ -100,7 +100,7 @@ function curvedLine(newX,newY,endX,splat) {
         counter += increase;
         ctx.lineTo(x,y);
         ctx.stroke();
-        splatter = Math.round(rndmRng(2,1));
+        splatter = Math.round(rndmRng(2,0));
         if (splat) splatterPoints(x,y,splatter);
     }
 }
@@ -151,11 +151,11 @@ function drawMeteor(m) {
     ctx.arc(m.x,m.y,m.r,0,Math.PI*2)
     ctx.fill();
     let reach = rndmRng(4,0);
-    for (let j=1.475; j >.25; j-=0.025) {
+    for (let j=1.5; j >.5; j-=0.05) {
         ctx.strokeStyle = `rgba(34, 68, 132, ${rndmRng(1,.5)})`;
         let newX = m.r * Math.cos(Math.PI*j) + m.x
         let newY = m.r * Math.sin(Math.PI*j) + m.y
-        let endX = m.r * Math.cos(Math.PI*(j+(reach*.025))) + m.x
+        let endX = m.r * Math.cos(Math.PI*(j+(reach*.05))) + m.x
 
         ctx.beginPath(); 
         curvedLine(newX,newY,endX,false) ;
@@ -198,7 +198,7 @@ function createFields(x,stalks,mod) {
     
     for (let i =stalks; i--;) {
         drawStalk(x,y,newHeight,-3*mod)
-        x-=rndmRng(4,-1)*mod;
+        x-=rndmRng(5,-1)*mod;
         oldHeight = height;
         height = newHeight
 

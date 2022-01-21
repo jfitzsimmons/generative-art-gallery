@@ -66,7 +66,7 @@ function cloudWisps(loops) {
             ctx.beginPath(); 
             line = (increase === true) ? line + rndmRng(100,1) : line - rndmRng(100,1);
             x = x + rndmRng(line/3,-line/3);
-            y+=rndmRng(3,2)
+            y+=rndmRng(4,2)
         }
     }
 }
@@ -123,7 +123,7 @@ function waves() {
         ctx.closePath();
         ctx.fill();
 
-        wvs+=15;
+        wvs+=16;
     }
 }
 
@@ -147,11 +147,11 @@ function sunReflection() {
         gradient.addColorStop(1, `rgba(253, 247, 173, ${m-1.2})`);
         
         while (count < chunk) {
-            increment = rndmRng(3,15);
+            increment = rndmRng(5,16);
             y+=increment;
             count+=increment;
             ctx.lineTo(x-rndmRng(sunW*m,sunW/2),y);
-            increment = rndmRng(3,15);
+            increment = rndmRng(5,16);
             y+=increment;
             count+=increment;
             ctx.lineTo(x+rndmRng(sunW*m,sunW/2),y);
@@ -161,11 +161,11 @@ function sunReflection() {
         x = sunX+sunW;
 
         while (count > 0+increment) {
-            increment = rndmRng(3,15);
+            increment = rndmRng(5,16);
             y-=increment;
             count-=increment;
             ctx.lineTo(x+rndmRng(sunW*m,sunW/2),y);
-            increment = rndmRng(3,15);
+            increment = rndmRng(5,16);
             y-=increment;
             count-=increment;
             ctx.lineTo(x-rndmRng(sunW*m,sunW/2),y);

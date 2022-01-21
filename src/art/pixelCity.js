@@ -323,8 +323,6 @@ function sunset() {
     }
 }
 
-
-
 function star1(x,y) {
     ctx.strokeStyle = '#FCEF8D';
     ctx.moveTo(x,y);
@@ -441,8 +439,6 @@ function stars() {
     ctx.lineWidth = rowHeight;
 }
 
-
-
 function oceanLayer(x,y,colors,d) {
     while (x <= w+rowHeight) {
         if (Math.random() < d) { 
@@ -459,7 +455,6 @@ function oceanLayer(x,y,colors,d) {
     }
     ctx.beginPath();
 }
-
 
 function ocean() {
     let oceanColors = ['#A32858','#CC425D','#EA6262','#F49373','#FFB879','#F9CD8E'];
@@ -485,8 +480,6 @@ function ocean() {
     }
 }
 
-
-
 let startingX = Math.floor(w*.75);
 function buildingRow() {
     while (buildingRows >= 0) {
@@ -504,25 +497,23 @@ export function loadCity() {
     buildingRows = 2;
 
     const gradient = ctx.createLinearGradient(w/2,0,w/2,h);
-    gradient.addColorStop(.05, `rgba(204,66,93,1)`);
-    gradient.addColorStop(.1, `rgba(236,106,101,1)`);
-    gradient.addColorStop(.4, `rgba(236,106,101,1)`);
-    gradient.addColorStop(.45, `rgba(244,147,115,1)`);
-    gradient.addColorStop(.55, `rgba(244,147,115,1)`);
-    gradient.addColorStop(.6, `rgba(255,184,121,1)`);
-    gradient.addColorStop(.7, `rgba(255,184,121,1)`);
-    gradient.addColorStop(.75, `rgba(249,205,142,1)`);
-    gradient.addColorStop(.75, `rgba(249,205,142,1)`);
-    gradient.addColorStop(.85, `rgba(249,205,142,1)`);
-    gradient.addColorStop(.9, `rgba(252,239,141,1)`);
+        gradient.addColorStop(.05, `rgba(204,66,93,1)`);
+        gradient.addColorStop(.1, `rgba(236,106,101,1)`);
+        gradient.addColorStop(.4, `rgba(236,106,101,1)`);
+        gradient.addColorStop(.45, `rgba(244,147,115,1)`);
+        gradient.addColorStop(.55, `rgba(244,147,115,1)`);
+        gradient.addColorStop(.6, `rgba(255,184,121,1)`);
+        gradient.addColorStop(.7, `rgba(255,184,121,1)`);
+        gradient.addColorStop(.75, `rgba(249,205,142,1)`);
+        gradient.addColorStop(.75, `rgba(249,205,142,1)`);
+        gradient.addColorStop(.85, `rgba(249,205,142,1)`);
+        gradient.addColorStop(.9, `rgba(252,239,141,1)`);
 
     ctx.fillStyle=gradient;
     ctx.fillRect(0,0,w,h);
 
     sunset();
-
     stars();
-
     ocean();
 
     buildingRow(buildingRows);

@@ -7,7 +7,7 @@ let hues = [], sats = [], lits = [], dabArr = [];
 
 function dabDraw(x,y) {
     let inY = y + rndmRng(0, dabR*-1);
-    let dabH = rndmRng(h*.3,h*.15) ;
+    let dabH = rndmRng(h*.36,h*.22) ;
     let hue = Math.round(rndmRng(hues[1],hues[0]));
     let sat = Math.round(rndmRng(sats[1],sats[0]));
     let lit = Math.round(rndmRng(lits[1],lits[0]));
@@ -78,23 +78,27 @@ function dabDraw(x,y) {
 
 export function loadDabs() {
     dabArr = [];
-    x = rndmRng(-1, dabR*-1);
-    y = rndmRng(-1, dabR*-1);
+    x = rndmRng(-1, dabR*-2);
+    y = rndmRng(dabR, dabR*-3);
     hues = [Math.round(rndmRng(360,0)),Math.round(rndmRng(360,0))].sort();
     sats = [Math.round(rndmRng(100,10)),Math.round(rndmRng(100,10))].sort();
     lits = [Math.round(rndmRng(90,10)),Math.round(rndmRng(90,10))].sort();
     count=0;
 
+    ctx.fillStyle=`hsla(44, 15%, ${100-(100-Math.round((lits[0]+lits[1])/2))}%, 1)`;
+    ctx.fillRect(0,0,w,h);
+
     while (y<h+dabR) {
         let tempDabArr =[];
         while (x<w+dabR) {
+            dabR = rndmRng(w*.022,w*.018)
             tempDabArr.push({x,y});
-            x+= rndmRng(dabR*2.2, dabR*1.8);
+            x+= rndmRng(dabR*2.1, dabR*1.9);
         }
         dabArr.push.apply(dabArr, shuffle(tempDabArr));
         count++;
         x = (count % 2 === 0) ? 0 : 0-dabR;
-        y+=dabR*2;
+        y+=dabR*2.1;
     }
 
     dabArr.forEach((d) => {

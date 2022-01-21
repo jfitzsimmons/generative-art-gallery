@@ -58,7 +58,7 @@ function drawLeaves(x,y,c,l,s,a,r) {
     for (let i = amount; i--;) {
         ctx.beginPath();
         let size = Math.round(rndmRng(14-(s.layer+l/2.2), 8-(s.layer+l/2.2)));
-        ctx.arc(rndmRng(x+r, x-r), rndmRng(y+25, y-25), size, 0, Math.PI * 2); 
+        ctx.arc(rndmRng(x+r, x-r), rndmRng(y+r, y-r), size, 0, Math.PI * 2); 
         ctx.fillStyle=`hsla(${(Math.random() > s.colorChange) ? Math.round(rndmRng(s.fallColor+5, s.fallColor-5)) : 125}, 
             ${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
         ctx.fill();
@@ -122,19 +122,19 @@ export function loadTrees() {
         let x = rndmRng(60,-300)* (1-sLayer*.05);
 
         while (x < w) { 
-            y -= rndmRng(h*.075, h*-.055)* (1-sLayer*.035);
+            y -= rndmRng(h*.077, h*-.053)* (1-sLayer*.035);
             stumps.push({
                 x,
                 y,
                 layer:sLayer,
-                sparse: [rndmRng(11,0),rndmRng(11,0)].sort(),
+                sparse: [rndmRng(7,0),rndmRng(7,0)].sort(),
                 fallColor: fallColors[Math.round(rndmRng(fallColors.length-1, 0))],
                 colorChange: Math.random(),
             })
-            x += rndmRng(700, 300)* (1-sLayer*.12);
+            x += rndmRng(600, 250)* (1-sLayer*.12);
         }
 
-        y -= rndmRng(h*.24, h*.16)* (1-sLayer*.1);
+        y -= rndmRng(h*.28, h*.18)* (1-sLayer*.1);
         sLayer++;      
     }
 
@@ -171,7 +171,7 @@ export function loadTrees() {
         offset = (btmW-topW) / 2;
         stumpH = rndmRng(160,140)* (1-s.layer*.07);
         branchH = stumpH/2;
-        let amount = 24-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*2;
+        let amount = 75-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
 
         ctx.shadowColor = `hsla(56, 95%, ${90*((s.layer/2+1)*.28)}%, .2)`;
         ctx.shadowBlur = 20-(s.layer*2);
@@ -185,7 +185,7 @@ export function loadTrees() {
 
         let tempColor =  s.colorChange;
         s.colorChange = .1;
-        drawLeaves(s.x,s.y-rndmRng(h*.01,0),18 +(s.layer*4),0,s,Math.round(amount/1.5),300);
+        drawLeaves(s.x,s.y-rndmRng(h*.01,0),18+(s.layer*4),0,s,amount,h*.2);
         
         ctx.restore();
 
@@ -206,7 +206,7 @@ export function loadTrees() {
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
 
-        drawLeaves(s.x+10,s.y+rndmRng(h*.01,0),16+(s.layer*4),0,s,Math.round(amount/1.5),300);
+        drawLeaves(s.x+h*.05,s.y+stumpH*1.7,16+(s.layer*4),0,s,amount,stumpH*2);
         s.colorChange = tempColor;
         
         ctx.restore();
