@@ -60,8 +60,8 @@ function splatterPoints(ox,oy,layers) {
 }
 
 function points(x,y,r) {
-    let edge = (w>h) ? w/2 : h/2;
-    let lines = Math.round(r/rndmRng(14,11));
+    let edge = (w>h) ? w/1.8 : h/1.8;
+    let lines = Math.round(r/rndmRng(12,8));
     
     for(let i = 0; i < lines; i++) {
         ctx.strokeStyle = `rgba(93, 78, 68, ${rndmRng(.2,.1)})`;
@@ -85,7 +85,7 @@ function curvedLine(newX,newY,endX,splat) {
     let x = newX;
     let startX = newX;
     let height = rndmRng(20,5);
-    let increase = 90/180*Math.PI / rndmRng(1.9,1);
+    let increase = 90/180*Math.PI / rndmRng(1.8,1);
     let startY = newY;
     let y=startY;
     let splatter = Math.round(rndmRng(2,1));
@@ -252,7 +252,7 @@ function createMeteors(n) {
     for (let i=n; n--;) {
         let x =rndmRng(w,0);
         let y = rndmRng(h*.5,0);
-        let r = rndmRng(h*.15,h*.05);
+        let r = rndmRng(h*.16,h*.07);
         meteors.push({x,y,r})
     }
 }

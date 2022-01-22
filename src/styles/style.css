@@ -22,11 +22,34 @@ h1 {
 .show {
     transition-timing-function: ease-in;
     opacity:1!important;
+    transition: 0.8s;
 }
 .hide {
     transition-timing-function: ease-out;
     opacity:0;
+    transition: 0.8s;
 }
+.glow {
+    animation: glow 1.6s ease-out 0s infinite alternate;;
+}
+@keyframes glow {
+    0% {
+        border-top: .5vmin solid hsla(0, 100%, 100%, 0.1);
+        border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.1);
+        border-left: .3vmin solid hsla(0, 100%, 100%, 0.1);
+        border-right: .3vmin solid hsla(0, 100%, 100%, 0.1);
+        box-shadow: 0 0 20px 0 rgba(255,255,255, 0.3);
+    }
+  
+    100% {
+        border-top: .5vmin solid hsla(0, 100%, 100%, 0.9);
+        border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.9);
+        border-left: .3vmin solid hsla(0, 100%, 100%, 0.9);
+        border-right: .3vmin solid hsla(0, 100%, 100%, 0.9);
+        box-shadow: 0 0 10px 0 rgba(255,255,255, 0.9);
+    }
+  }
+  
 .sepia {
     transition: .5s;
     filter: sepia(0);
@@ -157,9 +180,10 @@ button:active {
     box-shadow: -1vmin -1vmin 3px 0 rgba(255,255,255, 0.1), -1vmin -1vmin 7px 0 rgba(255,255,255, 0.1), 1vmin 1vmin 14px 0 rgba(255,255,255, 0.1);
 }
 .random {
-    width: 75%;
+    width: 44%;
     padding: 2vmin 2vmin 1vmin;
     line-height: 3vmin;
+    min-width: 155px;
 }
 .symbol {
     font-size: 4vmin;

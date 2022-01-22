@@ -22,11 +22,12 @@ const calls = [
     {f:loadSunset, name: 'ocean_sunset'},
     {f:loadWorld, name: 'reclaimed_world'},
 ];
-let call=0;
+let call=0, intervalID=0;
 let buttons = [];
 let flipCanvas = true;
 const againBtn = document.getElementById("again");
 const pinBtn = document.getElementById("pin");
+const shuffleBtn = document.getElementById("shuffle");
 const titleEl = document.getElementById("title");
 const controlsEl = document.getElementById("controls");
 const reloadArt = debounce(function() {loadArt(call)},500);
@@ -95,11 +96,26 @@ function showControls(e) {
     }
 }
 
+function shuffleArt(e) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
+    if (intervalID > 0) {
+        clearInterval(intervalID);
+        intervalID = 0;
+        shuffleBtn.classList.remove('glow'); 
+        shuffleBtn.innerHTML='SHUFFLE<br /><span class="symbol">&#10542;</span>'
+    } else {
+        shuffleBtn.classList.add('glow');
+        shuffleBtn.innerHTML='STOP<br /><span class="symbol">&#10539;</span>'
+        intervalID = setInterval(randomCall, 15000);
+    };
+}
+
 againBtn.addEventListener("click", loadArt); 
 pinBtn.addEventListener("click", showControls);
 document.getElementById("view").addEventListener("click", showControls);
 document.getElementById("another").addEventListener("click", incrementCall);
 document.getElementById("random").addEventListener("click", randomCall); 
+shuffleBtn.addEventListener("click", shuffleArt);
 loadArt(call);
 
 calls.forEach((c,i) => {
