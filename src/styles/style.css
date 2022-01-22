@@ -103,6 +103,9 @@ button:active {
     padding: 2vmin;
     box-shadow: 0vmin .5vmin 10px 0 rgba(255,255,255, 0.2), 0vmin 2vmin 20px 0 rgba(255,255,255, 0.4);
 }
+.shuffle .symbol {
+    font-size: 3vmin;
+}
 .pinned {
     box-shadow: 0vmin 0vmin 4px 0 rgba(255,255,255, 0.4), 0vmin .5vmin 6px 0 rgba(255,255,255, 0.7);
     transition: .5s;

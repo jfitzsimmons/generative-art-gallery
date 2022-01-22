@@ -6,7 +6,6 @@ The gallery art is coded with JavaScript and utilizes HTML Canvas.
 > Code art is any art that is built using code.  
 >    
 > **What goes into a piece of generative art?**  
->  
 > Often, generative art draws inspiration from modern art, especially pop art that makes heavy use of orderly geometric patterns.  
 >  
 > * Randomness is crucial for creating generative art. The art should be different each time you run the generation script.  
