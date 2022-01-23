@@ -177,6 +177,10 @@ function circleGroup() {
 export function loadSyntheosis() {
     spheres = [];
     circleCount = 0;
+
+    ctx.fillStyle="#000";
+    ctx.fillRect(0,0,w,h);
+    
     circleGroup();
 
     spheres.reverse().forEach(row => {  

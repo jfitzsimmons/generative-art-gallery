@@ -7,7 +7,7 @@ import {loadCity} from './art/pixelCity.js'
 import {loadMountain} from './art/mountainFog.js'
 import {loadSunset} from './art/oceanSunset.js'
 import {loadWorld} from './art/reclaimedWorld.js'
-import {resetCanvas} from './utils/canvas.js'
+import {resetCanvas, canvas} from './utils/canvas.js'
 import {rndmRng, debounce} from './utils/helpers.js'
 import './styles/style.css';
 
@@ -23,20 +23,34 @@ const calls = [
     {f:loadWorld, name: 'reclaimed_world'},
 ];
 let call=0, intervalID=0;
-let buttons = [];
-let flipCanvas = true;
+const buttons = [], timeouts = [];
 const againBtn = document.getElementById("again");
 const pinBtn = document.getElementById("pin");
 const shuffleBtn = document.getElementById("shuffle");
 const titleEl = document.getElementById("title");
 const controlsEl = document.getElementById("controls");
 const reloadArt = debounce(function() {loadArt(call)},500);
+const canvasImg = document.getElementById("canvasImg");
+
+function crossFade() {
+    canvasImg.classList.add("hide");
+    canvasImg.classList.remove("show");
+    const dataUrl = canvas.toDataURL();
+    timeouts.forEach(to => clearTimeout(to));
+    timeouts.push(
+        setTimeout(function(){
+            canvasImg.src = dataUrl;
+            canvasImg.classList.remove("hide"); 
+            canvasImg.classList.add("show");
+        }, 1400)
+    );
+}
 
 function loadArt(e,newCall) {
-    if(e && e.stopPropagation) e.stopPropagation(); 
-    resetCanvas(flipCanvas);
+    if(e && e.stopPropagation) e.stopPropagation();
+    resetCanvas();
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
-    flipCanvas= (flipCanvas===true) ? false : true;
+    crossFade(); 
 }
 
 function handleActiveButton(button) {
@@ -102,10 +116,10 @@ function shuffleArt(e) {
         clearInterval(intervalID);
         intervalID = 0;
         shuffleBtn.classList.remove('glow'); 
-        shuffleBtn.innerHTML='SHUFFLE<br /><span class="symbol">&#10542;</span>'
+        shuffleBtn.innerHTML='SHUFFLE<span class="symbol">&#10542;</span>'
     } else {
         shuffleBtn.classList.add('glow');
-        shuffleBtn.innerHTML='STOP<br /><span class="symbol">&#10539;</span>'
+        shuffleBtn.innerHTML='STOP<span class="symbol">&#10539;</span>'
         intervalID = setInterval(randomCall, 15000);
     };
 }

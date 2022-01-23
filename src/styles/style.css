@@ -6,7 +6,7 @@ body {
     font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", 
         "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 }
-canvas {
+canvas, .canvas-img  {
     position: fixed;
     z-index: 1;
 }
@@ -22,12 +22,12 @@ h1 {
 .show {
     transition-timing-function: ease-in;
     opacity:1!important;
-    transition: 0.8s;
+    transition: 1s;
 }
 .hide {
     transition-timing-function: ease-out;
     opacity:0;
-    transition: 0.8s;
+    transition: 1s;
 }
 .glow {
     animation: glow 1.6s ease-out 0s infinite alternate;;
@@ -39,19 +39,15 @@ h1 {
         border-left: .3vmin solid hsla(0, 100%, 100%, 0.1);
         border-right: .3vmin solid hsla(0, 100%, 100%, 0.1);
         box-shadow: 0 0 20px 0 rgba(255,255,255, 0.3);
-    }
-  
-    100% {
+    } 100% {
         border-top: .5vmin solid hsla(0, 100%, 100%, 0.9);
         border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.9);
         border-left: .3vmin solid hsla(0, 100%, 100%, 0.9);
         border-right: .3vmin solid hsla(0, 100%, 100%, 0.9);
         box-shadow: 0 0 10px 0 rgba(255,255,255, 0.9);
     }
-  }
-  
+}
 .sepia {
-    transition: .5s;
     filter: sepia(0);
 }
 .page {
@@ -103,9 +99,6 @@ button:active {
     padding: 2vmin;
     box-shadow: 0vmin .5vmin 10px 0 rgba(255,255,255, 0.2), 0vmin 2vmin 20px 0 rgba(255,255,255, 0.4);
 }
-.shuffle .symbol {
-    font-size: 3vmin;
-}
 .pinned {
     box-shadow: 0vmin 0vmin 4px 0 rgba(255,255,255, 0.4), 0vmin .5vmin 6px 0 rgba(255,255,255, 0.7);
     transition: .5s;
@@ -147,12 +140,12 @@ button:active {
     min-height: 5vmin;
     color:#fff;
     text-shadow: 0px 0px 4px rgba(0,0,0, .9);
-    padding: 1.7vmin;
+    padding: 1.7vmin 1.1vmin;
     margin: 1vmin;
-    font-size:calc(12px + .6vw);
+    font-size:calc(12px + .5vw);
     text-transform: uppercase;
     font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: 0.5vw;
+    letter-spacing: 0.45vw;
     white-space: nowrap;
 }
 .menu__button.active {
@@ -174,22 +167,24 @@ button:active {
     font-size:calc(12px + 1.1vw);
 }
 .menu__button:hover {
-    padding: 3.5vmin 1.7vmin;
+    padding: 3.5vmin 1.1vmin;
     box-shadow: -1vmin -1vmin 15px 0 rgba(255,255,255, 0.2), 0 -2vmin 30px 0 rgba(255,255,255, 0.2), 2vmin 2vmin 45px 0 rgba(255,255,255, 0.2);
 }
 .menu__button:active {
-    padding: 3vmin 1.7vmin;
+    padding: 3vmin 1.1vmin;
     text-shadow: 0px 0px 6px rgba(0,0,0, .6),0px 0px 11px rgba(0,0,0, .5);
     box-shadow: -1vmin -1vmin 3px 0 rgba(255,255,255, 0.1), -1vmin -1vmin 7px 0 rgba(255,255,255, 0.1), 1vmin 1vmin 14px 0 rgba(255,255,255, 0.1);
 }
 .random {
-    width: 44%;
-    padding: 2vmin 2vmin 1vmin;
     line-height: 3vmin;
-    min-width: 155px;
 }
-.symbol {
-    font-size: 4vmin;
+.shuffle .symbol {
+    font-size: 3vmin;
+}
+.random .symbol {
+    position: relative;
+    top: .4vmin;  
+    font-size: 4vmin;  
 }
 .label {
     color: rgba(255,255,255, 0.8);

@@ -292,7 +292,7 @@ export function loadMeditations() {
 
     //arrays of meteors
     let avgSize = Math.round(((h/2)*w)/75000);
-    createMeteors(Math.round(rndmRng(avgSize*.3, avgSize*.09)));
+    createMeteors(Math.round(rndmRng(avgSize*.33, avgSize*.15)));
     meteors = shuffle(meteors);
     const threePartIndex = Math.ceil(meteors.length / 3);
     const meteors3 = meteors.splice(-threePartIndex);

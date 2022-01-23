@@ -171,7 +171,7 @@ export function loadTrees() {
         offset = (btmW-topW) / 2;
         stumpH = rndmRng(160,140)* (1-s.layer*.07);
         branchH = stumpH/2;
-        let amount = 75-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
+        let amount = 70-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
 
         ctx.shadowColor = `hsla(56, 95%, ${90*((s.layer/2+1)*.28)}%, .2)`;
         ctx.shadowBlur = 20-(s.layer*2);
@@ -185,7 +185,7 @@ export function loadTrees() {
 
         let tempColor =  s.colorChange;
         s.colorChange = .1;
-        drawLeaves(s.x,s.y-rndmRng(h*.01,0),18+(s.layer*4),0,s,amount,h*.2);
+        drawLeaves(s.x,s.y-rndmRng(h*.009,0),18+(s.layer*4),0,s,amount,h*.18);
         
         ctx.restore();
 
@@ -206,7 +206,7 @@ export function loadTrees() {
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
 
-        drawLeaves(s.x+h*.05,s.y+stumpH*1.7,16+(s.layer*4),0,s,amount,stumpH*2);
+        drawLeaves(s.x+h*.05,s.y+stumpH*1.6,16+(s.layer*4),0,s,amount,stumpH*1.8);
         s.colorChange = tempColor;
         
         ctx.restore();
