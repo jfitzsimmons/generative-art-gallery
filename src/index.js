@@ -22,8 +22,8 @@ const calls = [
     {f:loadSunset, name: 'ocean_sunset'},
     {f:loadWorld, name: 'reclaimed_world'},
 ];
-let call=0, intervalID=0;
-const buttons = [], timeouts = [];
+let call=0, intervalID=-1;
+let buttons = [], timeouts = [];
 const againBtn = document.getElementById("again");
 const pinBtn = document.getElementById("pin");
 const shuffleBtn = document.getElementById("shuffle");
@@ -35,25 +35,32 @@ const canvasImg = document.getElementById("canvasImg");
 function crossFade() {
     canvasImg.classList.add("hide");
     canvasImg.classList.remove("show");
-    const dataUrl = canvas.toDataURL();
-    timeouts.forEach(to => clearTimeout(to));
+    if(timeouts.length > 0)timeouts.forEach(to => clearTimeout(to));
+    timeouts=[];
     timeouts.push(
         setTimeout(function(){
-            canvasImg.src = dataUrl;
-            canvasImg.classList.remove("hide"); 
-            canvasImg.classList.add("show");
-        }, 1400)
+            canvas.toBlob(function(blob) {
+                let url = URL.createObjectURL(blob);
+                canvasImg.src = url;
+            },'image/jpeg', 0.99);     
+        }, 800)
     );
+    setTimeout(function(){
+        canvasImg.classList.remove("hide"); 
+        canvasImg.classList.add("show");
+    }, 1000)
 }
 
-function loadArt(e,newCall) {
+const loadArt = debounce(function(e,newCall) {
     if(e && e.stopPropagation) e.stopPropagation();
+    
     resetCanvas();
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
     crossFade(); 
-}
+},800);
 
-function handleActiveButton(button) {
+function handleActiveButton(e) {
+    if (e && e.target.disabled == true) return;
     const actives = document.getElementsByClassName("active");
     while (actives.length)
         actives[0].classList.remove('active');
@@ -64,23 +71,23 @@ function handleActiveButton(button) {
 function incrementCall(e) {
     if(e && e.stopPropagation) e.stopPropagation(); 
     call = (++call >= calls.length) ? 0 : call++
-    loadArt(call)
-    handleActiveButton(buttons[call]);
+    handleActiveButton(e);
+    loadArt(e,call);
 }
 
 function setCall(e, i) {
     if(e && e.stopPropagation) e.stopPropagation(); 
     e.preventDefault();
     call = i;
-    loadArt(call)
-    handleActiveButton(e.target);
+    handleActiveButton(e);
+    loadArt(e,call)
 }
 
 function randomCall(e) {
     if(e && e.stopPropagation) e.stopPropagation(); 
     call = Math.round(rndmRng(calls.length-1+.499,-.499));
-    loadArt(call)
-    handleActiveButton(buttons[call]);
+    handleActiveButton(e);
+    loadArt(e,call)
 }
 
 function showControls(e) {
@@ -112,9 +119,9 @@ function showControls(e) {
 
 function shuffleArt(e) {
     if(e && e.stopPropagation) e.stopPropagation(); 
-    if (intervalID > 0) {
+    if (intervalID > -1) {
         clearInterval(intervalID);
-        intervalID = 0;
+        intervalID = -1;
         shuffleBtn.classList.remove('glow'); 
         shuffleBtn.innerHTML='SHUFFLE<span class="symbol">&#10542;</span>'
     } else {

@@ -1,9 +1,41 @@
 import {ctx,h,w,setDashedLines} from '../utils/canvas.js';
 import {rndmRng, shuffle, coinflip} from '../utils/helpers.js';
 
-let p1 = {}, p2 = {};
+let p1 = {}, p2 = {}, sunColors = {};
 let meteors = [], stripes = [];
-let dashArray = [0,0]
+let dashArray = [0,0];
+let red = {
+    drips: "#9F1A14",
+    meteor: `132, 68, 34`,
+    main: {
+        grd: [
+            "#Ffdfd8",
+            "#E3D8D1",
+            "#dfccc0",
+        ],
+        sun: "#DA2E20",
+        bursts: [
+            '227, 216, 209',
+            '218, 46, 32'
+        ],
+    }
+};
+let blue = {
+    drips: "#141A9f",
+    meteor: `34, 68, 132`,
+    main: {
+        grd: [
+            "#d8dfff",
+            "#d1D8e3",
+            "#c0ccdf",
+        ],
+        sun: "#202Eda",
+        bursts: [
+            '209, 216, 227',
+            '32, 46, 218'
+        ],
+    }
+};
 
 function drawSpeck(x,y) {
     ctx.beginPath();
@@ -112,10 +144,14 @@ function drips() {
     let short = h*rndmRng(.49,.1);
     let mod = 1;
 
+    const vary = coinflip(true,false);
+    const color = coinflip(red.drips,blue.drips);
+    ctx.strokeStyle = color;        
+
     while (x<w) {
         setDashedLines();
-        ctx.strokeStyle="#9F1A14";
-        ctx.fillStyle="#9F1A14";
+        ctx.strokeStyle = (vary) ? coinflip(red.drips,blue.drips) : color;
+        ctx.fillStyle=ctx.strokeStyle;
         ctx.lineWidth=Math.round(rndmRng(4,2))
         ctx.beginPath();  
         ctx.moveTo(x,0);
@@ -151,8 +187,11 @@ function drawMeteor(m) {
     ctx.arc(m.x,m.y,m.r,0,Math.PI*2)
     ctx.fill();
     let reach = rndmRng(4,0);
+    const vary = coinflip(true,false);
+    const color = coinflip(red.meteor,blue.meteor);
+    ctx.strokeStyle = `rgba(${color}, ${rndmRng(1,.5)})`;
     for (let j=1.5; j >.5; j-=0.05) {
-        ctx.strokeStyle = `rgba(34, 68, 132, ${rndmRng(1,.5)})`;
+        (vary) ? ctx.strokeStyle = `rgba(${coinflip(red.meteor,blue.meteor)}, ${rndmRng(1,.5)})` : `rgba(${color}, ${rndmRng(1,.5)})`;
         let newX = m.r * Math.cos(Math.PI*j) + m.x
         let newY = m.r * Math.sin(Math.PI*j) + m.y
         let endX = m.r * Math.cos(Math.PI*(j+(reach*.05))) + m.x
@@ -165,18 +204,18 @@ function drawMeteor(m) {
 
 function drawStalk(x,y,nh,set) {
     ctx.shadowOffsetX = set;
-    ctx.lineWidth = Math.round(rndmRng(4,3));
+    ctx.lineWidth = Math.round(rndmRng(10,6));
     ctx.beginPath(); 
     ctx.moveTo(x,y);
     ctx.lineTo(x+rndmRng(20,-20),y+nh)
     ctx.stroke();
     ctx.shadowOffsetX = 0;
-    ctx.lineWidth = Math.round(rndmRng(9,6));
+    ctx.lineWidth = Math.round(rndmRng(17,10));
     ctx.beginPath(); 
     ctx.moveTo(x,y);
     ctx.lineTo(x,y+(nh/rndmRng(6,1.5)))
     ctx.stroke();
-    ctx.lineWidth = Math.round(rndmRng(5,3));
+    ctx.lineWidth = Math.round(rndmRng(11,7));
     ctx.beginPath(); 
     ctx.moveTo(x,y+nh);
     ctx.lineTo(x,y+nh-(nh/rndmRng(15,10)))
@@ -186,10 +225,10 @@ function drawStalk(x,y,nh,set) {
 function createFields(x,stalks,mod) {
     let y = p1.y;
     let height = rndmRng(30,5);
-    let maxHeight = rndmRng(h*.55,h*.35);
-    let minHeight = rndmRng(h*.34,h*.25);
+    let maxHeight = rndmRng(h*.50,h*.36);
+    let minHeight = rndmRng(h*.35,h*.21);
     let oldHeight = 0;
-    let newHeight = rndmRng(height*1.2,height*1.1);
+    let newHeight = rndmRng(height*1.21,height*1.09);
     let grow = true;
     let count = 0;
 
@@ -198,25 +237,25 @@ function createFields(x,stalks,mod) {
     
     for (let i =stalks; i--;) {
         drawStalk(x,y,newHeight,-3*mod)
-        x-=rndmRng(5,-1)*mod;
+        x-=rndmRng(8,-1)*mod;
         oldHeight = height;
         height = newHeight
 
         if (height > maxHeight && grow === true) {
             grow=false;
-            count = Math.round(rndmRng(300,75));
+            count = Math.round(rndmRng(100,15));
             height = maxHeight;
         } else if (height < minHeight && grow === false) {
             grow=true;
-            count = Math.round(rndmRng(300,75));
+            count = Math.round(rndmRng(100,15));
             height = minHeight;
-        } else if (height < minHeight && grow === true) height*=1.02;
+        } else if (height < minHeight && grow === true) height*=1.04;
 
-        if (count > 0) { 
-            newHeight = rndmRng(oldHeight*1.02,oldHeight*.98);
+        if (count > 0) {
+            newHeight = rndmRng(oldHeight*1.03,oldHeight*.97);
             count--; 
         } else {
-            newHeight = (grow === false) ? rndmRng(height*1.005,height*.99) : rndmRng(height*1.01,height*.995);
+            newHeight = (grow === false) ? rndmRng(height*1.005,height*.98) : rndmRng(height*1.05,height*.995);          
         }
 
         y-= (newHeight - oldHeight) / 3;
@@ -258,15 +297,17 @@ function createMeteors(n) {
 }
 
 function generateNoise() {
-    let squares = Math.round((h*w)/((h*.2)*(w*.2)));
+    let squares = Math.round((h*w)/((h*.09)*(w*.09)));
     let x, y, number = 0;
     let count = 1;
     for ( y = h; y > -squares; y-=squares ) {
         for ( x = 0; x < w; x+=squares ) {
             if (Math.random()>.7) {
-                count+= squares * .0002
+                count+= squares * .0006
                 number = Math.floor( rndmRng(256,51) );
-                ctx.fillStyle = `rgba(${number}, ${number-25},${number-50}, 0.${Math.round(rndmRng(2,1))}`;
+                ctx.fillStyle = (sunColors.sun === "#DA2E20") ? 
+                    `rgba(${number}, ${number-25},${number-50}, 0.${Math.round(rndmRng(2,1))}` :
+                    `rgba(${number-50}, ${number-25},${number}, 0.${Math.round(rndmRng(2,1))}`;
                 ctx.filter = `brightness(${Math.round(count)}) saturate(${Math.round(count/2)})`;
                 ctx.fillRect(x, y, squares, squares);
             }
@@ -282,11 +323,13 @@ export function loadMeditations() {
     p2 = (p1.x < w*.5) ? {x:rndmRng(w*.63,w*.75),y:rndmRng(h*.65,h*.77)} 
         : {x:rndmRng(w*-.02,w*.15),y:rndmRng(h*.65,h*.77)}
 
+    sunColors = coinflip(red.main,blue.main);
+
     //sky
     let grd = ctx.createRadialGradient(p1.x, p1.y, h*rndmRng(.4,.01), p1.x, p1.y, h*rndmRng(.99,.96));
-        grd.addColorStop(rndmRng(.4,0), "#Ffdfd8");
-        grd.addColorStop(rndmRng(.9,.6), "#E3D8D1");
-        grd.addColorStop(1, "#dfccc0");
+        grd.addColorStop(rndmRng(.4,0), sunColors.grd[0]);
+        grd.addColorStop(rndmRng(.9,.6), sunColors.grd[1]);
+        grd.addColorStop(1, sunColors.grd[2]);
     ctx.fillStyle = grd;
     ctx.fillRect(0,0,w,p1.y);
 
@@ -310,24 +353,23 @@ export function loadMeditations() {
     }) 
 
     //sun
-    ctx.fillStyle="#DA2E20";
+    ctx.fillStyle=sunColors.sun;
     let size= rndmRng(h*.34,h*.19);
     ctx.beginPath();
     ctx.arc(p1.x*1.05,p1.y*.85,size, 0, Math.PI*2);
     ctx.fill();
-    bursts(p1.x*1.05,p1.y*.85,size,'227, 216, 209');
+    bursts(p1.x*1.05,p1.y*.85,size,sunColors.bursts[0]);
 
     //ground
     grd = ctx.createRadialGradient(p1.x, p1.y, h*rndmRng(.4,.01), p1.x, p1.y, h*rndmRng(.99,.6));
-    grd.addColorStop(rndmRng(.25,0), "#Ffdfd8");
-    grd.addColorStop(rndmRng(.4,.7), "#E3D8D1");
-    grd.addColorStop(rndmRng(1,.85), "#dfccc0");
+    grd.addColorStop(rndmRng(.25,0), sunColors.grd[0]);
+    grd.addColorStop(rndmRng(.4,.7), sunColors.grd[1]);
+    grd.addColorStop(rndmRng(1,.85), sunColors.grd[2]);
     ctx.fillStyle = grd;
     ctx.fillRect(0,p1.y,w, h*.4);
     dirt();
     ctx.fillStyle="#DA2E20";
-    bursts(p1.x*1.05,p1.y*1.05,size/4,'218, 46, 32');
-    bursts(p1.x*1.2,p1.y*1.16,size/2,'218, 46, 32');
+    bursts(p1.x*1.2,p1.y*1.16,size/2,sunColors.bursts[1]);
 
     //stripe arrays
     createStripes();
@@ -350,6 +392,8 @@ export function loadMeditations() {
     createFields(p1.x*.99,Math.round(p1.x*.99),1);
     //right field
     createFields(p1.x*1.01,Math.round(w-p1.x*1.01),-1);
+
+    bursts(p1.x*1.05,p1.y*1.05,size/4,sunColors.bursts[1]);
 
     stripes2.forEach(s => {
         drawStripe(s);

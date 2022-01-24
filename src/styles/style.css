@@ -22,12 +22,12 @@ h1 {
 .show {
     transition-timing-function: ease-in;
     opacity:1!important;
-    transition: 1s;
+    transition: .8s;
 }
 .hide {
     transition-timing-function: ease-out;
     opacity:0;
-    transition: 1s;
+    transition: .8s;
 }
 .glow {
     animation: glow 1.6s ease-out 0s infinite alternate;;

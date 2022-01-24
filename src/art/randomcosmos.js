@@ -247,6 +247,9 @@ export function loadCosmos() {
     let burstAmount = Math.round(((h/2)*(w/2)) / 90000);
     let circleAmount = (burstAmount <= 1) ? 1 : Math.round(rndmRng(burstAmount-1,1));
 
+    ctx.fillStyle = "#180D0E";
+    ctx.fillRect(0,0,w,h);
+
     backgroundGradients(bgSpots);
     randomSpots();
     points();
