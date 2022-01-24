@@ -2,6 +2,12 @@ import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,shuffle,randomProperty} from '../utils/helpers.js';
 
 const rowHeight = 10;
+/*
+let buildingRowH = [[[17,12],[15,8],[13,4]]
+                    ,[[22,17],[20,13],[18,9]]
+                    ,[[27,22],[25,18],[23,14]]];
+                    */
+
 let buildingRowH = [[[23,15],[19,10],[15,5]]
                     ,[[29,21],[25,16],[21,13]]
                     ,[[35,27],[31,22],[27,17]]];
@@ -143,9 +149,9 @@ function drawStyleSide3(i,l,y) {
 }
 
 function addSide(w) {
-    if (w <= 150) { 
+    if (w < 130) { 
         return 30;
-    } else if (w <= 210) { 
+    } else if (w < 170) { 
         return 50;
     } else { 
         return 70;
@@ -221,19 +227,19 @@ function addTower(l) {
 
 function addBuilding(s,row) {
     layers = [];
-
-    let buildingWidth = randomDimension(25, 10);
+    let buildingWidth = randomDimension(20, 9);
+    let lvl = 0;
     let x = s-buildingWidth;
     startingX = s-buildingWidth;
 
     let priorLevel = levelCreate(buildingRowH[buildingRows][0],buildingWidth,x,0);
     if (priorLevel.side===70 && priorLevel.ht<buildingRowH[buildingRows][0][0] * 8.9) {
-        let width = coinflip(150,190);
+        let width = coinflip(130,150);
         priorLevel = levelCreate(buildingRowH[buildingRows][1],width,(priorLevel.w-width)/2+priorLevel.x-10+Math.floor(Math.random() * (15 - -20) + (-20)),priorLevel.y + priorLevel.ht+rowHeight);
     }
     
     if (priorLevel.side===50 && priorLevel.ht<buildingRowH[buildingRows][0][0] * 8.8) {
-        let width = coinflip(90,130);
+        let width = coinflip(90,110);
         priorLevel = levelCreate(buildingRowH[buildingRows][2],width,(priorLevel.w-width)/2+priorLevel.x-10+Math.floor(Math.random() * (15 - -20) + (-20)),priorLevel.y + priorLevel.ht+rowHeight);  
     }
 

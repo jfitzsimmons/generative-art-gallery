@@ -29,7 +29,6 @@ const pinBtn = document.getElementById("pin");
 const shuffleBtn = document.getElementById("shuffle");
 const titleEl = document.getElementById("title");
 const controlsEl = document.getElementById("controls");
-const reloadArt = debounce(function() {loadArt(call)},500);
 const canvasImg = document.getElementById("canvasImg");
 
 function crossFade() {
@@ -43,21 +42,24 @@ function crossFade() {
                 let url = URL.createObjectURL(blob);
                 canvasImg.src = url;
             },'image/jpeg', 0.99);     
-        }, 800)
+        }, 700)
     );
     setTimeout(function(){
         canvasImg.classList.remove("hide"); 
         canvasImg.classList.add("show");
-    }, 1000)
+    }, 900)
 }
 
 const loadArt = debounce(function(e,newCall) {
-    if(e && e.stopPropagation) e.stopPropagation();
-    
     resetCanvas();
     (isNaN(newCall)) ? calls[call].f.call() : calls[newCall].f.call();
     crossFade(); 
 },800);
+
+function loadArtClick(e,newCall) {
+    if(e && e.stopPropagation) e.stopPropagation(); 
+    loadArt(newCall);
+}
 
 function handleActiveButton(e) {
     if (e && e.target.disabled == true) return;
@@ -68,30 +70,21 @@ function handleActiveButton(e) {
     buttons[call].classList.add("active"); 
 }
 
-function incrementCall(e) {
-    if(e && e.stopPropagation) e.stopPropagation(); 
-    call = (++call >= calls.length) ? 0 : call++
-    handleActiveButton(e);
-    loadArt(e,call);
-}
-
 function setCall(e, i) {
-    if(e && e.stopPropagation) e.stopPropagation(); 
-    e.preventDefault();
+    if (e) e.preventDefault();
     call = i;
     handleActiveButton(e);
-    loadArt(e,call)
+    loadArtClick(e,call)
 }
 
 function randomCall(e) {
-    if(e && e.stopPropagation) e.stopPropagation(); 
     call = Math.round(rndmRng(calls.length-1+.499,-.499));
-    handleActiveButton(e);
-    loadArt(e,call)
+    setCall(e, call)
 }
 
 function showControls(e) {
-    if(e && e.stopPropagation) e.stopPropagation(); 
+    if(e && e.stopPropagation) e.stopPropagation();
+
     const actives = document.getElementsByTagName("button");
 
     if (againBtn.classList.contains('show')) {
@@ -131,12 +124,14 @@ function shuffleArt(e) {
     };
 }
 
-againBtn.addEventListener("click", loadArt); 
 pinBtn.addEventListener("click", showControls);
 document.getElementById("view").addEventListener("click", showControls);
-document.getElementById("another").addEventListener("click", incrementCall);
-document.getElementById("random").addEventListener("click", randomCall); 
+document.getElementById("another").addEventListener("click", (e) => setCall(e, (++call >= calls.length) ? 0 : call++
+));
+document.getElementById("random").addEventListener("click", (e) => randomCall(e)); 
 shuffleBtn.addEventListener("click", shuffleArt);
+againBtn.addEventListener("click", loadArtClick); 
+
 loadArt(call);
 
 calls.forEach((c,i) => {
@@ -154,4 +149,4 @@ window.onload = function() {
     controlsEl.classList.add("loaded");
 }
 
-window.addEventListener('resize', reloadArt);
+window.addEventListener('resize', loadArt);
