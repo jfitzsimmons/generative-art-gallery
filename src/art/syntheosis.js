@@ -8,8 +8,8 @@ const cy = h*rndmRng(.9,.1);
 let spheres = [];
 
 function drawSphere(x,y,r,hue) {
-    const ax = x+rndmRng(r/5,-r/5);
-    const ay = y+rndmRng(r/5,-r/5);
+    const ax = Math.round(x+rndmRng(r/5,-r/5));
+    const ay = Math.round(y+rndmRng(r/5,-r/5));
     const alpha = distanceToC(ax,ay,cx,cy)/(h/2+w/2)+.3;
 
     //shadow
@@ -34,7 +34,7 @@ function drawSphere(x,y,r,hue) {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
     ctx.shadowColor = `hsla(${hue-rMod/3}, 87%, ${47-rMod*2.5}%, 1)`;
-    ctx.shadowBlur = 60;
+    ctx.shadowBlur = 50;
 
     //main circle
     grd = ctx.createRadialGradient(ax+ctx.shadowOffsetX, ay+ctx.shadowOffsetY, r/10, ax, ay, r*2.2);
@@ -104,8 +104,8 @@ function points(x,y,r) {
         
         ctx.strokeStyle = gradient;
         ctx.beginPath();
-        ctx.moveTo(x1,y1);
-        ctx.lineTo(x2,y2);
+        ctx.moveTo(Math.round(x1),Math.round(y1));
+        ctx.lineTo(Math.round(x2),Math.round(y2));
         ctx.stroke();
     }
 }
@@ -115,8 +115,8 @@ function drawLight(x,y,r) {
     ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 11;
     ctx.shadowColor = `hsla(47, 95%, 85%, 1)`;
-    let ex = x+rndmRng(r/15,-r/15)
-    let ey = y+rndmRng(r/15,-r/15)
+    let ex = Math.round(x+rndmRng(r/15,-r/15))
+    let ey = Math.round(y+rndmRng(r/15,-r/15))
     let distance = distanceToC(ex,ey,cx,cy)/(h/2+w/2)+.1;
     let dimension = (distance+.5)/2.5
     let alpha = (1-Math.round(distance*2 * 10) / 10 < 0) ? 0 : (1-Math.round(distance*2 * 10) / 10).toFixed(1);
@@ -130,16 +130,16 @@ function drawLight(x,y,r) {
         grd1.addColorStop(.8, `hsla(47, 95%, 68%, 0)`);
     ctx.fillStyle=grd1;
 
-    drawEllipseByCenter(ctx, ex, ey, r*dimension*.7, r*(dimension*.4));
+    drawEllipseByCenter(ctx, ex, ey, Math.round(r*dimension*.7), Math.round(r*(dimension*.4)));
 }
 
 function createRow(hue, center, amount) {
     let tempSpheres = [];
 
-    let x = center.x-((amount-1)*(center.r*1.49))
+    let x = Math.round(center.x-((amount-1)*(center.r*1.49)))
     for (let j=amount; j--;) {
         tempSpheres.push({x,y:center.y,r:center.r, hue});
-        x+= (center.r*1.49)*2;
+        x+= Math.round((center.r*1.49)*2);
     }
     circleCount += tempSpheres.length;
     spheres.push(tempSpheres); 
@@ -147,8 +147,8 @@ function createRow(hue, center, amount) {
 
 function circleGroup() {
     while (circleCount < maxCircles) {
-        const startX = rndmRng(w*.5,w*-.5);
-        const startY = rndmRng(h*.5,-h*.2);
+        const startX = Math.round(rndmRng(w*.5,w*-.5));
+        const startY = Math.round(rndmRng(h*.5,-h*.2));
         const hue = Math.round(rndmRng(361,40))
         const circleRange = [Math.round(rndmRng(8,1)),Math.round(rndmRng(8,1))].sort();
         const minCircleX =circleRange[0];
@@ -159,13 +159,13 @@ function circleGroup() {
         let mod = 1;
 
         for (let i = rows; i--;) {
-            let center = {x:startX+w*.5,y:startY+(h-i*height-height/2)*.71,r:height/2};
+            let center = {x:Math.round(startX+w*.5),y:Math.round(startY+(h-i*height-height/2)*.71),r:height/2};
             createRow(hue, center,tracker);
             if (tracker === maxCircleX) {
                 mod *= -1;
-                center.y = startY+(h-(i-1)*height-height/2)*.71;
+                center.y = Math.round(startY+(h-(i-1)*height-height/2)*.71);
                 createRow(hue, center,tracker-1);
-                center.y = startY+(h-(i-2)*height-height/2)*.71;
+                center.y = Math.round(startY+(h-(i-2)*height-height/2)*.71);
                 createRow(hue, center,tracker);
                 i-=2
             } 

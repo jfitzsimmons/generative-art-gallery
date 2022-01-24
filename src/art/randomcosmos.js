@@ -11,8 +11,8 @@ function pickGradient(i) {
 }
 
 function drawSpeck(x,y) {
-    ctx.moveTo(x, y);
-    ctx.lineTo(x+rndmRng(5,1),y+rndmRng(5,1));
+    ctx.moveTo(Math.round(x), Math.round(y));
+    ctx.lineTo(Math.round(x+rndmRng(5,1)),Math.round(y+rndmRng(5,1)));
     ctx.stroke();
     ctx.beginPath();
 }
@@ -31,7 +31,7 @@ function backgroundGradients(layers) {
                         ${rndmRng(43,17)}, 0)`);
 
         ctx.fillStyle = grd;
-        ctx.fillRect(outX-outR, outY-outR, outR*2, outR*2);
+        ctx.fillRect(Math.round(outX-outR), Math.round(outY-outR), Math.round(outR*2), Math.round(outR*2));
     }
 }
 
@@ -73,8 +73,8 @@ function bursts(bursts) {
             ctx.lineWidth=rndmRng(5,1);
             let modX= rndmRng(2.5,1.5);
             let modY= rndmRng(2.5,1.5);
-            let dotX=rndmRng(x+size/modX,x-size/modX);
-            let dotY=rndmRng(y+size/modY,y-size/modY)
+            let dotX=Math.round(rndmRng(x+size/modX,x-size/modX));
+            let dotY=Math.round(rndmRng(y+size/modY,y-size/modY))
             ctx.moveTo(dotX, dotY);
             ctx.lineTo(dotX+rndmRng(-1,-5),dotY+rndmRng(-1,-5));
             ctx.stroke();
@@ -86,26 +86,26 @@ function splatterPoints(ox,oy,layers) {
     for (let m=1; m<=layers; m++) {
         ctx.strokeStyle = `hsla(204, 100%, ${48+Math.round(rndmRng(51,0))}%, ${rndmRng(1,.5)})`;
         ctx.lineWidth=rndmRng(5,1);
-        let x=ox+rndmRng(10*m,5*m);
-        let y=oy+rndmRng(-5*m,-10*m);
+        let x=Math.round(ox+rndmRng(10*m,5*m));
+        let y=Math.round(oy+rndmRng(-5*m,-10*m));
         drawSpeck(x,y)
 
         ctx.strokeStyle = `hsla(260, 31%, ${70+Math.round(rndmRng(29,0))}%, ${rndmRng(1,.5)})`;
         ctx.lineWidth=rndmRng(5,1);
-        x=ox+rndmRng(-5*m,-10*m);
-        y=oy+rndmRng(-5*m,-10*m);
+        x=Math.round(ox+rndmRng(-5*m,-10*m));
+        y=Math.round(oy+rndmRng(-5*m,-10*m));
         drawSpeck(x,y)
 
         ctx.strokeStyle = `hsla(340, 89%, ${74+Math.round(rndmRng(25,0))}%, ${rndmRng(1,.5)})`;
         ctx.lineWidth=rndmRng(5,1);
-        x=ox+rndmRng(-5*m,-10*m);
-        y=oy+rndmRng(10*m,5*m);
+        x=Math.round(ox+rndmRng(-5*m,-10*m));
+        y=Math.round(oy+rndmRng(10*m,5*m));
         drawSpeck(x,y)
 
         ctx.strokeStyle = `hsla(179, 79%, ${74+Math.round(rndmRng(25,0))}%, ${rndmRng(1,.5)})`;
         ctx.lineWidth=rndmRng(5,1);
-        x=ox+rndmRng(10*m,5*m);
-        y=oy+rndmRng(10*m,5*m);
+        x=Math.round(ox+rndmRng(10*m,5*m));
+        y=Math.round(oy+rndmRng(10*m,5*m));
         drawSpeck(x,y)
     }
 }
@@ -124,7 +124,7 @@ function curvedLine() {
         ctx.moveTo(x,y);
         let increase = 90/180*Math.PI / rndmRng(30,15);
         x = i + dashes[0]+dashes[1];
-        y = startY+i/2 - Math.sin(counter) * height;
+        y = Math.round(startY+i/2 - Math.sin(counter) * height);
         counter += increase;
         ctx.lineTo(x,y);
         ctx.stroke();
@@ -144,7 +144,7 @@ function circleShading(x,y,size) {
         ctx.strokeStyle = `hsla(${gradients[0]},${Math.round(rndmRng(99,60))}%, ${rndmRng(1-(i*.05),.9-(i*.05))})`;
         ctx.beginPath();
         endAngle = ((startAngle-i/30)+increment > 2 * Math.PI) ? ((startAngle-i/30)+increment)-2 * Math.PI : (startAngle-i/30)+increment;
-        ctx.arc(x, y, size-(i/2)*10, startAngle+i/rndmRng(30,20), endAngle);
+        ctx.arc(x, y, Math.round(size-(i/2)*10), startAngle+i/rndmRng(30,20), endAngle);
         ctx.stroke();
         increment -= rndmRng(increment*.03,increment*.001)+(layers/10*.01);
     }
@@ -190,7 +190,7 @@ function circles(n) {
 
 function mainCircle() {
     let x=0;
-    let y=rndmRng(h*.66,h*.33);
+    let y=Math.round(rndmRng(h*.66,h*.33));
 
     while (x<w) {
         ctx.beginPath();
@@ -202,7 +202,7 @@ function mainCircle() {
         ctx.stroke();
     }
 
-    x=w/2;
+    x=Math.round(w/2);
     ctx.beginPath();
     ctx.moveTo(x,y);
     let size = Math.round(rndmRng(h*.3, h*.09));
@@ -210,7 +210,7 @@ function mainCircle() {
     while (size < h) {
         (coinflip(true,false)) ? createHalfArc(x,y,size) : createArc(x,y,size);
         if (Math.random() > .5) circleShading(x,y,size);
-        size = size*rndmRng(1.8, 1.4);
+        size = Math.round(size*rndmRng(1.8, 1.4));
     }
 }
 
@@ -225,10 +225,10 @@ function points() {
     for(var i = 0; i < lines; i++) {
         ctx.strokeStyle = pickGradient(0);
         setDashedLines();
-        let x1 = x + size * Math.cos(2 * Math.PI * i / lines);
-        let y1 = y + size * Math.sin(2 * Math.PI * i / lines);  
-        let x2 = x + edge * Math.cos(2 * Math.PI * i / lines);
-        let y2 = y + edge * Math.sin(2 * Math.PI * i / lines);   
+        let x1 = Math.round(x + size * Math.cos(2 * Math.PI * i / lines));
+        let y1 = Math.round(y + size * Math.sin(2 * Math.PI * i / lines));  
+        let x2 = Math.round(x + edge * Math.cos(2 * Math.PI * i / lines));
+        let y2 = Math.round(y + edge * Math.sin(2 * Math.PI * i / lines));   
         ctx.beginPath();
         ctx.moveTo(x1,y1);
         ctx.lineTo(x2,y2);
@@ -236,7 +236,7 @@ function points() {
     }
 
     for (let c=1; c<=rings; c++) {
-        size = size*rndmRng(2.2, 1.8);
+        size = Math.round(size*rndmRng(2.2, 1.8));
         createArc(x,y,size)
         if (Math.random() > .5) circleShading(x,y,size);       
     }

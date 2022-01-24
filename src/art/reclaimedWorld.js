@@ -2,8 +2,8 @@ import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,groupBy} from '../utils/helpers.js';
 
 let monoliths=[],hills=[],ground=[],colorsM=[],colorsG=[];
-let sun = {x: w*rndmRng(.7,.3), y: h*rndmRng(.45,-.05),}
-let baseHue = 56; 
+let sun = {}
+let baseHue = 0; 
 
 function drawTree(h) {
     const trunkY = h.y-rndmRng(h.r+150,h.r+30);
@@ -19,7 +19,7 @@ function drawTree(h) {
 
     ctx.beginPath();
     ctx.arc(h.x, trunkY, leavesR, 0, 2 * Math.PI);
-    if (Math.random() > .66) ctx.arc(h.x, trunkY-leavesR, leavesR/rndmRng(2,1.1), 0, 2 * Math.PI);
+    if (Math.random() > .66) ctx.arc(h.x, trunkY-leavesR, Math.round(leavesR/rndmRng(2,1.1)), 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -69,14 +69,14 @@ function drawPoles(t) {
 
     ctx.beginPath()
     ctx.moveTo(start.x,start.y);
-    ctx.quadraticCurveTo(start.x+(endX-start.x)/2+35, cpy, endX, endY);
+    ctx.quadraticCurveTo(Math.round(start.x+(endX-start.x)/2+35), cpy, endX, endY);
     ctx.stroke();
 }
 
 function drawCables(rows,t) {
     let start = {
         x: rndmRng(0,-100),
-        y: h * rndmRng(.2+(t*.11),-.05+(t*.06)),
+        y: Math.round(h * rndmRng(.2+(t*.11),-.05+(t*.06))),
     }
 
     ctx.strokeStyle = colorsM[t];
@@ -85,13 +85,13 @@ function drawCables(rows,t) {
         start = quadCurves(start.y,m.y, 800, 200, start,m.x+(m.mw/2));
     });
 
-    const endY = h * rndmRng(.2+(t*.11),-.05+(t*.06));
+    const endY = Math.round(h * rndmRng(.2+(t*.11),-.05+(t*.06)));
     const endX = rndmRng(w+100,w);
     let cpy = Math.max(start.y,endY) + rndmRng(800,200);
 
     ctx.beginPath()
     ctx.moveTo(start.x,start.y);
-    ctx.quadraticCurveTo(start.x+(endX-start.x)/2+35, cpy, endX, endY);
+    ctx.quadraticCurveTo(Math.round(start.x+(endX-start.x)/2+35), cpy, endX, endY);
     ctx.stroke();
 }
 
@@ -145,7 +145,7 @@ function generateHillRow(type) {
     while (x < w+50) {
         const decrease = Math.abs((w/2)-x)*.35;
         const r = rndmRng(300,100);
-        const y = h * rndmRng(.7+(type*.06),.5+(type*.06)) - decrease + r;
+        const y = Math.round(h * rndmRng(.7+(type*.06),.5+(type*.06)) - decrease + r);
         const tree = (Math.random() > .75) ? true : false;
         
         hills.push({
@@ -165,7 +165,7 @@ function generateGround(type) {
 
     while (x < w+50) {
         const r = rndmRng(1200,700);
-        const y = h * rndmRng(.99,.88) + r;
+        const y = Math.round(h * rndmRng(.99,.88) + r);
         
         ground.push({
             type,
@@ -180,7 +180,7 @@ function generateGround(type) {
 function generateMonolith(type,x) {
     const mw = rndmRng(100,40);
     const mh =  rndmRng(350,120);
-    const y = h * rndmRng(.2+(type*.11),-.05+(type*.06))
+    const y = Math.round(h * rndmRng(.2+(type*.11),-.05+(type*.06)))
 
     monoliths.push({
         type,
@@ -192,7 +192,7 @@ function generateMonolith(type,x) {
 }
 
 function generateMonoRow(t) {
-    let x = w*rndmRng(.16,.02);
+    let x = Math.round(w*rndmRng(.16,.02));
     while (x < w-100) {
         generateMonolith(t,x);
         x+=rndmRng(800,200);
@@ -225,7 +225,7 @@ function drawMonolith(m) {
 }
 
 function drawGradient(type) {
-    const gradient = ctx.createLinearGradient(w/2,0,w/2,h);
+    const gradient = ctx.createLinearGradient(Math.round(w/2),0,Math.round(w/2),h);
 
     (type===0) ?
         gradient.addColorStop(.05, `hsla(${colorsG[type]}, 0)`) :
@@ -238,7 +238,7 @@ function drawGradient(type) {
 }
 
 function drawSun() {
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 15;
     ctx.shadowColor = `hsla(${baseHue+6}, 65%, 80%, 1)`;
     ctx.fillStyle=`hsla(${baseHue+6}, 65%, 80%, 1)`;
     ctx.arc(sun.x, sun.y, rndmRng(600,200), 0, 2 * Math.PI);
@@ -248,13 +248,13 @@ function drawSun() {
 
 function drawDudes() {
     let peaks = [{
-        x: w* rndmRng(.5,.3),
+        x: Math.round(w* rndmRng(.5,.3)),
         y: h-rndmRng(270,200),
         r: rndmRng(30,20),
     }];
 
     peaks.push({
-        x: peaks[0].x + w * rndmRng(.2,.1),
+        x: Math.round(peaks[0].x + w * rndmRng(.2,.1)),
         y: h-rndmRng(270,200),
         r: rndmRng(30,20),
     });
@@ -328,7 +328,7 @@ export function loadWorld() {
     monoliths = [];
     hills = [];
     ground = [];
-    sun = {x: w*rndmRng(.7,.3), y: h*rndmRng(.45,-.05),}
+    sun = {x: Math.round(w*rndmRng(.7,.3)), y: Math.round(h*rndmRng(.45,-.05)),}
     baseHue = Math.round(rndmRng(283,0));
 
     colorsM = [

@@ -1,12 +1,10 @@
 import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng} from '../utils/helpers.js';
 
-let t = h*rndmRng(.75,.5);
-let sunX = 0;
-let sunW = 0;
+let t = 0,sunX = 0,sunW = 0;
 
 function sunset() { 
-    let gradient = ctx.createLinearGradient(w*rndmRng(.53,.5),t*rndmRng(.2,.1), w*rndmRng(.5,.47),t*rndmRng(1,.8));
+    let gradient = ctx.createLinearGradient(Math.round(w*rndmRng(.53,.5)),Math.round(t*rndmRng(.2,.1)), Math.round(w*rndmRng(.5,.47)),Math.round(t*rndmRng(1,.8)));
     
     gradient.addColorStop(0, '#30497A');
     gradient.addColorStop(rndmRng(.3,.05), '#38778F');
@@ -19,9 +17,9 @@ function sunset() {
 }
 
 function sun() {
-    sunX = rndmRng(w*.75,w*.25);
-    sunW = rndmRng(w*.15,w*.05);
-    let gradient = ctx.createLinearGradient(w*.5,rndmRng(t*.8,t*.4), w*.5,t);
+    sunX = Math.round(rndmRng(w*.75,w*.25));
+    sunW = Math.round(rndmRng(w*.15,w*.05));
+    let gradient = ctx.createLinearGradient(Math.round(w*.5),Math.round(rndmRng(t*.8,t*.4)), Math.round(w*.5),t);
     gradient.addColorStop(0, '#FDD1B8');
     gradient.addColorStop(1, '#FFE8B8');
     ctx.beginPath();
@@ -65,14 +63,14 @@ function cloudWisps(loops) {
             ctx.stroke();
             ctx.beginPath(); 
             line = (increase === true) ? line + rndmRng(100,1) : line - rndmRng(100,1);
-            x = x + rndmRng(line/3,-line/3);
+            x = Math.round(x + rndmRng(line/3,-line/3));
             y+=rndmRng(4,2)
         }
     }
 }
 
 function ocean() {
-    let gradient = ctx.createLinearGradient(w*.5,t, w*.5,h);       
+    let gradient = ctx.createLinearGradient(Math.round(w*.5),t,Math.round(w*.5),h);       
         gradient.addColorStop(0, 'rgba(64, 167, 186, 1)');
         gradient.addColorStop(rndmRng(.02,.07), 'rgba(73, 206, 187, 1)');
         gradient.addColorStop(rndmRng(.12,.08), 'rgba(59, 162, 181, 1)');
@@ -93,7 +91,7 @@ function waves() {
     let wvs = t;
 
     while(wvs < h) {
-        ctx.fillStyle = `rgba(${rndmRng(30,100)}, ${rndmRng(215,145)}, ${rndmRng(225,185)}, ${rndmRng(.4,.15)})`;
+        ctx.fillStyle = `rgba(${rndmRng(30,100)}, ${rndmRng(215,145)}, ${rndmRng(225,185)}, ${Math.round(rndmRng(.4,.15))})`;
         ctx.beginPath();
         let counter = 0, x=-100;
 
@@ -103,7 +101,7 @@ function waves() {
         
         for(let i=0; i<=w+100; i+=10){
             x = i;
-            y =  wvs - Math.sin(counter) * height;
+            y =  Math.round(wvs - Math.sin(counter) * height);
             counter += increase;
             ctx.lineTo(x,y);
         }
@@ -114,7 +112,7 @@ function waves() {
 
         for(let i=w+100; i>=-100; i-=10){
             x = i;
-            y =  wvs - Math.sin(counter) * height + 10;
+            y =  Math.round(wvs - Math.sin(counter) * height + 10);
             counter += increase;
             ctx.lineTo(x,y);
         }
@@ -128,7 +126,7 @@ function waves() {
 }
 
 function sunReflection() {
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = 9;
     ctx.shadowColor = "#FDF7AD";
     let chunk = rndmRng(100,30);
     let count = 0;
@@ -150,11 +148,11 @@ function sunReflection() {
             increment = rndmRng(5,16);
             y+=increment;
             count+=increment;
-            ctx.lineTo(x-rndmRng(sunW*m,sunW/2),y);
+            ctx.lineTo(Math.round(x-rndmRng(sunW*m,sunW/2)),y);
             increment = rndmRng(5,16);
             y+=increment;
             count+=increment;
-            ctx.lineTo(x+rndmRng(sunW*m,sunW/2),y);
+            ctx.lineTo(Math.round(x+rndmRng(sunW*m,sunW/2)),y);
             x-=5;
         }
 
@@ -164,11 +162,11 @@ function sunReflection() {
             increment = rndmRng(5,16);
             y-=increment;
             count-=increment;
-            ctx.lineTo(x+rndmRng(sunW*m,sunW/2),y);
+            ctx.lineTo(Math.round(x+rndmRng(sunW*m,sunW/2)),y);
             increment = rndmRng(5,16);
             y-=increment;
             count-=increment;
-            ctx.lineTo(x-rndmRng(sunW*m,sunW/2),y);
+            ctx.lineTo(Math.round(x-rndmRng(sunW*m,sunW/2)),y);
             x+=5;
         }
 
@@ -185,7 +183,7 @@ function sunReflection() {
 }
 
 export function loadSunset() {
-    t = h*rndmRng(.75,.5);
+    t = Math.round(h*rndmRng(.75,.5));
 
     sunset();
     sun();

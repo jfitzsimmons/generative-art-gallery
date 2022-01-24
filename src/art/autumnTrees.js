@@ -19,11 +19,11 @@ function buildBranch(start, layer) {
         let flip = (i===1) ? -1 : 1;
         let adjust = Math.abs(((start.x+(newX*flip)/3) - treeCenter.x)/temp);
         let bc = {
-            x: (i === 1) ? start.x-topW/4 : start.x+topW/4,
+            x: (i === 1) ? Math.round(start.x-topW/4) : Math.round(start.x+topW/4),
             y: start.y,
         };
         let tc = {
-            x: (i === 1) ? start.x-topW/4-newX : start.x+topW/4+newX,
+            x: (i === 1) ? Math.round(start.x-topW/4-newX) : Math.round(start.x+topW/4+newX),
             y: start.y-newY+adjust,
         };
         let angle = Math.atan2(bc.y - tc.y, bc.x - tc.x) * 180 / Math.PI;
@@ -31,21 +31,21 @@ function buildBranch(start, layer) {
         treePoints.push( {
             layer,
             tl: {
-                x: tc.x- ((topW/4) * Math.cos((-90+angle)* Math.PI / 180)),
-                y: tc.y- ((topW/4) * Math.sin((-90+angle)* Math.PI / 180)),
+                x: Math.round(tc.x- ((topW/4) * Math.cos((-90+angle)* Math.PI / 180))),
+                y: Math.round(tc.y- ((topW/4) * Math.sin((-90+angle)* Math.PI / 180))),
             },
             tr: {
-                x: tc.x- ((topW/4) * Math.cos((90+angle)* Math.PI / 180)),
-                y: tc.y- ((topW/4) * Math.sin((90+angle)* Math.PI / 180)),
+                x: Math.round(tc.x- ((topW/4) * Math.cos((90+angle)* Math.PI / 180))),
+                y: Math.round(tc.y- ((topW/4) * Math.sin((90+angle)* Math.PI / 180))),
             },
             tc,
             bl: {
-                x: bc.x- ((btmW/4) * Math.cos((-90+angle)* Math.PI / 180)),
-                y: bc.y- ((btmW/4) * Math.sin((-90+angle)* Math.PI / 180)),
+                x: Math.round(bc.x- ((btmW/4) * Math.cos((-90+angle)* Math.PI / 180))),
+                y: Math.round(bc.y- ((btmW/4) * Math.sin((-90+angle)* Math.PI / 180))),
             },
             br: {
-                x: bc.x- ((btmW/4) * Math.cos((90+angle)* Math.PI / 180)),
-                y: bc.y- ((btmW/4) * Math.sin((90+angle)* Math.PI / 180)),
+                x: Math.round(bc.x- ((btmW/4) * Math.cos((90+angle)* Math.PI / 180))),
+                y: Math.round(bc.y- ((btmW/4) * Math.sin((90+angle)* Math.PI / 180))),
             },
             bc,
             topW,
@@ -58,13 +58,13 @@ function drawLeaves(x,y,c,l,s,a,r) {
     let amount = a;
     ctx.fillStyle=`hsla(${Math.round(rndmRng(s.fallColor+5, s.fallColor-5))},${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
     for (let i = amount; i--;) {
-        ctx.beginPath();
         let size = Math.round(rndmRng(14-(s.layer+l/2.2), 8-(s.layer+l/2.2)));
+        ctx.beginPath();
         ctx.arc(rndmRng(x+r, x-r), rndmRng(y+r, y-r), size, 0, Math.PI * 2); 
-        if (Math.random()>repeat) 
+        if (Math.random()>repeat) {
             ctx.fillStyle=`hsla(${(Math.random() > s.colorChange) ? Math.round(rndmRng(s.fallColor+5, s.fallColor-5)) : 125}, 
-                ${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
-        ctx.fill();
+                ${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`
+         } else {ctx.fill();}
     }
 }
 
@@ -122,10 +122,10 @@ export function loadTrees() {
     drawBackground();
 
     while (y > h*.2) {
-        let x = rndmRng(60,-300)* (1-sLayer*.05);
+        let x = Math.round(rndmRng(60,-300)* (1-sLayer*.05));
 
         while (x < w) { 
-            y -= rndmRng(h*.077, h*-.053)* (1-sLayer*.035);
+            y -= Math.round(rndmRng(h*.077, h*-.053)* (1-sLayer*.035));
             stumps.push({
                 x,
                 y,
@@ -137,11 +137,11 @@ export function loadTrees() {
             x += rndmRng(600, 250)* (1-sLayer*.12);
         }
 
-        y -= rndmRng(h*.28, h*.18)* (1-sLayer*.1);
+        y -= Math.round(rndmRng(h*.28, h*.18)* (1-sLayer*.1));
         sLayer++;      
     }
 
-    stumps.sort(function(a, b) {return parseFloat(a.y) - parseFloat(b.y)})
+    stumps.sort(function(a, b) {return parseInt(a.y) - parseInt(b.y)})
 
     // Shadows
     ctx.beginPath();
@@ -171,13 +171,13 @@ export function loadTrees() {
     stumps.forEach((s,i) => {
         btmW = rndmRng(62,52) * (1-s.layer*.1);
         topW = btmW*(5/6);
-        offset = (btmW-topW) / 2;
-        stumpH = rndmRng(160,140)* (1-s.layer*.07);
-        branchH = stumpH/2;
+        offset = Math.round((btmW-topW) / 2);
+        stumpH = Math.round(rndmRng(160,140)* (1-s.layer*.07));
+        branchH = Math.round(stumpH/2);
         let amount = 70-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
 
-        ctx.shadowColor = `hsla(56, 95%, ${90*((s.layer/2+1)*.28)}%, .2)`;
-        ctx.shadowBlur = 20-(s.layer*2);
+        ctx.shadowColor = `hsla(56, 95%, ${Math.round(90*((s.layer/2+1)*.28))}%, .3)`;
+        ctx.shadowBlur = 15-(s.layer*2);
         ctx.shadowOffsetY = 0-s.layer;
         ctx.shadowOffsetX = s.layer;
         ctx.save();
@@ -188,7 +188,7 @@ export function loadTrees() {
 
         let tempColor =  s.colorChange;
         s.colorChange = .1;
-        drawLeaves(s.x,s.y-rndmRng(h*.009,0),18+(s.layer*4),0,s,amount,h*.18);
+        drawLeaves(s.x,Math.round(s.y-rndmRng(h*.009,0)),Math.round(18+(s.layer*4)),0,s,amount,Math.round(h*.18));
         
         ctx.restore();
 
@@ -199,8 +199,8 @@ export function loadTrees() {
         ctx.fillStyle=grd;
         ctx.beginPath();
         ctx.moveTo(s.x,s.y);
-        ctx.lineTo(s.x+btmW, s.y);
-        ctx.lineTo(s.x+offset+topW,s.y-stumpH);
+        ctx.lineTo(Math.round(s.x+btmW), s.y);
+        ctx.lineTo(Math.round(s.x+offset+topW),s.y-stumpH);
         ctx.lineTo(s.x+offset,s.y-stumpH);
         ctx.lineTo(s.x,s.y);
         ctx.fill();
@@ -209,13 +209,13 @@ export function loadTrees() {
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
 
-        drawLeaves(s.x+h*.05,s.y+stumpH*1.6,16+(s.layer*4),0,s,amount,stumpH*1.8);
+        drawLeaves(Math.round(s.x+h*.05),Math.round(s.y+stumpH*1.6,16+(s.layer*4)),0,s,amount,Math.round(stumpH*1.8));
         s.colorChange = tempColor;
         
         ctx.restore();
 
         treeCenter = {
-            x: s.x+topW/2+offset,
+            x: Math.round(s.x+topW/2+offset),
             y: s.y-stumpH,
         }
 

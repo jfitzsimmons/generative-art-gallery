@@ -1,6 +1,9 @@
 import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,shuffle,randomProperty} from '../utils/helpers.js';
 
+// TODO Draw all rows of same style together 
+// ... for performance reasons
+
 const rowHeight = 10;
 let buildingRowH = [[[23,15],[19,10],[15,5]]
                     ,[[29,21],[25,16],[21,13]]
@@ -276,46 +279,46 @@ function sunset() {
         else {height = h*.1}
         if (i % 2 === 0) {
             ctx.fillStyle = sunsetColors[i/2];
-            ctx.rect(0, y, w, height);
+            ctx.rect(0, y, w, Math.round(height));
             ctx.fill();
             ctx.beginPath();
-            y+=height;
+            y+=Math.round(height);
         } else {
             ctx.fillStyle = sunsetColors[Math.round(i/2)];
-            ctx.rect(0, y, w, h*.005);
+            ctx.rect(0, y, w, Math.round(h*.005));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.005;
+            y+=Math.round(h*.005);
 
             ctx.fillStyle = sunsetColors[Math.round(i/2)-1];
-            ctx.rect(0, y, w, h*.015);
+            ctx.rect(0, y, w, Math.round(h*.015));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.015;
+            y+=Math.round(h*.015);
             
             ctx.fillStyle = sunsetColors[Math.round(i/2)];
-            ctx.rect(0, y, w, h*.005);
+            ctx.rect(0, y, w, Math.round(h*.005));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.005;
+            y+=Math.round(h*.005);
 
             ctx.fillStyle = sunsetColors[Math.round(i/2)-1];
-            ctx.rect(0, y, w, h*.005);
+            ctx.rect(0, y, w, Math.round(h*.005));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.005;
+            y+=Math.round(h*.005);
 
             ctx.fillStyle = sunsetColors[Math.round(i/2)];
-            ctx.rect(0, y, w, h*.015);
+            ctx.rect(0, y, w, Math.round(h*.015));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.015;
+            y+=Math.round(h*.015);
 
             ctx.fillStyle = sunsetColors[Math.round(i/2)-1];
-            ctx.rect(0, y, w, h*.005);
+            ctx.rect(0, y, w, Math.round(h*.005));
             ctx.fill();
             ctx.beginPath();
-            y+=h*.005;
+            y+=Math.round(h*.005);
         }
     }
 }
@@ -429,7 +432,7 @@ function stars() {
 
     for (let i=0; i<amount; i++) {
         let x = rndmRng((w - 30), 30);
-        let y = rndmRng((h/2 - 30), 30);
+        let y = Math.round(rndmRng((h/2 - 30), 30));
         let star = randomProperty(drawStars);
         star(x,y);
     }
