@@ -54,13 +54,16 @@ function buildBranch(start, layer) {
 }
 
 function drawLeaves(x,y,c,l,s,a,r) {
+    let repeat = rndmRng(.9, .4);
     let amount = a;
+    ctx.fillStyle=`hsla(${Math.round(rndmRng(s.fallColor+5, s.fallColor-5))},${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
     for (let i = amount; i--;) {
         ctx.beginPath();
         let size = Math.round(rndmRng(14-(s.layer+l/2.2), 8-(s.layer+l/2.2)));
         ctx.arc(rndmRng(x+r, x-r), rndmRng(y+r, y-r), size, 0, Math.PI * 2); 
-        ctx.fillStyle=`hsla(${(Math.random() > s.colorChange) ? Math.round(rndmRng(s.fallColor+5, s.fallColor-5)) : 125}, 
-            ${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
+        if (Math.random()>repeat) 
+            ctx.fillStyle=`hsla(${(Math.random() > s.colorChange) ? Math.round(rndmRng(s.fallColor+5, s.fallColor-5)) : 125}, 
+                ${rndmRng(60, 30)}%, ${rndmRng(c+5, c-5)}%, .9)`;
         ctx.fill();
     }
 }
@@ -127,7 +130,7 @@ export function loadTrees() {
                 x,
                 y,
                 layer:sLayer,
-                sparse: [rndmRng(7,0),rndmRng(7,0)].sort(),
+                sparse: [rndmRng(8,0),rndmRng(8,0)].sort(),
                 fallColor: fallColors[Math.round(rndmRng(fallColors.length-1, 0))],
                 colorChange: Math.random(),
             })

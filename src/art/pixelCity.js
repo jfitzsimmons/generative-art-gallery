@@ -2,12 +2,6 @@ import {ctx,h,w} from '../utils/canvas.js';
 import {rndmRng,coinflip,shuffle,randomProperty} from '../utils/helpers.js';
 
 const rowHeight = 10;
-/*
-let buildingRowH = [[[17,12],[15,8],[13,4]]
-                    ,[[22,17],[20,13],[18,9]]
-                    ,[[27,22],[25,18],[23,14]]];
-                    */
-
 let buildingRowH = [[[23,15],[19,10],[15,5]]
                     ,[[29,21],[25,16],[21,13]]
                     ,[[35,27],[31,22],[27,17]]];
@@ -149,7 +143,7 @@ function drawStyleSide3(i,l,y) {
 }
 
 function addSide(w) {
-    if (w < 130) { 
+    if (w < 120) { 
         return 30;
     } else if (w < 170) { 
         return 50;
@@ -461,15 +455,15 @@ function oceanLayer(x,y,colors,d) {
 
 function ocean() {
     let x = Math.floor(w*.7);
-    let y = h-16*rowHeight;
+    let y = h-20*rowHeight;
     ctx.moveTo(x,y);
     let diff = 1;
-    let count = 40;
+    let count = 50;
     let color = 4;
 
     while (y < h) {
-        if (count % 8 === 0) {
-            color = count/8 - 1;
+        if (count % 10 === 0) {
+            color = count/10 - 1;
             diff = 1;
         }
 

@@ -48,7 +48,6 @@ function dirt() {
     let spots = Math.round((h*w) / 1300);
     ctx.strokeStyle = "#161211";
     for (let s=spots; s--;) {  
-        setDashedLines();
         drawSpeck(rndmRng(w,0),rndmRng(h,p1.y));
         drawSpeck(rndmRng(w,0),rndmRng(p1.y*1.2,p1.y));
     }
@@ -70,9 +69,8 @@ function bursts(x,y,size,color) {
 }
 
 function splatterPoints(ox,oy,layers) {
+    setDashedLines() 
     for (let m=1; m<=layers; m++) {
-        setDashedLines() 
-
         let x=ox+rndmRng(10*m,5*m);
         let y=oy+rndmRng(-5*m,-10*m);
         drawSpeck(x,y)
@@ -106,7 +104,6 @@ function points(x,y,r) {
         (p1.x < w*.5) ? curvedLine(x1,y1,x2,true) : curvedLine(x2,y1,x1,true);
         ctx.beginPath();
         ctx.moveTo(x1,y1);
-        ctx.strokeStyle = `rgba(93, 78, 68, ${rndmRng(.2,.1)})`;
         ctx.lineTo(x2,y2);
         ctx.stroke();
     }
@@ -126,7 +123,7 @@ function curvedLine(newX,newY,endX,splat) {
         dashArray = setDashedLines();
         ctx.beginPath();
         ctx.moveTo(x,y);
-        let increase = 90/180*Math.PI / rndmRng(6,4);
+        increase = 90/180*Math.PI / rndmRng(6,4);
         x = i + dashArray[0]+dashArray[1];
         y = startY - Math.sin(counter) * height;
         counter += increase;
@@ -164,7 +161,7 @@ function drips() {
             ctx.strokeStyle="#161211";
             ctx.fillStyle="#E3D8D1";
             for (let i =rings; i--;) {
-                setDashedLines();
+                if (Math.random() > .4) setDashedLines();
                 ctx.lineWidth=Math.round(rndmRng(7,3))
                 ctx.beginPath();
                 ctx.arc(x+rndmRng(h*.03,-h*.03),y+rndmRng(h*.04,-h*.04),rndmRng(h*.015,h*.007),0,2*Math.PI);
@@ -298,17 +295,26 @@ function createMeteors(n) {
 
 function generateNoise() {
     let squares = Math.round((h*w)/((h*.09)*(w*.09)));
-    let x, y, number = 0;
+    let x, y = 0;
+    let number = Math.floor(rndmRng(256,51));
     let count = 1;
+ 
+    ctx.fillStyle = (sunColors.sun === "#DA2E20") ? 
+        `rgba(${number}, ${number-25},${number-50}, 0.${Math.round(rndmRng(2,1))}` :
+        `rgba(${number-50}, ${number-25},${number}, 0.${Math.round(rndmRng(2,1))}`;
+    ctx.filter = `brightness(${Math.round(count)}) saturate(${Math.round(count/2)})`;
+
     for ( y = h; y > -squares; y-=squares ) {
         for ( x = 0; x < w; x+=squares ) {
             if (Math.random()>.7) {
-                count+= squares * .0006
+                count+= squares * .0005
                 number = Math.floor( rndmRng(256,51) );
-                ctx.fillStyle = (sunColors.sun === "#DA2E20") ? 
-                    `rgba(${number}, ${number-25},${number-50}, 0.${Math.round(rndmRng(2,1))}` :
-                    `rgba(${number-50}, ${number-25},${number}, 0.${Math.round(rndmRng(2,1))}`;
-                ctx.filter = `brightness(${Math.round(count)}) saturate(${Math.round(count/2)})`;
+                if (Math.random()>.5) 
+                    ctx.fillStyle = (sunColors.sun === "#DA2E20") ? 
+                        `rgba(${number}, ${number-25},${number-50}, 0.${Math.round(rndmRng(2,1))}` :
+                        `rgba(${number-50}, ${number-25},${number}, 0.${Math.round(rndmRng(2,1))}`;
+                if (Math.random()>.7) 
+                    ctx.filter = `brightness(${Math.round(count)}) saturate(${Math.round(count/2)})`;
                 ctx.fillRect(x, y, squares, squares);
             }
         }
