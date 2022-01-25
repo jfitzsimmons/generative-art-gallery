@@ -9,7 +9,7 @@ import {loadSunset} from './art/oceanSunset.js'
 import {loadWorld} from './art/reclaimedWorld.js'
 import {resetCanvas, canvas} from './utils/canvas.js'
 import {rndmRng, debounce} from './utils/helpers.js'
-import './styles/style.css';
+import './assets/styles/style.css';
 
 const calls = [
     {f:loadMeditations, name:'meditations'},
