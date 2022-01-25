@@ -1,7 +1,8 @@
 import {ctx,h,w} from '../utils/canvas.js';
-import {rndmRng} from '../utils/helpers.js';
+import {coinflip, rndmRng} from '../utils/helpers.js';
 
 let t = 0,sunX = 0,sunW = 0;
+let palette = [`220`,`174`,`191`,`22`,`344`,`44`]
 
 function sunset() { 
     let gradient = ctx.createLinearGradient(Math.round(w*rndmRng(.53,.5)),Math.round(t*rndmRng(.2,.1)), Math.round(w*rndmRng(.5,.47)),Math.round(t*rndmRng(1,.8)));
@@ -191,4 +192,13 @@ export function loadSunset() {
     ocean();
     waves();
     sunReflection();
+
+    let grd = ctx.createRadialGradient(sunX, t, h*rndmRng(.4,.2), sunX, t, h*rndmRng(1.1,.9));
+        grd.addColorStop(0, `hsla(${palette[Math.round(rndmRng(palette.length-1, 0))]}, 100%, 65%, 0)`);
+        grd.addColorStop(coinflip(.3,.4), `hsla(${palette[Math.round(rndmRng(palette.length-1, 0))]}, 100%, ${Math.round(rndmRng(50,40))}%, .${coinflip(1,2)})`);
+        grd.addColorStop(1, `hsla(${palette[Math.round(rndmRng(palette.length-1, 0))]}, 100%, ${Math.round(rndmRng(25,10))}%, .${coinflip(2,3)})`);
+
+    ctx.fillStyle = grd;
+    ctx.filter = `sepia(${Math.round(rndmRng(75,0))}%) saturate(${Math.round(rndmRng(190,10))}% blur(${Math.round(rndmRng(20,0))})`;
+    ctx.fillRect(0,0,w,h);
 }
