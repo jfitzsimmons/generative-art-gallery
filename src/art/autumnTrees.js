@@ -121,7 +121,7 @@ export function loadTrees() {
 
     drawBackground();
 
-    while (y > h*.2) {
+    while (y > h*.25) {
         let x = Math.round(rndmRng(60,-300)* (1-sLayer*.05));
 
         while (x < w) { 
@@ -130,14 +130,14 @@ export function loadTrees() {
                 x,
                 y,
                 layer:sLayer,
-                sparse: [rndmRng(8,0),rndmRng(8,0)].sort(),
+                sparse: [rndmRng(9,0),rndmRng(9,0)].sort(),
                 fallColor: fallColors[Math.round(rndmRng(fallColors.length-1, 0))],
                 colorChange: Math.random(),
             })
-            x += rndmRng(600, 250)* (1-sLayer*.12);
+            x += rndmRng(550, 250)* (1-sLayer*.12);
         }
 
-        y -= Math.round(rndmRng(h*.28, h*.18)* (1-sLayer*.1));
+        y -= Math.round(rndmRng(h*.25, h*.18)* (1-sLayer*.1));
         sLayer++;      
     }
 
@@ -174,7 +174,7 @@ export function loadTrees() {
         offset = Math.round((btmW-topW) / 2);
         stumpH = Math.round(rndmRng(160,140)* (1-s.layer*.07));
         branchH = Math.round(stumpH/2);
-        let amount = 70-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
+        let amount = 80-Math.round(rndmRng(s.sparse[1],s.sparse[0]))*5;
 
         ctx.shadowColor = `hsla(56, 95%, ${Math.round(90*((s.layer/2+1)*.28))}%, .3)`;
         ctx.shadowBlur = 15-(s.layer*2);

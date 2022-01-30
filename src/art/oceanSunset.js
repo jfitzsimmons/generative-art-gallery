@@ -92,7 +92,7 @@ function waves() {
     let wvs = t;
 
     while(wvs < h) {
-        ctx.fillStyle = `rgba(${rndmRng(30,100)}, ${rndmRng(215,145)}, ${rndmRng(225,185)}, ${Math.round(rndmRng(.4,.15))})`;
+        ctx.fillStyle = `rgba(${rndmRng(100,30)}, ${rndmRng(215,145)}, ${rndmRng(225,185)}, ${rndmRng(.4,.1)})`;
         ctx.beginPath();
         let counter = 0, x=-100;
 
@@ -109,7 +109,7 @@ function waves() {
         
         height = rndmRng(12,4);
         increase = 90/180*Math.PI / rndmRng(25,8);
-        y+= 100;
+        y+= 40;
 
         for(let i=w+100; i>=-100; i-=10){
             x = i;
