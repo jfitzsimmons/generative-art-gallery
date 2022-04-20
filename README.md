@@ -2,6 +2,8 @@
 
 The gallery art is coded with JavaScript and utilizes HTML Canvas.
 
+[![generative art gallery Preview Image](https://github.com/jfitzsimmons/generative-art-gallery/blob/main/preview.png)](https://jfitzsimmons.github.io/generative-art-gallery/ "generative art gallery")
+
 > **First, what is code art?**    
 > Code art is any art that is built using code.  
 >    
