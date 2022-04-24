@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Generative Art Portfolio of Joe Fitzsimmons. Medium is JS and Canvas.">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <link rel="icon" href="./assets/favicons/favicon.ico" type="image/x-icon">
+</head>
+
+<body id="view">
+    <div id="controls" class="controls fadein">
+        <div class="light_beam"></div>
+        <div class="light_beam light_beam2"></div>
+        <div class="menu">
+            <div id="menu" class="page">
+                <div id="title" class="title label">
+                    <%= htmlWebpackPlugin.options.pageHeader %>
+                        <br />&#9751;&#8881;&#8942;&#8942;&#8942;&#8942;&#8942;&#8880;&#9751;
+                </div>
+                <button id="random" class="menu__button random">
+                    <%= htmlWebpackPlugin.options.random %><span class="symbol">&#9861;</span>
+                </button>
+                <button id="shuffle" class="menu__button shuffle">
+                    <%= htmlWebpackPlugin.options.shuffle %><span class="symbol">&#10542;</span>
+                </button>
+            </div>
+        </div>
+        <div class="another">
+            <div>
+                <button id="pin" class="pin page">
+                    <div class="label pin__label">
+                        <%= htmlWebpackPlugin.options.pin %><br /><span class="symbol">&#9906;</span>
+                    </div>
+                </button>
+            </div>
+            <button id="another" class="page another__button">
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+                <div class="label another__label">
+                    <%= htmlWebpackPlugin.options.another %><br />&#10557;
+                </div>
+            </button>
+        </div>
+        <div class="again">
+            <button id="again" class="page flex again__button">
+                <div class="label again__label">
+                    <%= htmlWebpackPlugin.options.again %> <br /> &#10227;
+                </div>
+                <div class="flex">
+                    <div class="chevron2"></div>
+                    <div class="chevron2"></div>
+                    <div class="chevron2"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+    <canvas id="canvas1" class="sepia">
+        <%= htmlWebpackPlugin.options.sorry %>
+    </canvas>
+    <img id="canvasImg" data-source="#" class="canvas-img sepia" />
+</body>
+
+</html>
