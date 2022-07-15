@@ -1,4 +1,5 @@
 import {loadCosmos} from './art/randomcosmos.js'
+import {loadOracular} from './art/oracular.js'
 import {loadMeditations} from './art/meditate.js'
 import {loadSyntheosis} from './art/syntheosis.js'
 import {loadTrees} from './art/autumnTrees.js'
@@ -12,6 +13,7 @@ import {rndmRng, debounce} from './utils/helpers.js'
 import './assets/styles/style.css';
 
 const calls = [
+    {f:loadOracular, name:'oracular'},
     {f:loadMeditations, name:'meditations'},
     {f:loadCosmos, name:'cosmos'},
     {f:loadSyntheosis, name: 'syntheosis'},
