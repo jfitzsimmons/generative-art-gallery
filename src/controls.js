@@ -1,20 +1,17 @@
-import { loadCosmos } from "./art/randomcosmos.js";
-import { loadOracular } from "./art/oracular.js";
-import { loadMeditations } from "./art/meditate.js";
-import { loadSyntheosis } from "./art/syntheosis.js";
-import { loadTrees } from "./art/autumnTrees.js";
-import { loadDabs } from "./art/paintDabs.js";
-import { loadCity } from "./art/pixelCity.js";
-import { loadMountain } from "./art/mountainFog.js";
-import { loadSunset } from "./art/oceanSunset.js";
-import { loadWorld } from "./art/reclaimedWorld.js";
+import("./art/randomcosmos.js").then((f) => f.default);
+import("./art/meditate.js").then((f) => f.default);
+import("./art/syntheosis.js").then((f) => f.default);
+import("./art/autumnTrees.js").then((f) => f.default);
+import("./art/paintDabs.js").then((f) => f.default);
+import("./art/pixelCity.js").then((f) => f.default);
+import("./art/mountainFog.js").then((f) => f.default);
+import("./art/oceanSunset.js").then((f) => f.default);
+import("./art/reclaimedWorld.js").then((f) => f.default);
+import "./assets/styles/style.css";
+
 import { resetCanvas, canvas } from "./utils/canvas.js";
 import { rndmRng, debounce } from "./utils/helpers.js";
 import "./assets/styles/style.css";
-
-/** testjpf
- *
- * size warning is from devtool source map*/
 
 const calls = [
   { f: loadOracular, name: "oracular" },
@@ -150,8 +147,6 @@ document
 shuffleBtn.addEventListener("click", shuffleArt);
 againBtn.addEventListener("click", loadArtClick);
 
-loadArt(call);
-
 calls.forEach((c, i) => {
   const element = document.createElement("button");
   element.appendChild(document.createTextNode(c.name));
@@ -167,4 +162,4 @@ window.onload = function () {
   controlsEl.classList.add("loaded");
 };
 
-window.addEventListener("resize", loadArt);
+//window.addEventListener("resize", loadArt);
