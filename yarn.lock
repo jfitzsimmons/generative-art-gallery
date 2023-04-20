@@ -1102,7 +1102,8 @@ favicons-webpack-plugin@^5.0.2:
   optionalDependencies:
     html-webpack-plugin ">=5.0.0"
 
-favicons@^7.0.0-beta.4:
+
+favicons@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/favicons/-/favicons-7.1.2.tgz#8cea77961a383c6dce42563ac3c5d8b03b597d13"
   integrity sha512-kTgVOJ+xPKSGw7otDwVDdxw5n47FEiUuvPnrr3MoE03HLP6Wc9oA146eKVXVi0zkH1tf96SCcnFxKEafmKnovw==
