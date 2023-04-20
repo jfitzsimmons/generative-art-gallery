@@ -1,11 +1,11 @@
 import { loadCosmos } from './art/randomcosmos'
-import { loadMeditations } from './art/meditate'
+import loadMeditations from './art/meditate'
 import { loadSyntheosis } from './art/syntheosis'
-import { loadTrees } from './art/autumnTrees'
-import { loadDabs } from './art/paintDabs'
+import loadTrees from './art/autumnTrees'
+import loadDabs from './art/paintDabs'
 import { loadCity } from './art/pixelCity'
-import { loadMountain } from './art/mountainFog'
-import { loadSunset } from './art/oceanSunset'
+import loadMountain from './art/mountainFog'
+import loadSunset from './art/oceanSunset'
 import { loadWorld } from './art/reclaimedWorld'
 import { resetCanvas, canvas } from './utils/canvas'
 import { rndmRng, debounce } from './utils/helpers'
@@ -22,7 +22,7 @@ const calls = [
   { f: loadSunset, name: 'ocean_sunset' },
   { f: loadWorld, name: 'reclaimed_world' },
 ]
-let currCall = 0
+let currentCall = 0
 let intervalID = -1
 const buttons = []
 let timeouts = []
@@ -57,8 +57,7 @@ function crossFade() {
 }
 
 const loadArt = debounce((e, newCall) => {
-  const call = Number.isNaN(newCall) ? currCall : newCall
-  crossFade()
+  const call = Number.isNaN(parseInt(newCall, 10)) ? currentCall : newCall
   resetCanvas()
   calls[call].f.call()
   crossFade()
@@ -72,23 +71,21 @@ function loadArtClick(e, newCall) {
 function handleActiveButton(e) {
   if (e && e.target.disabled === true) return
   const actives = document.getElementsByClassName('active')
-  while (actives.length) {
-    actives[0].classList.remove('active')
-  }
+  while (actives.length) actives[0].classList.remove('active')
 
-  buttons[currCall].classList.add('active')
+  buttons[currentCall].classList.add('active')
 }
 
 function setCall(e, i) {
   if (e) e.preventDefault()
-  currCall = i
+  currentCall = i
   handleActiveButton(e)
-  loadArtClick(e, currCall)
+  loadArtClick(e, currentCall)
 }
 
 function randomCall(e) {
-  currCall = Math.round(rndmRng(calls.length - 1 + 0.499, -0.499))
-  setCall(e, currCall)
+  currentCall = Math.round(rndmRng(calls.length - 1 + 0.499, -0.499))
+  setCall(e, currentCall)
 }
 
 function showControls(e) {
@@ -138,7 +135,7 @@ function shuffleArt(e) {
 pinBtn.addEventListener('click', showControls)
 document.getElementById('view').addEventListener('click', showControls)
 document.getElementById('another').addEventListener('click', (e) => {
-  const call = ++currCall >= calls.length ? 0 : currCall++
+  const call = ++currentCall >= calls.length ? 0 : currentCall++
   return setCall(e, call)
 })
 document
@@ -147,7 +144,7 @@ document
 shuffleBtn.addEventListener('click', shuffleArt)
 againBtn.addEventListener('click', loadArtClick)
 
-loadArt(currCall)
+loadArt(currentCall)
 
 calls.forEach((c, i) => {
   const element = document.createElement('button')

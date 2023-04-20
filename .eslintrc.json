@@ -13,6 +13,10 @@
     "semi": 0,
     "no-plusplus": "off",
     "operator-linebreak": "off",
-    "space-in-parens": "off"
+    "space-in-parens": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-bitwise": 0,
+    "object-curly-newline": ["error", { "multiline": true }],
+    "no-confusing-arrow": "off"
   }
 }
