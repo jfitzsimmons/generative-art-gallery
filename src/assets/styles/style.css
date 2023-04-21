@@ -1,403 +1,430 @@
 body {
-    padding: 0; 
-    margin:0;
-    background: #000;
-    color: #fff;
-    font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", 
-        "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+  padding: 0;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Segoe UI', Candara, 'Bitstream Vera Sans', 'DejaVu Sans',
+    'Bitstream Vera Sans', 'Trebuchet MS', Verdana, 'Verdana Ref', sans-serif;
 }
-canvas, .canvas-img  {
-    position: fixed;
-    z-index: 1;
+canvas,
+.canvas-img {
+  position: fixed;
+  z-index: 1;
 }
 h1 {
-    font-size: 5vmin;
+  font-size: 5vmin;
 }
 .hundred {
-    height: 100%!important;
-    width: 100%!important;
-    top: 0!important;
-    left: 0!important;
+  height: 100% !important;
+  width: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
 }
 .show {
-    transition-timing-function: ease-in;
-    opacity:1!important;
-    transition: .8s;
+  transition-timing-function: ease-in;
+  opacity: 1 !important;
+  transition: 0.8s;
 }
 .hide {
-    transition-timing-function: ease-out;
-    opacity:0;
-    transition: .8s;
+  transition-timing-function: ease-out;
+  opacity: 0;
+  transition: 0.8s;
 }
 .glow {
-    animation: glow 1.6s ease-out 0s infinite alternate;;
+  animation: glow 1.6s ease-out 0s infinite alternate;
 }
 @keyframes glow {
-    0% {
-        border-top: .5vmin solid hsla(0, 100%, 100%, 0.1);
-        border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.1);
-        border-left: .3vmin solid hsla(0, 100%, 100%, 0.1);
-        border-right: .3vmin solid hsla(0, 100%, 100%, 0.1);
-        box-shadow: 0 0 20px 0 rgba(255,255,255, 0.3);
-    } 100% {
-        border-top: .5vmin solid hsla(0, 100%, 100%, 0.9);
-        border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.9);
-        border-left: .3vmin solid hsla(0, 100%, 100%, 0.9);
-        border-right: .3vmin solid hsla(0, 100%, 100%, 0.9);
-        box-shadow: 0 0 10px 0 rgba(255,255,255, 0.9);
-    }
+  0% {
+    border-top: 0.5vmin solid hsla(0, 100%, 100%, 0.1);
+    border-bottom: 0.5vmin solid hsla(0, 100%, 100%, 0.1);
+    border-left: 0.3vmin solid hsla(0, 100%, 100%, 0.1);
+    border-right: 0.3vmin solid hsla(0, 100%, 100%, 0.1);
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    border-top: 0.5vmin solid hsla(0, 100%, 100%, 0.9);
+    border-bottom: 0.5vmin solid hsla(0, 100%, 100%, 0.9);
+    border-left: 0.3vmin solid hsla(0, 100%, 100%, 0.9);
+    border-right: 0.3vmin solid hsla(0, 100%, 100%, 0.9);
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.9);
+  }
 }
 .sepia {
-    filter: sepia(0);
+  filter: sepia(0);
 }
 .page {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 .flex {
-    display: flex;
+  display: flex;
 }
 .another {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 }
 .again {
-    align-self: center;
-    flex: 1;
-    display: flex;
-    justify-content: end;
+  align-self: center;
+  flex: 1;
+  display: flex;
+  justify-content: end;
 }
 .menu {
-    flex: 1;
-    align-self: flex-start;
-    min-width: 28vw;
-    text-align: center;
-}    
+  flex: 1;
+  align-self: flex-start;
+  min-width: 28vw;
+  text-align: center;
+}
 .menu .page {
-    max-width: 33vw;
+  max-width: 33vw;
 }
 button {
-    backdrop-filter: blur(4px) saturate(250%);
-    background-color: hsla(0,0%,0%,.6);
-    border: .3vmin solid hsla(0,0%,0%,.1);
-    transition: .5s;
-    filter: sepia(0%);
+  backdrop-filter: blur(4px) saturate(250%);
+  background-color: hsla(0, 0%, 0%, 0.6);
+  border: 0.3vmin solid hsla(0, 0%, 0%, 0.1);
+  transition: 0.5s;
+  filter: sepia(0%);
 }
 button:hover {
-    backdrop-filter: blur(7px) saturate(500%);
-    cursor: pointer;
-    filter: sepia(50%);
+  backdrop-filter: blur(7px) saturate(500%);
+  cursor: pointer;
+  filter: sepia(50%);
 }
 button:active {
-    transition: .2s;
+  transition: 0.2s;
 }
 .pin {
-    border-radius:  0 0 25px 25px;
-    padding: 2vmin;
-    box-shadow: 0vmin .5vmin 10px 0 rgba(255,255,255, 0.2), 0vmin 2vmin 20px 0 rgba(255,255,255, 0.4);
+  border-radius: 0 0 25px 25px;
+  padding: 2vmin;
+  box-shadow: 0vmin 0.5vmin 10px 0 rgba(255, 255, 255, 0.2),
+    0vmin 2vmin 20px 0 rgba(255, 255, 255, 0.4);
 }
 .pinned {
-    box-shadow: 0vmin 0vmin 4px 0 rgba(255,255,255, 0.4), 0vmin .5vmin 6px 0 rgba(255,255,255, 0.7);
-    transition: .5s;
+  box-shadow: 0vmin 0vmin 4px 0 rgba(255, 255, 255, 0.4),
+    0vmin 0.5vmin 6px 0 rgba(255, 255, 255, 0.7);
+  transition: 0.5s;
 }
 .again__button {
-    box-shadow: -1vh 0 10px 0 rgba(255,255,255, 0.1), -2vh 0 20px 0 rgba(255,255,255, 0.1), -3vh 0 30px 0 rgba(255,255,255, 0.1);
-    border-radius: 25px 0 0 25px;
-    padding: 2vh;
-    min-width: 140px;
-    width: 26vmin;
+  box-shadow: -1vh 0 10px 0 rgba(255, 255, 255, 0.1),
+    -2vh 0 20px 0 rgba(255, 255, 255, 0.1),
+    -3vh 0 30px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 25px 0 0 25px;
+  padding: 2vh;
+  min-width: 140px;
+  width: 26vmin;
 }
-.again__button:hover  {
-    padding: 3vh;
-    box-shadow: -1vh 0 15px 0 rgba(255,255,255, 0.2), -3vh 0 30px 0 rgba(255,255,255, 0.2), -5vh 0 45px 0 rgba(255,255,255, 0.2);
+.again__button:hover {
+  padding: 3vh;
+  box-shadow: -1vh 0 15px 0 rgba(255, 255, 255, 0.2),
+    -3vh 0 30px 0 rgba(255, 255, 255, 0.2),
+    -5vh 0 45px 0 rgba(255, 255, 255, 0.2);
 }
 .again__button:active {
-    padding: 3.5vh;
-    box-shadow: -1vh 0 5px 0 rgba(255,255,255, 0.2), -2vh 0 10px 0 rgba(255,255,255, 0.1), -3vh 0 15px 0 rgba(255,255,255, 0.2);
+  padding: 3.5vh;
+  box-shadow: -1vh 0 5px 0 rgba(255, 255, 255, 0.2),
+    -2vh 0 10px 0 rgba(255, 255, 255, 0.1),
+    -3vh 0 15px 0 rgba(255, 255, 255, 0.2);
 }
 .another__button {
-    box-shadow: 0 -1vh 10px 0 rgba(255,255,255, 0.2), 0 -2vh 20px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2);
-    border-radius: 25px 25px 0 0;
-    padding: 3vw 2vw 3vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  box-shadow: 0 -1vh 10px 0 rgba(255, 255, 255, 0.2),
+    0 -2vh 20px 0 rgba(255, 255, 255, 0.2),
+    0 -3vh 30px 0 rgba(255, 255, 255, 0.2);
+  border-radius: 25px 25px 0 0;
+  padding: 3vw 2vw 3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .another__button:hover {
-    padding: 3.5vw 2.5vw;
-    box-shadow: 0 -1vh 15px 0 rgba(255,255,255, 0.2), 0 -3vh 30px 0 rgba(255,255,255, 0.2), 0 -5vh 45px 0 rgba(255,255,255, 0.2);
+  padding: 3.5vw 2.5vw;
+  box-shadow: 0 -1vh 15px 0 rgba(255, 255, 255, 0.2),
+    0 -3vh 30px 0 rgba(255, 255, 255, 0.2),
+    0 -5vh 45px 0 rgba(255, 255, 255, 0.2);
 }
 .another__button:active {
-    padding: 3.25vw;
-    box-shadow: 0 -1vh 5px 0 rgba(255,255,255, 0.2), 0 -2vh 10px 0 rgba(255,255,255, 0.19), 0 -3vh 15px 0 rgba(255,255,255, 0.19);
+  padding: 3.25vw;
+  box-shadow: 0 -1vh 5px 0 rgba(255, 255, 255, 0.2),
+    0 -2vh 10px 0 rgba(255, 255, 255, 0.19),
+    0 -3vh 15px 0 rgba(255, 255, 255, 0.19);
 }
 .menu__button {
-    box-shadow: -0vmin 0vmin 10px 0 rgba(255,255,255, 0.1), 1vmin -1vmin 20px 0 rgba(255,255,255, 0.1), 2vmin 2vmin 30px 0 rgba(255,255,255, 0.1);
-    border-radius: 25px;
-    min-height: 5vmin;
-    color:#fff;
-    text-shadow: 0px 0px 4px rgba(0,0,0, .9);
-    padding: 1.7vmin 1.1vmin;
-    margin: 1vmin;
-    font-size:calc(12px + .5vw);
-    text-transform: uppercase;
-    font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: 0.45vw;
-    white-space: nowrap;
+  box-shadow: -0vmin 0vmin 10px 0 rgba(255, 255, 255, 0.1),
+    1vmin -1vmin 20px 0 rgba(255, 255, 255, 0.1),
+    2vmin 2vmin 30px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  min-height: 5vmin;
+  color: #fff;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
+  padding: 1.5vmin 0.8vmin;
+  margin: 0.5vmin;
+  font-size: calc(12px + 0.3vw);
+  text-transform: uppercase;
+  font-family: Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans',
+    'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed',
+    'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+  letter-spacing: 0.4vw;
+  white-space: nowrap;
 }
 .menu__button.active {
-    border-top: .5vmin solid hsla(0, 100%, 100%, 0.6);
-    border-bottom: .5vmin solid hsla(0, 100%, 100%, 0.6);
-    border-left: .3vmin solid hsla(0, 100%, 100%, 0.6);
-    border-right: .3vmin solid hsla(0, 100%, 100%, 0.6);
-    transition: .5s;
+  border-top: 0.5vmin solid hsla(0, 100%, 100%, 0.6);
+  border-bottom: 0.5vmin solid hsla(0, 100%, 100%, 0.6);
+  border-left: 0.3vmin solid hsla(0, 100%, 100%, 0.6);
+  border-right: 0.3vmin solid hsla(0, 100%, 100%, 0.6);
+  transition: 0.5s;
 }
-.menu__button::before{
-    color:rgba(255, 255, 255, .6);
-    content:  "\203B";
-    font-size: 0;
-    transition: .5s;
+.menu__button::before {
+  color: rgba(255, 255, 255, 0.6);
+  content: '\203B';
+  font-size: 0;
+  transition: 0.5s;
 }
-.menu__button.active::before{
-    color:rgba(255, 255, 255, .6);
-    content:  "\203B";
-    font-size:calc(12px + 1.1vw);
+.menu__button.active::before {
+  color: rgba(255, 255, 255, 0.6);
+  content: '\203B';
+  font-size: calc(12px + 1.1vw);
 }
 .menu__button:hover {
-    padding: 3.5vmin 1.1vmin;
-    box-shadow: -1vmin -1vmin 15px 0 rgba(255,255,255, 0.2), 0 -2vmin 30px 0 rgba(255,255,255, 0.2), 2vmin 2vmin 45px 0 rgba(255,255,255, 0.2);
+  padding: 2vmin 0.8vmin;
+  box-shadow: -1vmin -1vmin 15px 0 rgba(255, 255, 255, 0.2),
+    0 -2vmin 30px 0 rgba(255, 255, 255, 0.2),
+    2vmin 2vmin 45px 0 rgba(255, 255, 255, 0.2);
 }
 .menu__button:active {
-    padding: 3vmin 1.1vmin;
-    text-shadow: 0px 0px 6px rgba(0,0,0, .6),0px 0px 11px rgba(0,0,0, .5);
-    box-shadow: -1vmin -1vmin 3px 0 rgba(255,255,255, 0.1), -1vmin -1vmin 7px 0 rgba(255,255,255, 0.1), 1vmin 1vmin 14px 0 rgba(255,255,255, 0.1);
+  padding: 2vmin 0.8vmin;
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6), 0px 0px 11px rgba(0, 0, 0, 0.5);
+  box-shadow: -1vmin -1vmin 3px 0 rgba(255, 255, 255, 0.1),
+    -1vmin -1vmin 7px 0 rgba(255, 255, 255, 0.1),
+    1vmin 1vmin 14px 0 rgba(255, 255, 255, 0.1);
 }
 .random {
-    line-height: 3vmin;
+  line-height: 3vmin;
 }
 .shuffle .symbol {
-    font-size: 3vmin;
+  font-size: 3vmin;
 }
 .random .symbol {
-    position: relative;
-    top: .4vmin;  
-    font-size: 4vmin;  
+  position: relative;
+  top: 0.4vmin;
+  font-size: 4vmin;
 }
 .label {
-    color: rgba(255,255,255, 0.8);
-    text-shadow: 0px 0px 6px rgba(0,0,0, .9);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 6vmin;
-    transition: .5s;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 6vmin;
+  transition: 0.5s;
 }
 .pin__label {
-    font-size: calc(12px + 1vmin);
-    line-height: 3vmin;
-    font-weight: 100; 
-    transition: .5s;
-    width: 112%;
-    letter-spacing: .5vmin;
+  font-size: calc(12px + 1vmin);
+  line-height: 3vmin;
+  font-weight: 100;
+  transition: 0.5s;
+  width: 112%;
+  letter-spacing: 0.5vmin;
 }
 .pinned .pin__label {
-    font-weight: 700; 
-    letter-spacing: .7vmin;
+  font-weight: 700;
+  letter-spacing: 0.7vmin;
 }
 .again__label {
-    font-size: 9vmin;
-    writing-mode: tb;
-    margin: auto 0;
-    transform: rotate(180deg);
+  font-size: 9vmin;
+  writing-mode: tb;
+  margin: auto 0;
+  transform: rotate(180deg);
 }
 .another__label {
-    font-size: 5.5vw;
-    bottom: 7.5vw;
-    position: absolute;
-    width: 106%;
-    left: -0.75vw;
+  font-size: 5.5vw;
+  bottom: 7.5vw;
+  position: absolute;
+  width: 106%;
+  left: -0.75vw;
 }
-.another__button:hover .another__label  {
-    font-size: 6.1vw;
-    left: -1.3vw;
-    width: 110%;
+.another__button:hover .another__label {
+  font-size: 6.1vw;
+  left: -1.3vw;
+  width: 110%;
 }
-.again__button:hover .again__label  {
-    font-size: 8vmin;  
+.again__button:hover .again__label {
+  font-size: 8vmin;
 }
 .another__button:active .another__label,
 .again__button:active .again__label {
-    text-shadow: 0px 0px 8px rgba(0,0,0, .6),0px 0px 15px rgba(0,0,0, .5);
-    transition: .2s;
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6), 0px 0px 15px rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
 }
 .title {
-    margin-top: 1vmin;
-    font-size: 6vmin;
+  margin-top: 1vmin;
+  font-size: 6vmin;
 }
 .controls {
-    display: flex;
-    flex-direction: rows;
-    justify-content: space-between;
-    flex: 1;
-    box-shadow: none;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    z-index: 3;
-    pointer-events: none;
-    box-shadow: inset 0 0 15vmin rgba(0,0,0, .5);
-    transition: .5s;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+  display: flex;
+  flex-direction: rows;
+  justify-content: space-between;
+  flex: 1;
+  box-shadow: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow: inset 0 0 15vmin rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
-.controls:hover ~ .sepia  {
-    filter: sepia(50%);
+.controls:hover ~ .sepia {
+  filter: sepia(50%);
 }
 .controls.loaded.fadein {
-    width: calc(100% + 20vmin);
-    height: calc(100% + 20vmin);
-    box-shadow: inset 0 0 10vmin rgba(0,0,0, 0);
-    transition: .75s;
-    transition-delay: .6s;
-    top: -5%;
-    left: -5%;
+  width: calc(100% + 20vmin);
+  height: calc(100% + 20vmin);
+  box-shadow: inset 0 0 10vmin rgba(0, 0, 0, 0);
+  transition: 0.75s;
+  transition-delay: 0.6s;
+  top: -5%;
+  left: -5%;
 }
-.controls.loaded.fadein:hover { 
-    width: 100%;
-    height: 100%;
-    box-shadow: inset 0 0 30vmin rgba(0,0,0, 1);
-    transition: .5s;
-    top: 0;
-    left: 0;
+.controls.loaded.fadein:hover {
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 30vmin rgba(0, 0, 0, 1);
+  transition: 0.5s;
+  top: 0;
+  left: 0;
 }
 .controls.loaded.fadein:hover button.page,
 .controls.loaded.fadein:hover .page button,
 .controls.loaded.fadein:hover .title,
 .controls.loaded.fadein:hover button.pin {
-    transition-timing-function: ease-out;
-    opacity: 1;
-    transition: opacity .5s, padding .5s, background-filter .5s,filter .5s,box-shadow .5s;
+  transition-timing-function: ease-out;
+  opacity: 1;
+  transition: opacity 0.5s, padding 0.5s, background-filter 0.5s, filter 0.5s,
+    box-shadow 0.5s;
 }
 .controls.loaded.fadein:hover .light_beam {
-    opacity: 1;
-    transition: 1.5s;
+  opacity: 1;
+  transition: 1.5s;
 }
 .controls.loaded.fadein .page button,
 .controls.loaded.fadein button.page,
 .controls.loaded.fadein .title,
-.controls.loaded.fadein button.pin
-{
-    transition-timing-function: ease-in;
-    opacity: 0;
-    transition: opacity .6s .75s, padding .5s 0s, background-filter .5s 0s,filter .5s 0s,box-shadow .5s 0s; 
+.controls.loaded.fadein button.pin {
+  transition-timing-function: ease-in;
+  opacity: 0;
+  transition: opacity 0.6s 0.75s, padding 0.5s 0s, background-filter 0.5s 0s,
+    filter 0.5s 0s, box-shadow 0.5s 0s;
 }
-.controls.loaded.fadein .light_beam
-{
-    opacity: 0;
-    transition: .8s;        
+.controls.loaded.fadein .light_beam {
+  opacity: 0;
+  transition: 0.8s;
 }
 .controls:hover .light_beam {
-    left: 66vw;
-    transform: skew(-30deg,0deg); 
-    border-image: 
-        linear-gradient(
-            180deg, 
-        rgba(255, 255, 200, .6), 
-        rgba(255, 255, 200, 0)
-        ) 
+  left: 66vw;
+  transform: skew(-30deg, 0deg);
+  border-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 200, 0.6),
+    rgba(255, 255, 200, 0)
+  );
 }
 .controls:hover .light_beam2 {
-    left: 21vw;
-    transform: skew(30deg,0deg); 
+  left: 21vw;
+  transform: skew(30deg, 0deg);
 }
 .light_beam {
-    opacity: 1;
-    position: absolute;
-    bottom:0;
-    left:45vw;
-    width: 1vw;
-    height: 0;
-    border-radius: 50px;
-    border-top: 25vw solid;
-    border-left: 6vw solid transparent;
-    border-right: 6vw solid transparent;
-    border-style: solid;
-    border-image: 
-        linear-gradient(
-            180deg, 
-        rgba(255, 255, 255, .6), 
-        rgba(255, 255, 255, 0)
-        ) 
+  opacity: 1;
+  position: absolute;
+  bottom: 0;
+  left: 45vw;
+  width: 1vw;
+  height: 0;
+  border-radius: 50px;
+  border-top: 25vw solid;
+  border-left: 6vw solid transparent;
+  border-right: 6vw solid transparent;
+  border-style: solid;
+  border-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0)
+  );
 }
 .light_beam2 {
-    left:42vw;
+  left: 42vw;
 }
-.light_beam { 
-    transform: skew(50deg,0deg); 
+.light_beam {
+  transform: skew(50deg, 0deg);
 }
-.light_beam2 { 
-    transform: skew(-50deg,0deg); 
+.light_beam2 {
+  transform: skew(-50deg, 0deg);
 }
 .chevron2 {
-    position: relative;
-    text-align: center;
-    padding: 12px;
-    margin-right: .05vw;
-    height: 30vh; 
-    left: -2vw;    
+  position: relative;
+  text-align: center;
+  padding: 12px;
+  margin-right: 0.05vw;
+  height: 30vh;
+  left: -2vw;
 }
 .chevron2:before {
-    content: '';
-    position: absolute;
-    top: -7vh;
-    height: 15vh;
-    width: 1vw;
-    background: rgba(255, 255, 255, 0.5);
-    transform: skew(12deg, 0deg);
-    box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
-    min-height: 23vh;
+  content: '';
+  position: absolute;
+  top: -7vh;
+  height: 15vh;
+  width: 1vw;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skew(12deg, 0deg);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(255, 255, 255, 0.19);
+  min-height: 23vh;
 }
 .chevron2:after {
-    content: '';
-    position: absolute;
-    top: 53%;
-    height: 15vh;
-    width: 1vw;
-    background: rgba(255, 255, 255, 0.5);
-    transform: skew(-12deg, 0deg);
-    box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
-    min-height: 23vh;
+  content: '';
+  position: absolute;
+  top: 53%;
+  height: 15vh;
+  width: 1vw;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skew(-12deg, 0deg);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(255, 255, 255, 0.19);
+  min-height: 23vh;
 }
 .chevron {
-    position: relative;
-    text-align: center;
-    padding: 12px;
-    margin-bottom: 1vw;
-    width: 20vw;
+  position: relative;
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 1vw;
+  width: 20vw;
 }
 .chevron:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 2vw;
-    width: 10vw;
-    background: rgba(255, 255, 255, 0.5);  
-    transform: skew(0deg, 12deg);
-    box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2vw;
+  width: 10vw;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skew(0deg, 12deg);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(255, 255, 255, 0.19);
 }
 .chevron:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 2vw;
-    width: 10vw;
-    background: rgba(255, 255, 255, 0.5);
-    transform: skew(0deg, -12deg);
-    box-shadow: 0 4px 8px 0 rgba(255,255,255, 0.2), 0 6px 20px 0 rgba(255,255,255, 0.19);
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2vw;
+  width: 10vw;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skew(0deg, -12deg);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(255, 255, 255, 0.19);
 }

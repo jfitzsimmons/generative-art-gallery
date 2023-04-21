@@ -1,16 +1,23 @@
 import { ctx, h, w } from '../utils/canvas'
 import { rndmRng, shuffle, flatten } from '../utils/helpers'
 
-const fallColors = [354, 29, 53, 65, 35]
+/**
+ * testjpf
+ * autumnLeaves - trees aren’t draw in layers, probably
+ * should.  Theres a .find() you shoul dlook into.  Probably
+ *  a resource hog. Start there???
+ */
+
+const fallColors = [0, 18, 50, 60, 35]
 let btmW = 0
 let topW = 0
 let offset = 0
 let stumpH = 0
 let branchH = 0
 let treeCenter = {}
-let branchLayer = []
+// let branchLayer = []
 let treePoints = []
-let stumps = []
+// let stumps = []
 
 function buildBranch(start, layer) {
   const temp = layer === 0 ? 1 : layer
@@ -27,7 +34,7 @@ function buildBranch(start, layer) {
         i === 1
           ? Math.round(start.x - topW / 4)
           : Math.round(start.x + topW / 4),
-      y: start.y,
+      y: start.y + topW / 5,
     }
     const tc = {
       x:
@@ -59,18 +66,18 @@ function buildBranch(start, layer) {
       tc,
       bl: {
         x: Math.round(
-          bc.x - (btmW / 4) * Math.cos(((-90 + angle) * Math.PI) / 180),
+          bc.x - (btmW / 3) * Math.cos(((-90 + angle) * Math.PI) / 180),
         ),
         y: Math.round(
-          bc.y - (btmW / 4) * Math.sin(((-90 + angle) * Math.PI) / 180),
+          bc.y - (btmW / 3) * Math.sin(((-90 + angle) * Math.PI) / 180),
         ),
       },
       br: {
         x: Math.round(
-          bc.x - (btmW / 4) * Math.cos(((90 + angle) * Math.PI) / 180),
+          bc.x - (btmW / 3) * Math.cos(((90 + angle) * Math.PI) / 180),
         ),
         y: Math.round(
-          bc.y - (btmW / 4) * Math.sin(((90 + angle) * Math.PI) / 180),
+          bc.y - (btmW / 3) * Math.sin(((90 + angle) * Math.PI) / 180),
         ),
       },
       bc,
@@ -80,17 +87,38 @@ function buildBranch(start, layer) {
 }
 
 function drawLeaves(x, y, c, l, s, a, r) {
+  /**
+     *       s.x,
+      Math.round(s.y - rndmRng(h * 0.009, 0)),
+      Math.round(18 + s.layer * 4),
+      0,
+      s,
+      amount,
+      Math.round(h * 0.18),
+     */
   const repeat = rndmRng(0.9, 0.4)
-  const amount = a
+  // const amount = a
   ctx.fillStyle = `hsla(${Math.round(
     rndmRng(s.fallColor + 5, s.fallColor - 5),
   )},${rndmRng(60, 30)}%, ${rndmRng(c + 5, c - 5)}%, .9)`
-  for (let i = amount; i--; ) {
+  for (let i = a; i--; ) {
     const size = Math.round(
-      rndmRng(14 - (s.layer + l / 2.2), 8 - (s.layer + l / 2.2)),
+      rndmRng(14 - (s.layer + l / 2.4), 8 - (s.layer + l / 2.4)),
     )
     ctx.beginPath()
-    ctx.arc(rndmRng(x + r, x - r), rndmRng(y + r, y - r), size, 0, Math.PI * 2)
+
+    ctx.ellipse(
+      rndmRng(x + r, x - r),
+      rndmRng(y + r, y - r),
+      rndmRng(size * 1.2, size * 0.8),
+      rndmRng(size * 1.2, size * 0.8),
+      rndmRng(Math.PI * 2, 0),
+      0,
+      Math.PI * 2,
+    )
+
+    // ctx.arc(rndmRng(x + r, x - r), rndmRng(y + r, y - r), size, 0, Math.PI * 2)
+
     if (Math.random() > repeat) {
       ctx.fillStyle = `hsla(${
         Math.random() > s.colorChange
@@ -150,13 +178,10 @@ function drawBackground() {
   ctx.fillRect(0, 0, w, h)
 }
 
-export default function loadTrees() {
-  let y = h + h * 0.1
-  stumps = []
+const generateStumps = () => {
+  const stumps = []
   let sLayer = 0
-
-  drawBackground()
-
+  let y = h + h * 0.1
   while (y > h * 0.25) {
     let x = Math.round(rndmRng(60, -300) * (1 - sLayer * 0.05))
 
@@ -166,9 +191,9 @@ export default function loadTrees() {
         x,
         y,
         layer: sLayer,
-        sparse: [rndmRng(9, 0), rndmRng(9, 0)].sort(),
+        sparse: [rndmRng(11, 0), rndmRng(11, 0)].sort(),
         fallColor: fallColors[Math.round(rndmRng(fallColors.length - 1, 0))],
-        colorChange: Math.random(),
+        colorChange: Math.random() / 2,
       })
       x += rndmRng(550, 250) * (1 - sLayer * 0.12)
     }
@@ -178,17 +203,20 @@ export default function loadTrees() {
   }
 
   stumps.sort((a, b) => parseInt(a.y, 10) - parseInt(b.y, 10))
+  return stumps
+}
 
+function drawShadow(stumps) {
   // Shadows
   ctx.beginPath()
   ctx.moveTo(0, stumps[0].y - 50)
-  sLayer = stumps[0].layer
+  let stumpLayer = stumps[0].layer
   ctx.fillStyle = 'rgba(10,10,0,.1)'
 
   stumps.forEach((s, i) => {
     if (i % 2 === 0) {
-      if (s.layer !== sLayer) {
-        sLayer--
+      if (s.layer !== stumpLayer) {
+        stumpLayer--
         ctx.lineTo(w + 200, s.y - 50)
         ctx.lineTo(w + 200, h + 200)
         ctx.lineTo(-200, h + 200)
@@ -200,8 +228,39 @@ export default function loadTrees() {
       ctx.lineTo(s.x, s.y - 50)
     }
   })
+}
+/** testjpf finish
+function curvedLine(startY) {
+  let counter = 0
+  let x = 0
+  const startX = rndmRng(-100, 0)
+  const height = rndmRng(350, 40)
+  // const startY = rndmRng(500, -200)
+  let y = startY
+  let hillWidth = rndmRng(150, 50)
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+  ctx.beginPath()
+  for (let i = startX; i <= w + 100; i += hillWidth) {
+    // dashes = setDashedLines()
+    ctx.moveTo(x, y)
+    const increase = ((90 / 180) * Math.PI) / rndmRng(30, 15)
+    hillWidth = rndmRng(150, 50)
+    x = i + hillWidth
+    y = Math.round(startY + i / 2 - Math.sin(counter) * height)
+    counter += increase
+    ctx.lineTo(x, y)
+  }
+  ctx.lineTo(startX, h)
+  ctx.lineTo(startX, startY)
+  ctx.fill()
+}
+*/
+export default function loadTrees() {
+  const stumps = generateStumps()
+  let branchLayer = []
+  drawBackground()
+  drawShadow(stumps)
 
-  branchLayer = []
   treePoints = []
 
   stumps.forEach((s) => {
@@ -210,11 +269,11 @@ export default function loadTrees() {
     offset = Math.round((btmW - topW) / 2)
     stumpH = Math.round(rndmRng(160, 140) * (1 - s.layer * 0.07))
     branchH = Math.round(stumpH / 2)
-    const amount = 80 - Math.round(rndmRng(s.sparse[1], s.sparse[0])) * 5
+    const amount = 84 - Math.round(rndmRng(s.sparse[1], s.sparse[0]))
 
     ctx.shadowColor = `hsla(56, 95%, ${Math.round(
       90 * ((s.layer / 2 + 1) * 0.28),
-    )}%, .3)`
+    )}%, .2)`
     ctx.shadowBlur = 15 - s.layer * 2
     ctx.shadowOffsetY = 0 - s.layer
     ctx.shadowOffsetX = s.layer
@@ -226,12 +285,13 @@ export default function loadTrees() {
 
     const tempColor = s.colorChange
     // eslint-disable-next-line no-param-reassign
-    s.colorChange = 0.1
+    s.colorChange = 0.05
+    // ground leaves
     drawLeaves(
       s.x,
       Math.round(s.y - rndmRng(h * 0.009, 0)),
       Math.round(18 + s.layer * 4),
-      0,
+      6,
       s,
       amount,
       Math.round(h * 0.18),
@@ -258,12 +318,14 @@ export default function loadTrees() {
 
     drawLeaves(
       Math.round(s.x + h * 0.05),
-      Math.round(s.y + stumpH * 1.6, 16 + s.layer * 4),
-      0,
+      Math.round(s.y + stumpH * 1.6),
+      Math.round(16 + s.layer * 4),
+      5,
       s,
       amount,
       Math.round(stumpH * 1.8),
     )
+
     // eslint-disable-next-line no-param-reassign
     s.colorChange = tempColor
 
@@ -285,6 +347,7 @@ export default function loadTrees() {
       topW /= 2
       offset = (btmW - topW) / 2
       treePoints = []
+      // if (j > 0) curvedLine(copy[j][0].tc.y)
 
       copy[j].forEach((l) => {
         buildBranch(l.tc, j + 1)

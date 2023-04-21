@@ -1,3 +1,4 @@
+/* eslint-disable import/no-mutable-exports */
 import { rndmRng } from './helpers'
 
 export const canvas = document.getElementById('canvas1')

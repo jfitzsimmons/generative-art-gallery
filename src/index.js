@@ -1,4 +1,4 @@
-import { loadCosmos } from './art/randomcosmos'
+import loadCosmos from './art/randomcosmos'
 import loadMeditations from './art/meditate'
 import { loadSyntheosis } from './art/syntheosis'
 import loadTrees from './art/autumnTrees'
@@ -11,6 +11,14 @@ import { resetCanvas, canvas } from './utils/canvas'
 import { rndmRng, debounce } from './utils/helpers'
 import './assets/styles/style.css'
 
+const againBtn = document.getElementById('again')
+const pinBtn = document.getElementById('pin')
+const shuffleBtn = document.getElementById('shuffle')
+const titleEl = document.getElementById('title')
+const controlsEl = document.getElementById('controls')
+const canvasImg = document.getElementById('canvasImg')
+const buttons = []
+
 const calls = [
   { f: loadMeditations, name: 'meditations' },
   { f: loadCosmos, name: 'cosmos' },
@@ -22,16 +30,10 @@ const calls = [
   { f: loadSunset, name: 'ocean_sunset' },
   { f: loadWorld, name: 'reclaimed_world' },
 ]
+
 let currentCall = 0
 let intervalID = -1
-const buttons = []
 let timeouts = []
-const againBtn = document.getElementById('again')
-const pinBtn = document.getElementById('pin')
-const shuffleBtn = document.getElementById('shuffle')
-const titleEl = document.getElementById('title')
-const controlsEl = document.getElementById('controls')
-const canvasImg = document.getElementById('canvasImg')
 
 function crossFade() {
   canvasImg.classList.add('hide')
